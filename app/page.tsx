@@ -24,7 +24,7 @@ export default async function Home() {
 
 	return (
 		<PageWrapper>
-			<MainClient assets={assets} />
+			<MainClient assets={assets} introScript={introScript} />
 		</PageWrapper>
 	);
 }
