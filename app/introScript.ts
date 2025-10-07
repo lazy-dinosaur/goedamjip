@@ -82,10 +82,6 @@ export const introScript: Segment[] = [
 		background: null,
 		segmentEffects: {
 			soundEffects: [
-				// {
-				// 	tag: "DRONE_UNSTABLE_AIR",
-				// 	status: "start",
-				// },
 				{
 					tag: "ROOMTONE_EMPTY_NEUTRAL",
 					status: "start",
