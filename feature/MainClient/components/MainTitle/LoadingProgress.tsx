@@ -11,7 +11,7 @@ export const LoadingProgress = ({
 		visible &&
 		(loadingProgress < 100 ? (
 			<div className="absolute bottom-15 left-0 right-0 text-center px-8">
-				<p className="text-white text-xl font-bm-hanna-11 mb-4">
+				<p className="text-white md:text-xl font-bm-hanna-11 mb-4">
 					음향을 준비하는 중...
 				</p>
 				{/* 프로그레스 바 */}
@@ -26,7 +26,7 @@ export const LoadingProgress = ({
 			</div>
 		) : (
 			<div className="absolute bottom-15 left-0 right-0 text-center animate-pulse">
-				<p className="text-white text-xl font-bm-hanna-11">
+				<p className="text-white md:text-xl font-bm-hanna-11">
 					화면을 클릭하여 시작하세요
 				</p>
 			</div>
