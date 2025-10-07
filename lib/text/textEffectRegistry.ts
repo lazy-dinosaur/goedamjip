@@ -1,5 +1,5 @@
 export type EffectResult = {
-	timeline: gsap.core.Timeline; // Timeline만!
+	timeline?: gsap.core.Timeline; // Timeline만!
 	cleanup?: () => void;
 };
 

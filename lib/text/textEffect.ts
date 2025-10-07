@@ -27,7 +27,8 @@ class TextEffect {
 			return this;
 		}
 		const result = creator(element, options);
-		this.timeline.add(result.timeline, position);
+
+		if (result.timeline) this.timeline.add(result.timeline, position);
 
 		if (result.cleanup) {
 			this.cleanUpFunctions.push(result.cleanup);

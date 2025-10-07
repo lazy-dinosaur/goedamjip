@@ -4,7 +4,11 @@ import { EffectCreator } from "./textEffectRegistry";
 const FADE_IN: EffectCreator = (element, options = {}) => {
 	const tl = gsap.timeline();
 	const duration = options.duration ?? 0.6;
-	tl.fromTo(element, { opacity: 0 }, { opacity: 1, duration, ...options });
+	tl.fromTo(
+		element,
+		{ opacity: 0 },
+		{ opacity: 1, duration, ease: "power2.inOut", ...options },
+	);
 	return {
 		timeline: tl,
 	};
@@ -71,7 +75,11 @@ const INK_REVEAL: EffectCreator = (element, options = {}) => {
 	element.style.filter = `url(#${filterId})`;
 	element.style.willChange = "filter, opacity";
 
-	tl.fromTo(element, { opacity: 0 }, { opacity: 1, duration: 0.6 }).to(
+	tl.fromTo(
+		element,
+		{ opacity: 0 },
+		{ opacity: 1, ease: "power2.inOut", duration: 0.6 },
+	).to(
 		{},
 		{
 			duration,
