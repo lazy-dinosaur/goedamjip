@@ -31,14 +31,7 @@ export default function MainTitle({
 			const textEffect = new TextEffect();
 			textEffect
 				.addEffect("INK_REVEAL", textRef.current)
-				.addEffect(
-					"FADE_IN",
-					soundAdviceRef.current,
-					{
-						ease: "power2.inOut",
-					},
-					"-=0.2",
-				)
+				.addEffect("FADE_IN", soundAdviceRef.current, {}, "-=0.2")
 				.play();
 			textEffectRef.current = textEffect;
 		}
