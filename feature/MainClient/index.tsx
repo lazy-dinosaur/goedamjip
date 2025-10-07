@@ -4,8 +4,14 @@ import MainTitle from "./components/MainTitle";
 import MainIntro from "./components/MainIntro";
 import { useState, useCallback, useEffect } from "react";
 import audioManager from "@/lib/audio/audioManager";
+import { Segment } from "@/app/introScript";
 
-export default function MainClient({ assets }: { assets: GetAssetsMap }) {
+interface MainClientProps {
+	assets: GetAssetsMap;
+	introScript: Segment[];
+}
+
+export default function MainClient({ assets, introScript }: MainClientProps) {
 	// 인트로 스킵 설정 확인
 	const [skipIntroSetting, setSkipIntroSetting] = useState(() => {
 		if (typeof window !== "undefined") {
@@ -82,7 +88,7 @@ export default function MainClient({ assets }: { assets: GetAssetsMap }) {
 					changeStage={() => changeStage("intro")}
 				/>
 			)}
-			{currentStage === "intro" && <MainIntro />}
+			{currentStage === "intro" && <MainIntro introScript={introScript} />}
 		</>
 	);
 }
