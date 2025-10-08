@@ -5,6 +5,7 @@ import MainIntro from "./components/MainIntro";
 import { useState, useCallback, useEffect } from "react";
 import audioManager from "@/lib/audio/audioManager";
 import { Segment } from "@/app/introScript";
+import MainMenu from "./components/MainMenu";
 
 interface MainClientProps {
 	assets: GetAssetsMap;
@@ -22,10 +23,12 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	//화면이 클릭 되면 intro가 시작되어야 한다 다만 title의 종료 에니메이션 이후에 시작되어야 한다.
 	//즉 title에서 로딩이 끝난 이후 클릭을 하면 종료 에니메이션이 동작 해야하고 그 이후에 introstage로 변경 되어야 한다.
 
-	const [currentStage, setCurrentStage] = useState<"title" | "intro">("title");
+	const [currentStage, setCurrentStage] = useState<"title" | "intro" | "menu">(
+		"title",
+	);
 	const [didWatchIntro, setDidWatchIntro] = useState(false); // 인트로를 봤는지 추적
 
-	const changeStage = useCallback((stage: "title" | "intro") => {
+	const changeStage = useCallback((stage: "title" | "intro" | "menu") => {
 		setCurrentStage(stage);
 	}, []);
 
@@ -88,7 +91,15 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					changeStage={() => changeStage("intro")}
 				/>
 			)}
-			{currentStage === "intro" && <MainIntro introScript={introScript} />}
+			{currentStage === "intro" && (
+				<MainIntro
+					introScript={introScript}
+					changeStage={() => {
+						changeStage("menu");
+					}}
+				/>
+			)}
+			{currentStage === "menu" && <MainMenu />}
 		</>
 	);
 }
