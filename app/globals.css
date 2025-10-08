@@ -56,5 +56,10 @@ body {
 .line {
 	display: inline-block;
 	overflow: hidden;
-	white-space: pre;
+}
+
+.text-korean {
+	word-break: keep-all;
+	overflow-wrap: break-word;
+	line-break: strict;
 }
