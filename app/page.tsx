@@ -23,7 +23,7 @@ export default async function Home() {
 	]);
 
 	return (
-		<PageWrapper>
+		<PageWrapper className={"select-none"}>
 			<MainClient assets={assets} introScript={introScript} />
 		</PageWrapper>
 	);
