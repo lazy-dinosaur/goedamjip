@@ -1,0 +1,112 @@
+import gsap from "gsap";
+import { EffectCreator } from "../textEffectRegistry";
+
+export const GLITCH: EffectCreator = (element, options = {}) => {
+	const intensity = options.intensity ?? 1.3;
+	let loopActive = true;
+
+	// transform 적용을 위해 display 설정
+	gsap.set(element, { display: "inline-block" });
+
+	// RGB 색상 분리 효과
+	const rgbSplit = [
+		`${2 * intensity}px 0 #ff0000`,
+		`${-2 * intensity}px 0 #00ff00`,
+		`0 ${2 * intensity}px #0000ff`,
+	].join(", ");
+
+	// 재귀적으로 glitch를 반복하는 함수
+	const createGlitchLoop = () => {
+		if (!loopActive) return;
+
+		const tl = gsap.timeline({
+			onComplete: () => {
+				// 랜덤한 딜레이 후 다시 실행
+				if (loopActive) {
+					gsap.delayedCall(gsap.utils.random(0.5, 1.5), createGlitchLoop);
+				}
+			},
+		});
+
+		// Glitch 시퀀스
+		tl.set(element, { textShadow: "none" });
+
+		// 짧게 glitch 발생
+		for (let i = 0; i < 2; i++) {
+			tl.to(element, {
+				duration: 0.05,
+				x: `random(${-5 * intensity}, ${5 * intensity})`,
+				y: `random(${-5 * intensity}, ${5 * intensity})`,
+				skewX: `random(${-5 * intensity}, ${5 * intensity})`,
+				scaleX: `random(${0.95}, ${1.1})`,
+				scaleY: `random(${0.95}, ${1.05})`,
+				textShadow: rgbSplit,
+				opacity: 0.8,
+				ease: "steps(1)",
+			})
+				.to(element, {
+					duration: 0.05,
+					x: 0,
+					y: 0,
+					skewX: 0,
+					scaleX: 1,
+					scaleY: 1,
+					textShadow: "none",
+					opacity: 1,
+					ease: "steps(1)",
+				})
+				.to(element, {
+					duration: 0.02,
+					x: `random(${-3 * intensity}, ${3 * intensity})`,
+					skewX: `random(${-3 * intensity}, ${3 * intensity})`,
+					scaleX: `random(${0.97}, ${1.05})`,
+					scaleY: `random(${0.97}, ${1.03})`,
+					textShadow: rgbSplit,
+					ease: "steps(1)",
+				})
+				.to(element, {
+					duration: 0.02,
+					x: 0,
+					skewX: 0,
+					scaleX: 1,
+					scaleY: 1,
+					textShadow: "none",
+					ease: "steps(1)",
+				});
+		}
+
+		// 다시 정상 상태로
+		tl.set(element, {
+			x: 0,
+			y: 0,
+			skewX: 0,
+			scaleX: 1,
+			scaleY: 1,
+			textShadow: "none",
+			opacity: 1,
+		});
+	};
+
+	// 첫 실행
+	createGlitchLoop();
+
+	// 더미 타임라인 반환 (실제 애니메이션은 재귀 함수로 처리)
+	const dummyTimeline = gsap.timeline();
+
+	return {
+		timeline: dummyTimeline,
+		cleanup: () => {
+			loopActive = false;
+			gsap.killTweensOf(element);
+			gsap.set(element, {
+				x: 0,
+				y: 0,
+				skewX: 0,
+				scaleX: 1,
+				scaleY: 1,
+				textShadow: "none",
+				opacity: 1,
+			});
+		},
+	};
+};
