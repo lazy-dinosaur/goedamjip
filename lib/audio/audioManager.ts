@@ -22,6 +22,7 @@ class AudioManager {
 		return new Promise((resolve, reject) => {
 			const howl = new Howl({
 				src: [url],
+				html5: false,
 				preload: true,
 				onload: () => {
 					this.cache.set(key, howl);
@@ -69,11 +70,18 @@ class AudioManager {
 		if (options?.loop !== undefined) {
 			howl.loop(options.loop);
 		}
+		if (options?.fade) {
+			howl.volume(options.fade.from);
+		} else {
+			howl.volume(0);
+		}
 
 		const id = howl.play();
 
 		if (options?.fade) {
 			howl.fade(options.fade.from, options.fade.to, options.fade.duration, id);
+		} else {
+			howl.fade(0, 1, 0);
 		}
 
 		if (options?.onend) {
@@ -119,6 +127,20 @@ class AudioManager {
 
 	isLoaded(tagName: string): boolean {
 		return this.cache.has(tagName);
+	}
+
+	stopAllNonLooping(fadeDuration: number = 500) {
+		this.cache.forEach((howl, key) => {
+			// loop:false && 재생 중인 것만 정리
+			if (!howl.loop() && howl.playing()) {
+				howl.fade(howl.volume(), 0, fadeDuration);
+
+				// fade 완료 후 stop
+				setTimeout(() => {
+					howl.stop();
+				}, fadeDuration);
+			}
+		});
 	}
 
 	clearCache(): void {
