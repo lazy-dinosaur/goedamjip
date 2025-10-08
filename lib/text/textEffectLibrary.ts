@@ -4,6 +4,8 @@ import { GLITCH } from "./effects/glitch";
 import { GLOW } from "./effects/glow";
 import { GLOW_RED } from "./effects/glowRed";
 import { JITTER } from "./effects/jitter";
+import { PULSE_FAST } from "./effects/pulseFast";
+import { PULSE_SLOW } from "./effects/pulseSlow";
 
 const TextEffectLibrary = {
 	FADE_IN,
@@ -12,6 +14,8 @@ const TextEffectLibrary = {
 	GLOW,
 	GLOW_RED,
 	JITTER,
+	PULSE_FAST,
+	PULSE_SLOW,
 };
 
 export default TextEffectLibrary;
