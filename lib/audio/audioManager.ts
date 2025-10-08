@@ -129,7 +129,7 @@ class AudioManager {
 		return this.cache.has(tagName);
 	}
 
-	cleanupOnShots(fadeDuration: number = 500) {
+	stopOnShots(fadeDuration: number = 500) {
 		this.cache.forEach((howl, key) => {
 			// loop:false && 재생 중인 것만 정리
 			if (!howl.loop() && howl.playing()) {

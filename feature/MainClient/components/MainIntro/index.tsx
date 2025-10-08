@@ -55,7 +55,7 @@ export default function MainIntro({
 	}, [userIntereacted, continueRef]);
 	const onClick = useCallback(async () => {
 		setUserInterected(true);
-		audioManager.cleanupOnShots();
+		audioManager.stopOnShots();
 		let completedCount = 0;
 		const totalLines = linesRef.current.size;
 
