@@ -95,10 +95,8 @@ export const GLITCH: EffectCreator = (element, options = {}) => {
 	createGlitchLoop();
 
 	// 더미 타임라인 반환 (실제 애니메이션은 재귀 함수로 처리)
-	const dummyTimeline = gsap.timeline();
 
 	return {
-		timeline: dummyTimeline,
 		cleanup: () => {
 			loopActive = false;
 

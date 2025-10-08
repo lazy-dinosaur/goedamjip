@@ -43,11 +43,7 @@ export const GLOW_RED: EffectCreator = (element, options = {}) => {
 	// 첫 실행
 	createGlowLoop();
 
-	// 더미 타임라인 반환
-	const dummyTimeline = gsap.timeline();
-
 	return {
-		timeline: dummyTimeline,
 		cleanup: () => {
 			loopActive = false;
 			gsap.killTweensOf(element);

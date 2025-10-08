@@ -46,11 +46,7 @@ export const JITTER: EffectCreator = (element, options = {}) => {
 	// 첫 실행
 	createJitterLoop();
 
-	// 더미 타임라인 반환
-	const dummyTimeline = gsap.timeline();
-
 	return {
-		timeline: dummyTimeline,
 		cleanup: () => {
 			loopActive = false;
 			gsap.killTweensOf(element);
