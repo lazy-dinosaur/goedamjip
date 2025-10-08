@@ -8,7 +8,6 @@ import { SplitText } from "gsap/SplitText";
 import { ContinueMark } from "@/component/ContinueMark";
 import { useGSAP } from "@gsap/react";
 import audioManager from "@/lib/audio/audioManager";
-import { useRouter } from "next/navigation";
 interface MainIntroProps {
 	introScript: Segment[];
 	changeStage: () => void;
@@ -56,7 +55,7 @@ export default function MainIntro({
 	}, [userIntereacted, continueRef]);
 	const onClick = useCallback(async () => {
 		setUserInterected(true);
-		audioManager.stopAllNonLooping();
+		audioManager.cleanupOnShots();
 		let completedCount = 0;
 		const totalLines = linesRef.current.size;
 
