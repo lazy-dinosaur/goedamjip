@@ -29,7 +29,7 @@ interface PreLineEffects {
 }
 
 // 텍스트 청크 타입
-interface TextChunk {
+export interface TextChunk {
 	content: string;
 	textEffects?: TextEffect[];
 	soundEffects?: SoundEffect[];
@@ -37,7 +37,7 @@ interface TextChunk {
 }
 
 // 라인 타입
-interface Line {
+export interface Line {
 	text: string;
 	chunks: TextChunk[];
 	preLineEffects: PreLineEffects;
@@ -101,7 +101,6 @@ export const introScript: Segment[] = [
 					soundEffects: [
 						{
 							tag: "DOOR_CREAK_SLOW",
-							repeat: 3,
 						},
 					],
 					visualEffects: [],
@@ -110,11 +109,10 @@ export const introScript: Segment[] = [
 				chunks: [
 					{
 						content: "당신은 낡고 음침한 도서관에 ",
-						soundEffects: [],
 					},
 					{
 						content: "들어섭니다.",
-						soundEffects: [],
+						soundEffects: [{ tag: "FOOTSTEP_WOOD_NORMAL_CREAKY" }],
 					},
 				],
 			},
@@ -182,7 +180,7 @@ export const introScript: Segment[] = [
 				preLineEffects: {
 					soundEffects: [
 						{
-							tag: "FEMALE_GIGGLE ",
+							tag: "FEMALE_GIGGLE",
 						},
 					],
 					visualEffects: [],
@@ -207,7 +205,7 @@ export const introScript: Segment[] = [
 			{
 				text: '"안녕? 기괴한 이야기가 가득한 도서관에 온것을 환영해"',
 				preLineEffects: {
-					soundEffects: [],
+					soundEffects: [{ tag: "FEMALE_GIGGLE" }],
 					visualEffects: [],
 					image: null,
 				},
@@ -283,6 +281,7 @@ export const introScript: Segment[] = [
 					soundEffects: [
 						{
 							tag: "PAGE_TURN",
+							repeat: 5,
 						},
 						{
 							tag: "GHOSTLY_WHISPERS_OVERLAPPING",
