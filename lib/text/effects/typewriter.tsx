@@ -6,11 +6,11 @@ gsap.registerPlugin(TextPlugin);
 
 export const TYPEWRITER: EffectCreator = (element, options = {}) => {
 	const originalText = element.textContent || "";
-	const speed = options.speed ?? 0.05;
+	const speed = options.speed ?? 0.06;
 	const tl = gsap.timeline();
 
-	// 텍스트 비우기
-	gsap.set(element, { text: "" });
+	// 텍스트 비우고 동시에 opacity 설정
+	gsap.set(element, { text: "", display: "inline-block", opacity: 1 });
 
 	// 한 글자씩 타이핑 (한글 지원)
 	tl.to(element, {
@@ -18,6 +18,7 @@ export const TYPEWRITER: EffectCreator = (element, options = {}) => {
 		text: {
 			value: originalText,
 			delimiter: "",
+			preserveSpaces: true,
 		},
 		ease: "none",
 	});
