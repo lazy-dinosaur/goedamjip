@@ -54,8 +54,11 @@ body {
 }
 
 .line {
-	display: inline-block;
+	display: inline-flex;
 	overflow: hidden;
+	vertical-align: baseline;
+}
+.word {
 }
 
 .text-korean {
