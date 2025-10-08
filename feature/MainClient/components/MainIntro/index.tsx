@@ -90,6 +90,13 @@ export default function MainIntro({
 		});
 	}, [segmentCounts, currentSegment, changeStage]);
 
+	const revealEffects = [
+		"FADE_IN",
+		"TYPEWRITER",
+		"RISE_FROM_BOTTOM",
+		"TEXT_SCRAMBLE_GLITCH",
+	];
+
 	useLayoutEffect(() => {
 		const currentLinesRef = linesRef.current; // effect 시작 시점의 값 저장
 		const currentChunksRef = new Map(chunksRef.current); // chunksRef의 현재 상태를 복사
@@ -124,65 +131,162 @@ export default function MainIntro({
 			// Step 2: linesRef에 TextEffect 생성 & 청크 추가
 			introScript[currentSegment].lines.forEach((line, lineIdx) => {
 				const lineTextEffect = new TextEffect();
+				const getRevealEffect = (effects: string[]): string | undefined => {
+					return effects.find((effect) => revealEffects.includes(effect));
+				};
 
 				line.chunks.forEach((chunk, chunkIdx) => {
 					const ref = chunksRef.current.get(`line${lineIdx}-chunk${chunkIdx}`);
 					if (ref) {
-						SplitText.create(ref, {
-							type: "lines, words",
-							mask: "lines",
-							linesClass: "line++",
-							autoSplit: true,
-							tag: "span",
-							onSplit(self) {
-								// inline-block으로 설정해야 y transform이 동작함
-								gsap.set(self.words, {
-									display: "inline-block",
-								});
-								const split = gsap.from(self.words, {
-									duration: 0.8,
-									y: 100,
-									autoAlpha: 0,
-									opacity: 0,
-									stagger: 0.1,
-								});
+						const currentRevealEffect = getRevealEffect(
+							chunk.textEffects ?? [],
+						);
+						if (
+							!currentRevealEffect ||
+							currentRevealEffect == "FADE_IN" ||
+							currentRevealEffect == "RISE_FROM_BOTTOM"
+						) {
+							SplitText.create(ref, {
+								type: "lines, words",
+								mask: "words",
+								linesClass: "line++",
+								wordsClass: "word++",
+								autoSplit: true,
+								tag: "span",
+								onSplit(self) {
+									// 부모 요소 opacity 복원
+									gsap.set(ref, { opacity: 1 });
+									// inline-block으로 설정해야 y transform이 동작함
+									self.words.forEach((word, index) => {
+										gsap.set(word, { display: "inline-block" });
+										// 마지막 단어가 아니면 공백 추가
+										if (index < self.words.length - 1) {
+											word.innerHTML = word.innerHTML + "&nbsp;";
+										}
+									});
 
-								if (chunk.soundEffects && chunk.soundEffects.length > 0) {
-									lineTextEffect.getTimeline().call(() => {
-										// reverse 중일 때는 사운드 재생 안 함
-										if (lineTextEffect.getTimeline().reversed()) return;
+									const split = gsap.from(self.words, {
+										duration: 0.8,
+										y: 100,
+										autoAlpha: 0,
+										opacity: 0,
+										stagger: 0.1,
+									});
 
-										chunk.soundEffects?.forEach((effect) => {
-											if (effect.status == "start") {
-												audioManager.play(effect.tag, { loop: true });
-											} else if (effect.status == "stop") {
-												pendingStopsRef.current.add({
-													id: effect.tag,
-													type: "audio",
-												}); // 저장만
-											} else {
-												audioManager.play(effect.tag, {
-													loop: false,
-													repeat: effect.repeat,
-												});
+									if (chunk.soundEffects && chunk.soundEffects.length > 0) {
+										lineTextEffect.getTimeline().call(() => {
+											// reverse 중일 때는 사운드 재생 안 함
+											if (lineTextEffect.getTimeline().reversed()) return;
+
+											chunk.soundEffects?.forEach((effect) => {
+												if (effect.status == "start") {
+													audioManager.play(effect.tag, { loop: true });
+												} else if (effect.status == "stop") {
+													pendingStopsRef.current.add({
+														id: effect.tag,
+														type: "audio",
+													}); // 저장만
+												} else {
+													audioManager.play(effect.tag, {
+														loop: false,
+														repeat: effect.repeat,
+													});
+												}
+											});
+										}, undefined); // ">" = 이전 애니메이션 끝
+									}
+
+									lineTextEffect.getTimeline().add(split, "-=0.3");
+									if (chunk.textEffects && chunk.textEffects.length > 0) {
+										chunk.textEffects.forEach((effectName) => {
+											if (!revealEffects.includes(effectName)) {
+												lineTextEffect.addEffect(
+													effectName,
+													ref,
+													undefined,
+													"-=0.8",
+												);
 											}
 										});
-									}, undefined); // ">" = 이전 애니메이션 끝
-								}
+									}
+								},
+							});
+						} else if (currentRevealEffect == "TYPEWRITER") {
+							lineTextEffect.addEffect("TYPEWRITER", ref);
 
-								lineTextEffect.getTimeline().add(split, "-=0.3");
-								if (chunk.textEffects && chunk.textEffects.length > 0) {
-									chunk.textEffects.forEach((effectName) => {
+							if (chunk.soundEffects && chunk.soundEffects.length > 0) {
+								lineTextEffect.getTimeline().call(() => {
+									// reverse 중일 때는 사운드 재생 안 함
+									if (lineTextEffect.getTimeline().reversed()) return;
+
+									chunk.soundEffects?.forEach((effect) => {
+										if (effect.status == "start") {
+											audioManager.play(effect.tag, { loop: true });
+										} else if (effect.status == "stop") {
+											pendingStopsRef.current.add({
+												id: effect.tag,
+												type: "audio",
+											}); // 저장만
+										} else {
+											audioManager.play(effect.tag, {
+												loop: false,
+												repeat: effect.repeat,
+											});
+										}
+									});
+								}, undefined); // ">" = 이전 애니메이션 끝
+							}
+
+							if (chunk.textEffects && chunk.textEffects.length > 0) {
+								chunk.textEffects.forEach((effectName) => {
+									if (!revealEffects.includes(effectName)) {
 										lineTextEffect.addEffect(
 											effectName,
 											ref,
 											undefined,
 											"-=0.8",
 										);
+									}
+								});
+							}
+						} else if (currentRevealEffect == "TEXT_SCRAMBLE_GLITCH") {
+							lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
+
+							if (chunk.soundEffects && chunk.soundEffects.length > 0) {
+								lineTextEffect.getTimeline().call(() => {
+									if (lineTextEffect.getTimeline().reversed()) return;
+
+									chunk.soundEffects?.forEach((effect) => {
+										if (effect.status == "start") {
+											audioManager.play(effect.tag, { loop: true });
+										} else if (effect.status == "stop") {
+											pendingStopsRef.current.add({
+												id: effect.tag,
+												type: "audio",
+											});
+										} else {
+											audioManager.play(effect.tag, {
+												loop: false,
+												repeat: effect.repeat,
+											});
+										}
 									});
-								}
-							},
-						});
+								}, undefined);
+							}
+
+							if (chunk.textEffects && chunk.textEffects.length > 0) {
+								chunk.textEffects.forEach((effectName) => {
+									if (!revealEffects.includes(effectName)) {
+										lineTextEffect.addEffect(
+											effectName,
+											ref,
+											undefined,
+											"-=0.8",
+										);
+									}
+								});
+							}
+						}
 					}
 				});
 
@@ -273,7 +377,8 @@ export default function MainIntro({
 										);
 								}}
 								key={`seg${currentSegment}-line${lineIdx}-chunk${chunkIdx}`}
-								className="text-neutral-300 text-2xl md:text-3xl font-bm-hanna-11 leading-relaxed text-center text-korean whitespace-pre-wrap"
+								className="text-neutral-300 text-2xl md:text-3xl font-bm-hanna-11 leading-relaxed text-center text-korean whitespace-pre-wrap opacity-0"
+								style={{ marginRight: "0.3em", opacity: 0 }}
 							>
 								{chunk.content}
 							</span>
