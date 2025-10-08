@@ -109,6 +109,7 @@ export const introScript: Segment[] = [
 				chunks: [
 					{
 						content: "당신은 낡고 음침한 도서관에 ",
+						textEffects: ["PULSE_FAST"],
 					},
 					{
 						content: "들어섭니다.",
@@ -292,6 +293,7 @@ export const introScript: Segment[] = [
 					},
 					{
 						content: '내가 방금 찾은 기록이야."',
+						textEffects: ["GLOW"],
 					},
 				],
 			},
