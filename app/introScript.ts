@@ -112,7 +112,7 @@ export const introScript: Segment[] = [
 					},
 					{
 						content: "들어섭니다.",
-						soundEffects: [{ tag: "FOOTSTEP_WOOD_NORMAL_CREAKY" }],
+						soundEffects: [{ tag: "FOOTSTEP_HEAVY_LUMBERING" }],
 					},
 				],
 			},
@@ -225,7 +225,7 @@ export const introScript: Segment[] = [
 		],
 	},
 	{
-		id: "seg-6",
+		id: "seg-5",
 		background: null,
 		segmentEffects: {
 			soundEffects: [],
@@ -254,14 +254,10 @@ export const introScript: Segment[] = [
 		],
 	},
 	{
-		id: "seg-7",
+		id: "seg-6",
 		background: null,
 		segmentEffects: {
 			soundEffects: [
-				// {
-				// 	tag: "DRONE_UNSTABLE_AIR",
-				// 	status: "stop",
-				// },
 				{
 					tag: "ROOMTONE_EMPTY_NEUTRAL",
 					status: "stop",
