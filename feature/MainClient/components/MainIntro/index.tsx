@@ -53,6 +53,7 @@ export default function MainIntro({
 			);
 		}
 	}, [userIntereacted, continueRef]);
+
 	const onClick = useCallback(async () => {
 		setUserInterected(true);
 		audioManager.stopOnShots();
@@ -120,6 +121,8 @@ export default function MainIntro({
 				// VISUAL_VIGNETTE stop
 				console.log(`Visual effect stop: ${effect.tag}`);
 				pendingStopsRef.current.add({ id: effect.tag, type: "visual" }); // 저장만
+			} else {
+				console.log(`Visual effect play: ${effect.tag}`);
 			}
 		});
 
@@ -173,30 +176,40 @@ export default function MainIntro({
 										stagger: 0.1,
 									});
 
-									if (chunk.soundEffects && chunk.soundEffects.length > 0) {
-										lineTextEffect.getTimeline().call(() => {
-											// reverse 중일 때는 사운드 재생 안 함
-											if (lineTextEffect.getTimeline().reversed()) return;
-
-											chunk.soundEffects?.forEach((effect) => {
-												if (effect.status == "start") {
-													audioManager.play(effect.tag, { loop: true });
-												} else if (effect.status == "stop") {
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "audio",
-													}); // 저장만
-												} else {
-													audioManager.play(effect.tag, {
-														loop: false,
-														repeat: effect.repeat,
-													});
-												}
-											});
-										}, undefined); // ">" = 이전 애니메이션 끝
-									}
-
 									lineTextEffect.getTimeline().add(split, "-=0.3");
+
+									if (chunk.soundEffects && chunk.soundEffects.length > 0) {
+										lineTextEffect.getTimeline().call(
+											() => {
+												// reverse 중일 때는 사운드 재생 안 함
+												if (lineTextEffect.getTimeline().reversed()) return;
+
+												chunk.soundEffects?.forEach((effect) => {
+													if (effect.status == "start") {
+														audioManager.play(effect.tag, { loop: true });
+													} else if (effect.status == "stop") {
+														pendingStopsRef.current.add({
+															id: effect.tag,
+															type: "audio",
+														}); // 저장만
+													} else if (effect.loop == true) {
+														audioManager.play(effect.tag, { loop: true });
+														pendingStopsRef.current.add({
+															id: effect.tag,
+															type: "audio",
+														}); // 저장만
+													} else {
+														audioManager.play(effect.tag, {
+															loop: false,
+															repeat: effect.repeat,
+														});
+													}
+												});
+											},
+											undefined,
+											"<0.2",
+										); // ">" = 이전 애니메이션 끝
+									}
 									if (chunk.textEffects && chunk.textEffects.length > 0) {
 										chunk.textEffects.forEach((effectName) => {
 											if (!revealEffects.includes(effectName)) {
@@ -215,26 +228,36 @@ export default function MainIntro({
 							lineTextEffect.addEffect("TYPEWRITER", ref);
 
 							if (chunk.soundEffects && chunk.soundEffects.length > 0) {
-								lineTextEffect.getTimeline().call(() => {
-									// reverse 중일 때는 사운드 재생 안 함
-									if (lineTextEffect.getTimeline().reversed()) return;
+								lineTextEffect.getTimeline().call(
+									() => {
+										// reverse 중일 때는 사운드 재생 안 함
+										if (lineTextEffect.getTimeline().reversed()) return;
 
-									chunk.soundEffects?.forEach((effect) => {
-										if (effect.status == "start") {
-											audioManager.play(effect.tag, { loop: true });
-										} else if (effect.status == "stop") {
-											pendingStopsRef.current.add({
-												id: effect.tag,
-												type: "audio",
-											}); // 저장만
-										} else {
-											audioManager.play(effect.tag, {
-												loop: false,
-												repeat: effect.repeat,
-											});
-										}
-									});
-								}, undefined); // ">" = 이전 애니메이션 끝
+										chunk.soundEffects?.forEach((effect) => {
+											if (effect.status == "start") {
+												audioManager.play(effect.tag, { loop: true });
+											} else if (effect.status == "stop") {
+												pendingStopsRef.current.add({
+													id: effect.tag,
+													type: "audio",
+												}); // 저장만
+											} else if (effect.loop == true) {
+												audioManager.play(effect.tag, { loop: true });
+												pendingStopsRef.current.add({
+													id: effect.tag,
+													type: "audio",
+												}); // 저장만
+											} else {
+												audioManager.play(effect.tag, {
+													loop: false,
+													repeat: effect.repeat,
+												});
+											}
+										});
+									},
+									undefined,
+									"<0.2",
+								); // ">" = 이전 애니메이션 끝
 							}
 
 							if (chunk.textEffects && chunk.textEffects.length > 0) {
@@ -253,25 +276,35 @@ export default function MainIntro({
 							lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
 
 							if (chunk.soundEffects && chunk.soundEffects.length > 0) {
-								lineTextEffect.getTimeline().call(() => {
-									if (lineTextEffect.getTimeline().reversed()) return;
+								lineTextEffect.getTimeline().call(
+									() => {
+										if (lineTextEffect.getTimeline().reversed()) return;
 
-									chunk.soundEffects?.forEach((effect) => {
-										if (effect.status == "start") {
-											audioManager.play(effect.tag, { loop: true });
-										} else if (effect.status == "stop") {
-											pendingStopsRef.current.add({
-												id: effect.tag,
-												type: "audio",
-											});
-										} else {
-											audioManager.play(effect.tag, {
-												loop: false,
-												repeat: effect.repeat,
-											});
-										}
-									});
-								}, undefined);
+										chunk.soundEffects?.forEach((effect) => {
+											if (effect.status == "start") {
+												audioManager.play(effect.tag, { loop: true });
+											} else if (effect.status == "stop") {
+												pendingStopsRef.current.add({
+													id: effect.tag,
+													type: "audio",
+												});
+											} else if (effect.loop == true) {
+												audioManager.play(effect.tag, { loop: true });
+												pendingStopsRef.current.add({
+													id: effect.tag,
+													type: "audio",
+												}); // 저장만
+											} else {
+												audioManager.play(effect.tag, {
+													loop: false,
+													repeat: effect.repeat,
+												});
+											}
+										});
+									},
+									undefined,
+									"<0.2",
+								);
 							}
 
 							if (chunk.textEffects && chunk.textEffects.length > 0) {
