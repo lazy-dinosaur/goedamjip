@@ -141,8 +141,12 @@ export default function MainIntro({
 			} else {
 				visualEffectManager.play(
 					typeof effect == "object" ? effect.tag : effect,
-					{ loop: false },
+					{ loop: true },
 				);
+				pendingStopsRef.current.add({
+					id: typeof effect == "object" ? effect.tag : effect,
+					type: "visual",
+				});
 			}
 		});
 
@@ -257,8 +261,13 @@ export default function MainIntro({
 													} else {
 														visualEffectManager.play(
 															typeof effect == "object" ? effect.tag : effect,
-															{ loop: false },
+															{ loop: true },
 														);
+														pendingStopsRef.current.add({
+															id:
+																typeof effect == "object" ? effect.tag : effect,
+															type: "visual",
+														});
 													}
 												});
 											}
@@ -338,8 +347,13 @@ export default function MainIntro({
 											} else {
 												visualEffectManager.play(
 													typeof effect == "object" ? effect.tag : effect,
-													{ loop: false },
+													{ loop: true },
 												);
+
+												pendingStopsRef.current.add({
+													id: typeof effect == "object" ? effect.tag : effect,
+													type: "visual",
+												});
 											}
 										});
 									}
@@ -415,8 +429,13 @@ export default function MainIntro({
 											} else {
 												visualEffectManager.play(
 													typeof effect == "object" ? effect.tag : effect,
-													{ loop: false },
+													{ loop: true },
 												);
+
+												pendingStopsRef.current.add({
+													id: typeof effect == "object" ? effect.tag : effect,
+													type: "visual",
+												});
 											}
 										});
 									}
@@ -474,8 +493,13 @@ export default function MainIntro({
 						} else {
 							visualEffectManager.play(
 								typeof effect == "object" ? effect.tag : effect,
-								{ loop: false },
+								{ loop: true },
 							);
+
+							pendingStopsRef.current.add({
+								id: typeof effect == "object" ? effect.tag : effect,
+								type: "visual",
+							});
 						}
 					});
 					lineTextEffect.play();
@@ -522,9 +546,6 @@ export default function MainIntro({
 			});
 			pendingStopsRef.current.clear();
 
-			// 모든 비주얼 효과 정리
-			visualEffectManager.stopAll();
-
 			// chunksRef 초기화
 			chunksRef.current.clear();
 		};
@@ -534,13 +555,14 @@ export default function MainIntro({
 		<ComponentWrapper
 			className={!userIntereacted ? "cursor-pointer" : "default"}
 			onClick={!userIntereacted ? onClick : undefined}
+			style={{ overflow: "hidden" }}
 		>
 			{/* Visual Effects Container */}
 			<div ref={visualEffectsRef} />
 
-			<div className="max-w-4xl flex flex-col items-center justify-center space-y-2">
+			<div className="max-w-4xl flex flex-col items-center justify-center space-y-5">
 				{introScript[currentSegment].lines.map((line, lineIdx) => (
-					<div key={`seg${currentSegment}-line-${lineIdx}`} className="">
+					<div key={`seg${currentSegment}-line-${lineIdx}`} className="w-full">
 						{line.chunks.map((chunk, chunkIdx) => (
 							<span
 								ref={(el) => {
@@ -551,8 +573,8 @@ export default function MainIntro({
 										);
 								}}
 								key={`seg${currentSegment}-line${lineIdx}-chunk${chunkIdx}`}
-								className="text-neutral-300 text-2xl md:text-3xl font-bm-hanna-11 text-center text-korean whitespace-pre-wrap opacity-0 align-baseline"
-								style={{ marginRight: "0.3em", opacity: 0 }}
+								className="text-neutral-300 text-2xl md:text-3xl font-bm-hanna-11 text-korean whitespace-pre-wrap opacity-0 align-baseline"
+								style={{ opacity: 0 }}
 							>
 								{chunk.content}
 							</span>
