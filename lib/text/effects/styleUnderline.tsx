@@ -13,7 +13,7 @@ export const STYLE_UNDERLINE: EffectCreator = (element, options = {}) => {
 	const underline = document.createElement("span");
 	underline.style.position = "absolute";
 	underline.style.left = "0";
-	underline.style.bottom = "1.4em";
+	underline.style.bottom = "0em";
 	underline.style.width = "100%";
 	underline.style.height = "2px";
 	underline.style.backgroundColor = "currentColor";

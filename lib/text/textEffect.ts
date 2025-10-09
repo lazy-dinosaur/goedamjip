@@ -1,9 +1,6 @@
 import gsap from "gsap";
-import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import TextEffectRegistry, { EffectOptions } from "./textEffectRegistry";
 import TextEffectLibrary from "./textEffectLibrary";
-
-gsap.registerPlugin(ScrambleTextPlugin);
 
 class TextEffect {
 	private timeline: gsap.core.Timeline;
