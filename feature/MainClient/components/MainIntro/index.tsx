@@ -87,8 +87,6 @@ export default function MainIntro({
 					}
 				});
 
-				tl.revert();
-
 				completedCount++;
 
 				// 모든 라인의 reverse가 완료되면
@@ -192,9 +190,9 @@ export default function MainIntro({
 									self.words.forEach((word, index) => {
 										gsap.set(word, { display: "inline-block" });
 										// 마지막 단어가 아니면 공백 추가
-										if (index < self.words.length - 1) {
-											word.innerHTML = word.innerHTML + "&nbsp;";
-										}
+										word.innerHTML = word.innerHTML + "&nbsp;";
+										// if (index < self.words.length - 1) {
+										// }
 									});
 
 									const split = gsap.from(self.words, {
@@ -275,7 +273,7 @@ export default function MainIntro({
 													effectName,
 													ref,
 													undefined,
-													"-=0.8",
+													"-=0.3",
 												);
 											}
 										});
@@ -357,7 +355,7 @@ export default function MainIntro({
 											effectName,
 											ref,
 											undefined,
-											"-=0.8",
+											"-=0.3",
 										);
 									}
 								});
@@ -434,7 +432,7 @@ export default function MainIntro({
 											effectName,
 											ref,
 											undefined,
-											"-=0.8",
+											"-=0.3",
 										);
 									}
 								});
@@ -485,7 +483,7 @@ export default function MainIntro({
 						lineTextEffect.getTimeline().eventCallback("onComplete", () => {
 							setTimeout(() => {
 								setUserInterected(false);
-							}, 150);
+							}, 300);
 						});
 					}
 				}, delay);
