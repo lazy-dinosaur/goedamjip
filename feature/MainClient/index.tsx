@@ -4,6 +4,7 @@ import MainTitle from "./components/MainTitle";
 import MainIntro from "./components/MainIntro";
 import { useState, useCallback, useEffect } from "react";
 import audioManager from "@/lib/audio/audioManager";
+import visualEffectManager from "@/lib/visual/visualEffectManager";
 import { Segment } from "@/app/introScript";
 import MainMenu from "./components/MainMenu";
 
@@ -49,7 +50,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	const [isAudioLoaded, setIsAudioLoaded] = useState(false);
 
 	useEffect(() => {
-		const loadAudio = async () => {
+		const loadAssets = async () => {
 			const audioAssets = Array.from(assets.values()).filter((asset) => {
 				if (
 					asset.category == "SOUND" &&
@@ -61,26 +62,52 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 				}
 			});
 
-			let loaded = 0;
-			const total = audioAssets.length;
+			const visualAssets = Array.from(assets.values()).filter((asset) => {
+				if (
+					asset.category == "VISUAL" &&
+					Array.isArray(asset.files) &&
+					asset.files.length > 0 &&
+					asset.files[0].url
+				) {
+					return true;
+				}
+			});
 
-			const loadPromises = audioAssets.map(async (asset) => {
+			let loaded = 0;
+			const total = audioAssets.length + visualAssets.length;
+
+			const audioPromises = audioAssets.map(async (asset) => {
 				try {
 					await audioManager.loadAudio(asset.tag_name, asset.files[0].url);
 					loaded++;
 					setLoadingProgress((loaded / total) * 100);
 				} catch (error) {
-					console.error("Load error:", error);
+					console.error("Audio load error:", error);
 					loaded++;
 					setLoadingProgress((loaded / total) * 100);
 				}
 			});
 
-			await Promise.all(loadPromises);
+			const visualPromises = visualAssets.map(async (asset) => {
+				try {
+					await visualEffectManager.preloadEffect(
+						asset.tag_name,
+						asset.files[0].url,
+					);
+					loaded++;
+					setLoadingProgress((loaded / total) * 100);
+				} catch (error) {
+					console.error("Visual load error:", error);
+					loaded++;
+					setLoadingProgress((loaded / total) * 100);
+				}
+			});
+
+			await Promise.all([...audioPromises, ...visualPromises]);
 			setIsAudioLoaded(true);
 		};
-		loadAudio();
-	}, []);
+		loadAssets();
+	}, [assets]);
 
 	return (
 		<>
