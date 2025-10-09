@@ -48,6 +48,11 @@ class AudioManager {
 		const howl = this.cache.get(key);
 		if (!howl) throw new Error(`Audio ${key} not loaded`);
 
+		// 중복 재생 방지: 이미 재생 중이면 스킵
+		if (howl.playing()) {
+			return;
+		}
+
 		if (options?.volume !== undefined) {
 			howl.volume(options.volume);
 		}
