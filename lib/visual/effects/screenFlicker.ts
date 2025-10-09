@@ -62,7 +62,7 @@ export const SCREEN_FLICKER: VisualEffectCreator = (options = {}) => {
 	// Create flickering animation based on the example
 	const tl = gsap.timeline({ repeat: loop ? -1 : 0 });
 
-	// Flicker pattern (3 second cycle)
+	// Flicker pattern (8 second cycle: 3s flicker + 5s stable)
 	const flickerPattern = [
 		{ time: 0, opacity: 0, textOpacity: 0.3, textBrightness: 0.5 },
 		{ time: 0.06, opacity: 1, textOpacity: 1, textBrightness: 1 }, // 2%
@@ -81,7 +81,16 @@ export const SCREEN_FLICKER: VisualEffectCreator = (options = {}) => {
 		{ time: 1.86, opacity: 0.1, textOpacity: 0.4, textBrightness: 0.6 }, // 62%
 		{ time: 1.89, opacity: 0.95, textOpacity: 1, textBrightness: 1 }, // 63%
 		{ time: 1.95, opacity: 0, textOpacity: 0.3, textBrightness: 0.5 }, // 65%
-		{ time: 3, opacity: 0, textOpacity: 0.3, textBrightness: 0.5 }, // 100%
+		{ time: 2.4, opacity: 0, textOpacity: 0.3, textBrightness: 0.5 },
+		{ time: 2.46, opacity: 0.9, textOpacity: 1, textBrightness: 1 },
+		{ time: 2.52, opacity: 0.2, textOpacity: 0.4, textBrightness: 0.6 },
+		{ time: 2.58, opacity: 1, textOpacity: 1, textBrightness: 1 },
+		{ time: 2.7, opacity: 0.1, textOpacity: 0.4, textBrightness: 0.6 },
+		{ time: 2.76, opacity: 0.95, textOpacity: 1, textBrightness: 1 },
+		// Transition to stable bright state
+		{ time: 3, opacity: 1, textOpacity: 1, textBrightness: 1 },
+		// Hold stable bright state for 5 seconds
+		{ time: 8, opacity: 1, textOpacity: 1, textBrightness: 1 },
 	];
 
 	// Build timeline
