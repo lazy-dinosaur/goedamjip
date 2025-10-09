@@ -5,7 +5,7 @@ export const STYLE_FONT_ANCIENT_TRACE: EffectCreator = (
 	element,
 	options = {},
 ) => {
-	const fontFamily = options.fontFamily ?? "var(--font-bm-euljiro-orae)";
+	const fontFamily = options.fontFamily ?? "var(--font-bm-euljiro-10)";
 
 	gsap.set(element, {
 		fontFamily: fontFamily,
