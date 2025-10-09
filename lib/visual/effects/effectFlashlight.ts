@@ -11,6 +11,7 @@ export const EFFECT_FLASHLIGHT: VisualEffectCreator = (options = {}) => {
 		inset: 0;
 		pointer-events: none;
 		z-index: 10;
+		overflow: hidden;
 	`;
 
 	// 배경을 비추는 희미한 빛
