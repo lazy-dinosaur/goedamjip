@@ -92,7 +92,32 @@ export default function MainIntro({
 				// 모든 라인의 reverse가 완료되면
 				if (completedCount === totalLines) {
 					if (currentSegment == segmentCounts - 1) {
-						changeStage();
+						// 마지막 세그먼트: 모든 효과를 부드럽게 정리 후 changeStage
+						const cleanupPromises = Array.from(pendingStopsRef.current).map(
+							(effect) => {
+								if (effect.type == "audio") {
+									return new Promise<void>((resolve) => {
+										audioManager.fade(effect.id, 1, 0, 500);
+										setTimeout(() => {
+											audioManager.stop(effect.id);
+											resolve();
+										}, 500);
+									});
+								} else if (effect.type == "visual") {
+									return new Promise<void>((resolve) => {
+										visualEffectManager.stop(effect.id);
+										setTimeout(() => resolve(), 1000);
+									});
+								}
+								return Promise.resolve();
+							},
+						);
+
+						// 모든 cleanup이 완료되면 changeStage 호출
+						Promise.all(cleanupPromises).then(() => {
+							pendingStopsRef.current.clear();
+							setTimeout(() => changeStage(), 300);
+						});
 					} else {
 						setCurrentSegment((prev) =>
 							segmentCounts - 1 > prev ? prev + 1 : prev,
