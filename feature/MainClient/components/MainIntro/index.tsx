@@ -34,6 +34,7 @@ export default function MainIntro({
 
 	const tl = gsap.timeline();
 
+	//continueAnimation
 	useGSAP(() => {
 		if (userIntereacted && continueRef.current) {
 			// continue 숨기기
@@ -57,6 +58,7 @@ export default function MainIntro({
 		}
 	}, [userIntereacted, continueRef]);
 
+	// clicke
 	const onClick = useCallback(async () => {
 		setUserInterected(true);
 		audioManager.stopOnShots();
@@ -78,7 +80,7 @@ export default function MainIntro({
 
 				// 이 라인에 속한 chunk들의 opacity를 0으로 설정
 				const lineChunks = introScript[currentSegment].lines[lineIdx].chunks;
-				lineChunks.forEach((chunk, chunkIdx) => {
+				lineChunks.forEach((_, chunkIdx) => {
 					const element = chunksRef.current.get(
 						`line${lineIdx}-chunk${chunkIdx}`,
 					);
@@ -128,18 +130,13 @@ export default function MainIntro({
 
 			effect.reverse();
 		});
-	}, [segmentCounts, currentSegment, changeStage]);
-
-	const revealEffects = [
-		"FADE_IN",
-		"TYPEWRITER",
-		"RISE_FROM_BOTTOM",
-		"TEXT_SCRAMBLE_GLITCH",
-	];
+	}, [segmentCounts, currentSegment, changeStage, introScript]);
 
 	useLayoutEffect(() => {
 		const currentLinesRef = linesRef.current; // effect 시작 시점의 값 저장
 		const currentChunksRef = new Map(chunksRef.current); // chunksRef의 현재 상태를 복사
+		const currentPendingStops = new Set(pendingStopsRef.current); // pendingStopsRef의 현재 상태를 복사
+		const currentSplitInstancesMap = splitInstancesMap.current; // splitInstancesMap의 현재 참조 저장
 
 		// visualEffectManager 초기화
 		if (visualEffectsRef.current) {
@@ -174,6 +171,13 @@ export default function MainIntro({
 				});
 			}
 		});
+
+		const revealEffects = [
+			"FADE_IN",
+			"TYPEWRITER",
+			"RISE_FROM_BOTTOM",
+			"TEXT_SCRAMBLE_GLITCH",
+		];
 
 		// 이전 세그먼트 청크들 opacity 초기화
 		// Step 1: chunksRef 등록 완료 대기
@@ -216,7 +220,7 @@ export default function MainIntro({
 									// 부모 요소 opacity 복원
 									gsap.set(ref, { opacity: 1 });
 									// inline-block으로 설정해야 y transform이 동작함
-									self.words.forEach((word, index) => {
+									self.words.forEach((word) => {
 										gsap.set(word, { display: "inline-block" });
 										// 마지막 단어가 아니면 공백 추가
 										word.innerHTML = word.innerHTML + "&nbsp;";
@@ -544,10 +548,10 @@ export default function MainIntro({
 
 		return () => {
 			// SplitText 인스턴스들 정리
-			splitInstancesMap.current.forEach((instance, element) => {
+			currentSplitInstancesMap.forEach((instance) => {
 				instance.revert();
 			});
-			splitInstancesMap.current.clear();
+			currentSplitInstancesMap.clear();
 
 			// 모든 효과 정리
 			currentLinesRef.forEach((effect) => effect.clearAll());
@@ -561,7 +565,7 @@ export default function MainIntro({
 			});
 
 			// 오디오/비주얼 효과 정리
-			pendingStopsRef.current.forEach((effect) => {
+			currentPendingStops.forEach((effect) => {
 				if (effect.type == "audio") {
 					audioManager.fade(effect.id, 1, 0, 500);
 					setTimeout(() => audioManager.stop(effect.id), 500);
@@ -569,10 +573,10 @@ export default function MainIntro({
 					visualEffectManager.stop(effect.id);
 				}
 			});
-			pendingStopsRef.current.clear();
+			currentPendingStops.clear();
 
 			// chunksRef 초기화
-			chunksRef.current.clear();
+			currentChunksRef.clear();
 		};
 	}, [currentSegment, introScript]);
 
@@ -580,14 +584,21 @@ export default function MainIntro({
 		<ComponentWrapper
 			className={!userIntereacted ? "cursor-pointer" : "default"}
 			onClick={!userIntereacted ? onClick : undefined}
-			style={{ overflow: "hidden" }}
 		>
-			{/* Visual Effects Container */}
-			<div ref={visualEffectsRef} />
-
+			<div className="absolute w-full h-full">
+				<div
+					ref={visualEffectsRef}
+					className="absolute inset-0 pointer-events-none w-full h-full"
+				/>
+			</div>
 			<div className="max-w-4xl flex flex-col items-center justify-center space-y-5">
+				{/* Visual Effects Container */}
+
 				{introScript[currentSegment].lines.map((line, lineIdx) => (
-					<div key={`seg${currentSegment}-line-${lineIdx}`} className="w-full">
+					<div
+						key={`seg${currentSegment}-line-${lineIdx}`}
+						className="w-full relative z-10"
+					>
 						{line.chunks.map((chunk, chunkIdx) => (
 							<span
 								ref={(el) => {
