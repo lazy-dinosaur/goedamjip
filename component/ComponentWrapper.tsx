@@ -10,7 +10,7 @@ interface ComponentWrapperProps
 }
 
 const componentWrapperStyle = cva(
-	`h-full w-full flex items-center justify-center bg-black flex-col overflow-hidden px-8 relative`,
+	`h-full w-full flex items-center justify-center flex-col overflow-hidden px-8 relative`,
 );
 
 export default function ComponentWrapper({
