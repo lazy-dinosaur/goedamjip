@@ -5,6 +5,7 @@ import MainIntro from "./components/MainIntro";
 import { useState, useCallback, useEffect } from "react";
 import audioManager from "@/lib/audio/audioManager";
 import visualEffectManager from "@/lib/visual/visualEffectManager";
+import imageManager from "@/lib/image/imageManager";
 import { Segment } from "@/app/introScript";
 import MainMenu from "./components/MainMenu";
 
@@ -73,8 +74,25 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 				}
 			});
 
+			// introScript에서 이미지 URL 수집
+			const imageUrls = new Set<string>();
+			introScript.forEach((segment) => {
+				// background 이미지
+				if (segment.background?.url) {
+					imageUrls.add(segment.background.url);
+				}
+
+				// preLineEffects 이미지
+				segment.lines.forEach((line) => {
+					if (line.preLineEffects.image?.url) {
+						imageUrls.add(line.preLineEffects.image.url);
+					}
+				});
+			});
+
 			let loaded = 0;
-			const total = audioAssets.length + visualAssets.length;
+			const total =
+				audioAssets.length + visualAssets.length + imageUrls.size;
 
 			const audioPromises = audioAssets.map(async (asset) => {
 				try {
@@ -103,11 +121,27 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 				}
 			});
 
-			await Promise.all([...audioPromises, ...visualPromises]);
+			const imagePromises = Array.from(imageUrls).map(async (url) => {
+				try {
+					await imageManager.preloadImage(url);
+					loaded++;
+					setLoadingProgress((loaded / total) * 100);
+				} catch (error) {
+					console.error("Image load error:", error);
+					loaded++;
+					setLoadingProgress((loaded / total) * 100);
+				}
+			});
+
+			await Promise.all([
+				...audioPromises,
+				...visualPromises,
+				...imagePromises,
+			]);
 			setIsAudioLoaded(true);
 		};
 		loadAssets();
-	}, [assets]);
+	}, [assets, introScript]);
 
 	return (
 		<>
