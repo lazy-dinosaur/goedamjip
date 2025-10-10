@@ -591,7 +591,7 @@ export default function MainIntro({
 							lineTextEffect.getTimeline().eventCallback("onComplete", () => {
 								setTimeout(() => {
 									setUserInterected(false);
-								}, 300);
+								}, 800);
 							});
 						}
 
