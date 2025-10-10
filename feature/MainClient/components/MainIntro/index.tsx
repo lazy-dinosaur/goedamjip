@@ -585,12 +585,10 @@ export default function MainIntro({
 			className={!userIntereacted ? "cursor-pointer" : "default"}
 			onClick={!userIntereacted ? onClick : undefined}
 		>
-			<div className="absolute w-full h-full">
-				<div
-					ref={visualEffectsRef}
-					className="absolute inset-0 pointer-events-none w-full h-full"
-				/>
-			</div>
+			<div
+				ref={visualEffectsRef}
+				className="absolute inset-0 pointer-events-none w-full h-full"
+			/>
 			<div className="max-w-4xl flex flex-col items-center justify-center space-y-5">
 				{/* Visual Effects Container */}
 
