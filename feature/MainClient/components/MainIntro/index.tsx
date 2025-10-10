@@ -135,8 +135,6 @@ export default function MainIntro({
 	useLayoutEffect(() => {
 		const currentLinesRef = linesRef.current; // effect 시작 시점의 값 저장
 		const currentChunksRef = new Map(chunksRef.current); // chunksRef의 현재 상태를 복사
-		const currentPendingStops = new Set(pendingStopsRef.current); // pendingStopsRef의 현재 상태를 복사
-		const currentSplitInstancesMap = splitInstancesMap.current; // splitInstancesMap의 현재 참조 저장
 
 		// visualEffectManager 초기화
 		if (visualEffectsRef.current) {
@@ -548,10 +546,10 @@ export default function MainIntro({
 
 		return () => {
 			// SplitText 인스턴스들 정리
-			currentSplitInstancesMap.forEach((instance) => {
+			splitInstancesMap.current.forEach((instance) => {
 				instance.revert();
 			});
-			currentSplitInstancesMap.clear();
+			splitInstancesMap.current.clear();
 
 			// 모든 효과 정리
 			currentLinesRef.forEach((effect) => effect.clearAll());
@@ -565,15 +563,16 @@ export default function MainIntro({
 			});
 
 			// 오디오/비주얼 효과 정리
-			currentPendingStops.forEach((effect) => {
+			pendingStopsRef.current.forEach((effect) => {
 				if (effect.type == "audio") {
 					audioManager.fade(effect.id, 1, 0, 500);
 					setTimeout(() => audioManager.stop(effect.id), 500);
 				} else if (effect.type == "visual") {
 					visualEffectManager.stop(effect.id);
 				}
+				// 원본 ref에서도 제거
 			});
-			currentPendingStops.clear();
+			pendingStopsRef.current.clear();
 
 			// chunksRef 초기화
 			currentChunksRef.clear();
