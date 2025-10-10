@@ -13,13 +13,27 @@ export const EFFECT_FLASHLIGHT: VisualEffectCreator = (options = {}) => {
 		z-index: 10;
 	`;
 
+	// 화면 크기에 따른 크기 계산
+	const getResponsiveSizes = () => {
+		const minDimension = Math.min(window.innerWidth, window.innerHeight);
+		const backgroundSize = Math.max(280, Math.min(420, minDimension * 0.45));
+		const flashlightSize = Math.max(170, Math.min(260, minDimension * 0.28));
+		const maskInner = Math.max(60, Math.min(90, minDimension * 0.09));
+		const maskMiddle = Math.max(110, Math.min(170, minDimension * 0.17));
+		const maskOuter = Math.max(160, Math.min(250, minDimension * 0.26));
+
+		return { backgroundSize, flashlightSize, maskInner, maskMiddle, maskOuter };
+	};
+
+	const sizes = getResponsiveSizes();
+
 	// 배경을 비추는 희미한 빛
 	const backgroundLight = document.createElement("div");
 	backgroundLight.className = "background-light";
 	backgroundLight.style.cssText = `
 		position: absolute;
-		width: 500px;
-		height: 500px;
+		width: ${sizes.backgroundSize}px;
+		height: ${sizes.backgroundSize}px;
 		background: radial-gradient(circle at center,
 			rgba(255, 255, 200, 0.25) 0%,
 			rgba(255, 255, 150, 0.15) 30%,
@@ -36,8 +50,8 @@ export const EFFECT_FLASHLIGHT: VisualEffectCreator = (options = {}) => {
 	flashlight.className = "flashlight";
 	flashlight.style.cssText = `
 		position: absolute;
-		width: 300px;
-		height: 300px;
+		width: ${sizes.flashlightSize}px;
+		height: ${sizes.flashlightSize}px;
 		background: radial-gradient(circle at center,
 			rgba(255, 255, 255, 0.9) 0%,
 			rgba(255, 255, 255, 0.4) 20%,
@@ -151,11 +165,12 @@ export const EFFECT_FLASHLIGHT: VisualEffectCreator = (options = {}) => {
 				backgroundLight.style.left = `${coords.x}%`;
 				backgroundLight.style.top = `${coords.y}%`;
 
-				// darkness mask 업데이트
+				// darkness mask 업데이트 (반응형 크기 사용)
+				const currentSizes = getResponsiveSizes();
 				const style = `radial-gradient(circle at ${coords.x}% ${coords.y}%,
-					transparent 100px,
-					rgba(0, 0, 0, 0.5) 200px,
-					black 300px)`;
+					transparent ${currentSizes.maskInner}px,
+					rgba(0, 0, 0, 0.5) ${currentSizes.maskMiddle}px,
+					black ${currentSizes.maskOuter}px)`;
 				darkness.style.maskImage = style;
 				darkness.style.webkitMaskImage = style;
 			},
@@ -191,11 +206,12 @@ export const EFFECT_FLASHLIGHT: VisualEffectCreator = (options = {}) => {
 		backgroundLight.style.left = `${points[0].x}%`;
 		backgroundLight.style.top = `${points[0].y}%`;
 
-		// darkness mask도 초기 위치로 리셋
+		// darkness mask도 초기 위치로 리셋 (반응형 크기 사용)
+		const currentSizes = getResponsiveSizes();
 		const style = `radial-gradient(circle at ${points[0].x}% ${points[0].y}%,
-			transparent 100px,
-			rgba(0, 0, 0, 0.5) 200px,
-			black 300px)`;
+			transparent ${currentSizes.maskInner}px,
+			rgba(0, 0, 0, 0.5) ${currentSizes.maskMiddle}px,
+			black ${currentSizes.maskOuter}px)`;
 		darkness.style.maskImage = style;
 		darkness.style.webkitMaskImage = style;
 	});
