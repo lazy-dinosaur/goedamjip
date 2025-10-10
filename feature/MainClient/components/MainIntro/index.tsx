@@ -133,9 +133,6 @@ export default function MainIntro({
 	}, [segmentCounts, currentSegment, changeStage, introScript]);
 
 	useLayoutEffect(() => {
-		const currentLinesRef = linesRef.current; // effect 시작 시점의 값 저장
-		const currentChunksRef = new Map(chunksRef.current); // chunksRef의 현재 상태를 복사
-
 		// visualEffectManager 초기화
 		if (visualEffectsRef.current) {
 			visualEffectManager.init(visualEffectsRef.current);
@@ -180,7 +177,7 @@ export default function MainIntro({
 		// 이전 세그먼트 청크들 opacity 초기화
 		// Step 1: chunksRef 등록 완료 대기
 		setTimeout(() => {
-			currentLinesRef.clear();
+			linesRef.current.clear();
 
 			// Step 2: linesRef에 TextEffect 생성 & 청크 추가
 			introScript[currentSegment].lines.forEach((line, lineIdx) => {
@@ -487,14 +484,14 @@ export default function MainIntro({
 					}
 				});
 
-				currentLinesRef.set(lineIdx, lineTextEffect);
+				linesRef.current.set(lineIdx, lineTextEffect);
 			});
 
 			// Step 3: linesRef 순차 재생
 			let delay = 0;
-			const lineCount = currentLinesRef.size;
+			const lineCount = linesRef.current.size;
 
-			currentLinesRef.forEach((lineTextEffect, lineIdx) => {
+			linesRef.current.forEach((lineTextEffect, lineIdx) => {
 				setTimeout(() => {
 					const { soundEffects, visualEffects } =
 						introScript[currentSegment].lines[lineIdx].preLineEffects;
@@ -552,10 +549,10 @@ export default function MainIntro({
 			splitInstancesMap.current.clear();
 
 			// 모든 효과 정리
-			currentLinesRef.forEach((effect) => effect.clearAll());
+			linesRef.current.forEach((effect) => effect.clearAll());
 
 			// 모든 청크 요소의 GSAP 애니메이션 정리
-			currentChunksRef.forEach((element) => {
+			chunksRef.current.forEach((element) => {
 				if (element) {
 					gsap.killTweensOf(element);
 					gsap.set(element, { clearProps: "all" });
@@ -575,7 +572,7 @@ export default function MainIntro({
 			pendingStopsRef.current.clear();
 
 			// chunksRef 초기화
-			currentChunksRef.clear();
+			chunksRef.current.clear();
 		};
 	}, [currentSegment, introScript]);
 
