@@ -7,11 +7,10 @@ export const EFFECT_FLASHLIGHT: VisualEffectCreator = (options = {}) => {
 	// wrapper 생성
 	const wrapper = document.createElement("div");
 	wrapper.style.cssText = `
-		position: fixed;
+		position: absolute;
 		inset: 0;
 		pointer-events: none;
 		z-index: 10;
-		overflow: hidden;
 	`;
 
 	// 배경을 비추는 희미한 빛

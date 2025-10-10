@@ -7,7 +7,7 @@ export const SCREEN_BLUR: VisualEffectCreator = (options = {}) => {
 	// Create empty wrapper element (required by VisualEffectCreator interface)
 	const wrapper = document.createElement("div");
 	wrapper.style.cssText = `
-		position: fixed;
+		position: absolute;
 		inset: 0;
 		pointer-events: none;
 		z-index: 50;

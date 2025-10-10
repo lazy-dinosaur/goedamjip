@@ -2,12 +2,10 @@ import gsap from "gsap";
 import { VisualEffectCreator } from "../visualEffectRegistry";
 
 export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
-	const { loop = true } = options;
-
-	// Create wrapper element
+	// ... (wrapper, vignette, grain 생성 코드는 동일)
 	const wrapper = document.createElement("div");
 	wrapper.style.cssText = `
-		position: fixed;
+		position: absolute;
 		inset: 0;
 		pointer-events: none;
 		z-index: 50;
@@ -15,7 +13,6 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 		background: transparent;
 	`;
 
-	// Create vignette layer
 	const vignette = document.createElement("div");
 	vignette.style.cssText = `
 		position: absolute;
@@ -29,7 +26,6 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 		will-change: opacity;
 	`;
 
-	// Create grain layer
 	const grain = document.createElement("canvas");
 	grain.style.cssText = `
 		position: absolute;
@@ -41,11 +37,9 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 		will-change: opacity;
 	`;
 
-	// Set canvas size
 	grain.width = window.innerWidth;
 	grain.height = window.innerHeight;
 
-	// Generate grain texture with animation
 	const ctx = grain.getContext("2d");
 	let animationFrameId: number;
 
@@ -56,37 +50,42 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 
 			for (let i = 0; i < data.length; i += 4) {
 				const noise = Math.random() * 255;
-				data[i] = noise; // R
-				data[i + 1] = noise; // G
-				data[i + 2] = noise; // B
-				data[i + 3] = 50; // Alpha (grain intensity)
+				data[i] = noise;
+				data[i + 1] = noise;
+				data[i + 2] = noise;
+				data[i + 3] = 50;
 			}
-
 			ctx.putImageData(imageData, 0, 0);
 		}
 	};
-
 	const animateGrain = () => {
 		generateGrain();
 		animationFrameId = requestAnimationFrame(animateGrain);
 	};
 
-	// Start grain animation
 	if (ctx) {
 		animateGrain();
 	}
-
 	wrapper.appendChild(vignette);
 	wrapper.appendChild(grain);
 
 	// Find target element to apply dimming effect
 	let targetElement: HTMLElement | null = null;
+	const componentWrapper = document.querySelector(
+		'[class*="ComponentWrapper"]',
+	) as HTMLElement;
+	targetElement = componentWrapper || document.body;
 
 	// Create GSAP timeline for fade in only
 	const tl = gsap.timeline({ paused: true });
 
 	// Set initial states
 	gsap.set([vignette, grain], { opacity: 0 });
+
+	// [수정 1] 깜빡임 방지를 위해 filter의 초기 상태를 미리 설정합니다.
+	if (targetElement) {
+		gsap.set(targetElement, { filter: "brightness(1)" });
+	}
 
 	// Fade in vignette and grain (2 seconds), then hold
 	tl.to(
@@ -99,42 +98,29 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 		0,
 	);
 
-	// Find and animate target element
-	setTimeout(() => {
-		const componentWrapper = document.querySelector(
-			'[class*="ComponentWrapper"]',
-		) as HTMLElement;
-		if (componentWrapper) {
-			targetElement = componentWrapper;
-		} else {
-			targetElement = document.body;
-		}
+	// [수정 2] 배경 어둡게 하는 애니메이션 로직 수정
+	if (targetElement) {
+		// .to 대신 .fromTo를 사용해 시작과 끝 상태를 명확히 합니다.
+		tl.fromTo(
+			targetElement,
+			{ filter: "brightness(1)" }, // 시작: 원래 밝기
+			{
+				filter: "brightness(0.7)", // 끝: 70% 밝기로 어둡게
+				duration: 2,
+				ease: "power2.inOut",
+			},
+			0,
+		);
+	}
 
-		// Add text dimming to the timeline
-		if (targetElement) {
-			// Dim text gradually as vignette fades in
-			tl.to(
-				targetElement,
-				{
-					filter: "brightness(1)",
-					duration: 2,
-					ease: "power2.inOut",
-				},
-				0,
-			);
-		}
-
-		// Start the timeline after setup is complete
-		tl.play();
-	}, 100);
+	// [수정 3] setTimeout 제거하고 바로 실행
+	tl.play();
 
 	// Handle window resize
 	const handleResize = () => {
 		grain.width = window.innerWidth;
 		grain.height = window.innerHeight;
-		// Grain will be regenerated automatically by the animation loop
 	};
-
 	window.addEventListener("resize", handleResize);
 
 	return {
@@ -144,12 +130,10 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 			tl.kill();
 			window.removeEventListener("resize", handleResize);
 
-			// Stop grain animation
 			if (animationFrameId) {
 				cancelAnimationFrame(animationFrameId);
 			}
 
-			// Fade out vignette and grain smoothly
 			gsap.to([vignette, grain], {
 				opacity: 0,
 				duration: 1.5,
@@ -159,7 +143,7 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 			// Restore text brightness smoothly
 			if (targetElement) {
 				gsap.to(targetElement, {
-					filter: "brightness(1)",
+					filter: "brightness(1)", // 원래 밝기로 복구
 					duration: 1.5,
 					ease: "power2.out",
 					onComplete: () => {

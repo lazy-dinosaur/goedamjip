@@ -7,7 +7,7 @@ export const VISUAL_CANDLE_FLICKER: VisualEffectCreator = (options = {}) => {
 	// Create wrapper element
 	const wrapper = document.createElement("div");
 	wrapper.style.cssText = `
-		position: fixed;
+		position: absolute;
 		inset: 0;
 		pointer-events: none;
 		z-index: 50;
