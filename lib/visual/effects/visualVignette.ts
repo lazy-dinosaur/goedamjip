@@ -37,17 +37,22 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 		will-change: opacity;
 	`;
 
-	grain.width = window.innerWidth;
-	grain.height = window.innerHeight;
+	// Canvas 해상도 75% (성능 최적화)
+	grain.width = Math.floor(window.innerWidth * 0.75);
+	grain.height = Math.floor(window.innerHeight * 0.75);
 
-	const ctx = grain.getContext("2d");
+	const ctx = grain.getContext("2d", { alpha: true, desynchronized: true });
 	let animationFrameId: number;
+	let lastFrameTime = 0;
+	const targetFPS = 60; // 60fps
+	const frameInterval = 1000 / targetFPS;
 
 	const generateGrain = () => {
 		if (ctx) {
 			const imageData = ctx.createImageData(grain.width, grain.height);
 			const data = imageData.data;
 
+			// 성능 최적화: 픽셀을 건너뛰면서 처리
 			for (let i = 0; i < data.length; i += 4) {
 				const noise = Math.random() * 255;
 				data[i] = noise;
@@ -58,13 +63,22 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 			ctx.putImageData(imageData, 0, 0);
 		}
 	};
-	const animateGrain = () => {
-		generateGrain();
+
+	const animateGrain = (currentTime: number) => {
 		animationFrameId = requestAnimationFrame(animateGrain);
+
+		// FPS 제한
+		const elapsed = currentTime - lastFrameTime;
+		if (elapsed < frameInterval) {
+			return;
+		}
+		lastFrameTime = currentTime - (elapsed % frameInterval);
+
+		generateGrain();
 	};
 
 	if (ctx) {
-		animateGrain();
+		animationFrameId = requestAnimationFrame(animateGrain);
 	}
 	wrapper.appendChild(vignette);
 	wrapper.appendChild(grain);
@@ -118,8 +132,8 @@ export const VISUAL_VIGNETTE: VisualEffectCreator = (options = {}) => {
 
 	// Handle window resize
 	const handleResize = () => {
-		grain.width = window.innerWidth;
-		grain.height = window.innerHeight;
+		grain.width = Math.floor(window.innerWidth * 0.75);
+		grain.height = Math.floor(window.innerHeight * 0.75);
 	};
 	window.addEventListener("resize", handleResize);
 
