@@ -21,6 +21,8 @@ interface MainIntroProps {
 	introScript: ProcessedSegment[];
 	changeStage: () => void;
 	needsRecoverState: [boolean, Dispatch<SetStateAction<boolean>>];
+	currentSegment: number;
+	onSegmentChange: (newSegment: number) => void;
 }
 type PendingStop = {
 	type: "audio" | "visual" | "image";
@@ -31,9 +33,10 @@ export default function MainIntro({
 	introScript,
 	needsRecoverState,
 	changeStage,
+	currentSegment,
+	onSegmentChange,
 }: MainIntroProps) {
 	const segmentCounts = introScript.length;
-	const [currentSegment, setCurrentSegment] = useState(0);
 	const [userIntereacted, setUserInterected] = useState(true);
 	const [needsRecover, setNeedRecover] = needsRecoverState;
 
@@ -115,16 +118,23 @@ export default function MainIntro({
 						if (currentSegmentId) {
 							imageManager.clearBySegment(currentSegmentId);
 						}
-						setCurrentSegment((prev) =>
-							segmentCounts - 1 > prev ? prev + 1 : prev,
-						);
+						const nextSegment = currentSegment + 1;
+						if (nextSegment < segmentCounts) {
+							onSegmentChange(nextSegment);
+						}
 					}
 				}
 			});
 
 			effect.reverse();
 		});
-	}, [segmentCounts, currentSegment, changeStage, introScript]);
+	}, [
+		segmentCounts,
+		currentSegment,
+		changeStage,
+		introScript,
+		onSegmentChange,
+	]);
 
 	useLayoutEffect(() => {
 		const initSegment = async (recovery?: boolean) => {
@@ -159,6 +169,11 @@ export default function MainIntro({
 					pendingStopsRef.current.add({ id: effect.tag, type: "audio" }); // 저장만
 				} else {
 					audioManager.play(effect.tag, { repeat: effect.repeat, loop: false });
+
+					pendingStopsRef.current.add({
+						id: effect.tag,
+						type: "audio",
+					}); // 저장만
 				}
 			});
 
@@ -275,6 +290,11 @@ export default function MainIntro({
 																loop: false,
 																repeat: effect.repeat,
 															});
+
+															pendingStopsRef.current.add({
+																id: effect.tag,
+																type: "audio",
+															}); // 저장만
 														}
 													});
 												}
@@ -368,6 +388,10 @@ export default function MainIntro({
 														loop: false,
 														repeat: effect.repeat,
 													});
+													pendingStopsRef.current.add({
+														id: effect.tag,
+														type: "audio",
+													}); // 저장만
 												}
 											});
 										}
@@ -451,6 +475,10 @@ export default function MainIntro({
 														loop: false,
 														repeat: effect.repeat,
 													});
+													pendingStopsRef.current.add({
+														id: effect.tag,
+														type: "audio",
+													}); // 저장만
 												}
 											});
 										}
@@ -543,6 +571,7 @@ export default function MainIntro({
 									repeat: effect.repeat,
 									loop: false,
 								});
+								pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
 							}
 						});
 
@@ -612,7 +641,21 @@ export default function MainIntro({
 				await Promise.all(imagePromises);
 			}
 
-			const { visual: visualEffects } = currentSegmentData;
+			const { audio: soundEffects, visual: visualEffects } = currentSegmentData;
+
+			soundEffects.forEach((effect) => {
+				if (effect.status == "start") {
+					audioManager.play(effect.tag, { loop: true });
+				} else if (effect.status == "stop") {
+					pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
+				} else {
+					audioManager.play(effect.tag, {
+						repeat: effect.repeat,
+						loop: false,
+					});
+					pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
+				}
+			});
 
 			visualEffects.forEach((effect) => {
 				if (typeof effect == "object" && effect.status === "start") {
@@ -685,6 +728,16 @@ export default function MainIntro({
 		const handleVisibilityChange = () => {
 			if (document.hidden) {
 				// 화면이 숨겨질 때 음소거
+				//
+				pendingStopsRef.current.forEach((effect) => {
+					if (effect.type == "audio") {
+						audioManager.stop(effect.id);
+					} else if (effect.type == "visual") {
+						visualEffectManager.stop(effect.id);
+					}
+					// 원본 ref에서도 제거
+				});
+				pendingStopsRef.current.clear();
 				setUserInterected(true);
 				Howler.mute(true);
 				visualEffectManager.stopAll();

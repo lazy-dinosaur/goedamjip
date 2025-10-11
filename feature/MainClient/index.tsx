@@ -38,6 +38,10 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 		}
 	}, []);
 
+	const handleSegmentChange = useCallback((newSegment: number) => {
+		setCurrentSegment(newSegment);
+	}, []);
+
 	const introWatched = useCallback(() => {
 		setDidWatchIntro(true);
 	}, []);
@@ -68,10 +72,12 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					changeStage={() => changeStage("intro")}
 				/>
 			)}
-			{currentStage === "intro" && (
+			{currentStage === "intro" && !needsReactivation && (
 				<MainIntro
 					introScript={introScript}
 					needsRecoverState={[needsRecover, setNeedsRecover]}
+					currentSegment={currentSegment}
+					onSegmentChange={handleSegmentChange}
 					changeStage={() => {
 						changeStage("menu");
 					}}
