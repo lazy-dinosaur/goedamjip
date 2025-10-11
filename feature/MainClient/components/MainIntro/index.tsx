@@ -1,11 +1,18 @@
 "use client";
 import ComponentWrapper from "@/component/ComponentWrapper";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import {
+	Dispatch,
+	SetStateAction,
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import TextEffect from "@/lib/text/textEffect";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ContinueMark } from "@/component/ContinueMark";
-import { useGSAP } from "@gsap/react";
 import audioManager from "@/lib/audio/audioManager";
 import visualEffectManager from "@/lib/visual/visualEffectManager";
 import imageManager from "@/lib/image/imageManager";
@@ -13,6 +20,7 @@ import { ProcessedSegment } from "@/types/script.types";
 interface MainIntroProps {
 	introScript: ProcessedSegment[];
 	changeStage: () => void;
+	needsRecoverState: [boolean, Dispatch<SetStateAction<boolean>>];
 }
 type PendingStop = {
 	type: "audio" | "visual" | "image";
@@ -21,11 +29,14 @@ type PendingStop = {
 
 export default function MainIntro({
 	introScript,
+	needsRecoverState,
 	changeStage,
 }: MainIntroProps) {
 	const segmentCounts = introScript.length;
 	const [currentSegment, setCurrentSegment] = useState(0);
 	const [userIntereacted, setUserInterected] = useState(true);
+	const [needsRecover, setNeedRecover] = needsRecoverState;
+
 	const linesRef = useRef<Map<number, TextEffect>>(new Map());
 	const chunksRef = useRef<Map<string, HTMLSpanElement>>(new Map());
 	const pendingStopsRef = useRef<Set<PendingStop>>(new Set());
@@ -116,9 +127,9 @@ export default function MainIntro({
 	}, [segmentCounts, currentSegment, changeStage, introScript]);
 
 	useLayoutEffect(() => {
-		const initSegment = async () => {
+		const initSegment = async (recovery?: boolean) => {
 			// visualEffectManager 초기화
-			if (visualEffectsRef.current) {
+			if (visualEffectsRef.current && !recovery) {
 				visualEffectManager.init(visualEffectsRef.current);
 			}
 
@@ -579,8 +590,54 @@ export default function MainIntro({
 				playLinesSequentially();
 			}, 0);
 		};
+		const recoverySegment = async () => {
+			const currentSegmentData = introScript[currentSegment].inheritedEffects;
+			if (currentSegmentData.images.length > 0) {
+				const imagePromises = currentSegmentData.images.map((image) => {
+					if (
+						typeof image.url == "string" &&
+						imageContainerRef.current &&
+						maskRef.current
+					) {
+						return imageManager.addImage(
+							image.url,
+							image.type,
+							imageContainerRef.current,
+							maskRef.current,
+							image.sustain_until,
+						);
+					}
+					return Promise.resolve();
+				});
+				await Promise.all(imagePromises);
+			}
 
-		initSegment();
+			const { visual: visualEffects } = currentSegmentData;
+
+			visualEffects.forEach((effect) => {
+				if (typeof effect == "object" && effect.status === "start") {
+					visualEffectManager.play(effect.tag, { loop: true });
+				} else if (typeof effect == "object" && effect.status === "stop") {
+					pendingStopsRef.current.add({ id: effect.tag, type: "visual" });
+				} else {
+					visualEffectManager.play(
+						typeof effect == "object" ? effect.tag : effect,
+						{ loop: true },
+					);
+					pendingStopsRef.current.add({
+						id: typeof effect == "object" ? effect.tag : effect,
+						type: "visual",
+					});
+				}
+			});
+		};
+
+		const recoverInit = async () => {
+			await recoverySegment();
+			setNeedRecover(false);
+		};
+
+		needsRecover ? recoverInit() : initSegment();
 
 		return () => {
 			// SplitText 인스턴스들 정리
@@ -615,7 +672,32 @@ export default function MainIntro({
 			// chunksRef 초기화
 			chunksRef.current.clear();
 		};
-	}, [currentSegment, introScript]);
+	}, [currentSegment, introScript, needsRecover]);
+
+	// 모바일 기기 감지
+	const isMobile =
+		typeof window !== "undefined" &&
+		/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+	useEffect(() => {
+		if (!isMobile) return;
+
+		const handleVisibilityChange = () => {
+			if (document.hidden) {
+				// 화면이 숨겨질 때 음소거
+				Howler.mute(true);
+				visualEffectManager.stopAll();
+				imageManager.clearAll();
+			} else {
+				setUserInterected(false);
+			}
+		};
+
+		document.addEventListener("visibilitychange", handleVisibilityChange);
+		return () => {
+			document.removeEventListener("visibilitychange", handleVisibilityChange);
+		};
+	}, [isMobile]);
 
 	return (
 		<ComponentWrapper
@@ -636,6 +718,7 @@ export default function MainIntro({
 				ref={visualEffectsRef}
 				className="absolute inset-0 pointer-events-none w-full h-full"
 			/>
+
 			<div
 				ref={screenRef}
 				className="max-w-4xl flex flex-col items-center justify-center space-y-5"
