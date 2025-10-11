@@ -121,7 +121,7 @@ class ImageManager {
 				gsap.set(img, {
 					scale: 1,
 					opacity: 0,
-					filter: "brightness(0.35) grayscale(0.7)",
+					filter: "brightness(0.35) grayscale(0.6)",
 				});
 
 				gsap.set(maskingImg, {
@@ -141,17 +141,6 @@ class ImageManager {
 					0,
 				);
 
-				// Screen scale animation
-				// tl.to(
-				// 	screenContainer,
-				// 	{
-				// 		scale: 1.5,
-				// 		duration: 1.25,
-				// 		ease: "power3.out",
-				// 	},
-				// 	"<",
-				// );
-
 				// Show main image
 				tl.to(
 					img,
@@ -163,11 +152,6 @@ class ImageManager {
 
 				// Reset screen scale and fade out mask
 				setTimeout(() => {
-					// tl.to(screenContainer, {
-					// 	duration: 1.25,
-					// 	scale: 1,
-					// 	ease: "power3.out",
-					// });
 					tl.to(
 						maskingImg,
 						{
@@ -252,7 +236,7 @@ class ImageManager {
 			});
 
 			tl.to(imageData.element, {
-				filter: "blur(20px) brightness(0.35) grayscale(0.7)",
+				filter: "blur(20px) brightness(0.35) grayscale(0.6)",
 				opacity: 0,
 				scale: 1.5,
 				duration: 1.5,
