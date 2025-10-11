@@ -6,12 +6,13 @@ import { useState, useCallback, useEffect } from "react";
 import audioManager from "@/lib/audio/audioManager";
 import visualEffectManager from "@/lib/visual/visualEffectManager";
 import imageManager from "@/lib/image/imageManager";
-import { Segment } from "@/app/introScript";
 import MainMenu from "./components/MainMenu";
+import ReactivationModal from "@/component/ReactivationModal";
+import { ProcessedSegment } from "@/util/preprocessScript";
 
 interface MainClientProps {
 	assets: GetAssetsMap;
-	introScript: Segment[];
+	introScript: ProcessedSegment[];
 }
 
 export default function MainClient({ assets, introScript }: MainClientProps) {
@@ -91,8 +92,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 			});
 
 			let loaded = 0;
-			const total =
-				audioAssets.length + visualAssets.length + imageUrls.size;
+			const total = audioAssets.length + visualAssets.length + imageUrls.size;
 
 			const audioPromises = audioAssets.map(async (asset) => {
 				try {
@@ -161,6 +161,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 				/>
 			)}
 			{currentStage === "menu" && <MainMenu />}
+			<ReactivationModal />
 		</>
 	);
 }
