@@ -28,7 +28,6 @@ export default function MainIntro({
 	const [userIntereacted, setUserInterected] = useState(true);
 	const linesRef = useRef<Map<number, TextEffect>>(new Map());
 	const chunksRef = useRef<Map<string, HTMLSpanElement>>(new Map());
-	const continueRef = useRef<HTMLDivElement>(null);
 	const pendingStopsRef = useRef<Set<PendingStop>>(new Set());
 	const visualEffectsRef = useRef<HTMLDivElement>(null);
 	const splitInstancesMap = useRef<Map<HTMLElement, SplitText>>(new Map());
@@ -36,32 +35,6 @@ export default function MainIntro({
 	const imageContainerRef = useRef<HTMLDivElement>(null);
 	const screenRef = useRef<HTMLDivElement>(null);
 	const maskRef = useRef<HTMLDivElement>(null);
-
-	const tl = gsap.timeline();
-
-	//continueAnimation
-	useGSAP(() => {
-		if (userIntereacted && continueRef.current) {
-			// continue 숨기기
-			gsap.killTweensOf(continueRef.current);
-			gsap.to(continueRef.current, { opacity: 0, duration: 0.2 });
-		} else if (!userIntereacted && continueRef.current) {
-			// continue 보여주기 + 애니메이션
-			tl.add(gsap.set(continueRef.current, { opacity: 0, y: 5 }));
-			tl.add(
-				gsap.fromTo(continueRef.current, { opacity: 0 }, { opacity: 1, y: 0 }),
-			);
-			tl.add(
-				gsap.to(continueRef.current, {
-					opacity: 0.5,
-					y: 5,
-					ease: "power2.in",
-					yoyo: true,
-					repeat: -1,
-				}),
-			);
-		}
-	}, [userIntereacted, continueRef]);
 
 	// clicke
 	const onClick = useCallback(async () => {
