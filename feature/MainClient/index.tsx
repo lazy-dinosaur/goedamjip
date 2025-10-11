@@ -71,12 +71,14 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 			{currentStage === "intro" && (
 				<MainIntro
 					introScript={introScript}
+					needsRecoverState={[needsRecover, setNeedsRecover]}
 					changeStage={() => {
 						changeStage("menu");
 					}}
 				/>
 			)}
 			{currentStage === "menu" && <MainMenu />}
+
 			<ReactivationModal
 				needsReactivationState={[needsReactivation, setNeedsReactivation]}
 				onReactivationStateChange={(isReactivated) => {
