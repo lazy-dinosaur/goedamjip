@@ -158,7 +158,7 @@ class ImageManager {
 							scale: 1,
 							opacity: 0,
 							duration: 1.25,
-							ease: "power3.out",
+							ease: "power3.in",
 							onComplete: () => {
 								maskingImg.remove();
 							},
