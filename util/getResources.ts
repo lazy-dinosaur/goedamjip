@@ -1,4 +1,4 @@
-import { Segment } from "@/app/introScript";
+import { Segment } from "@/types/script.types";
 
 export const getStoryAssets = (script: Segment[]) => {
 	const sounds = script.map((seg) => {

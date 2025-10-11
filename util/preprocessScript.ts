@@ -1,14 +1,12 @@
-import { Segment, SoundEffect, VisualEffect, Image } from "@/app/introScript";
-
 // 전처리된 세그먼트 타입
-export interface ProcessedSegment extends Segment {
-	// 이전 세그먼트들에서 시작되어 현재도 지속 중인 효과들
-	inheritedEffects: {
-		audio: SoundEffect[];
-		visual: VisualEffect[];
-		images: Image[];
-	};
-}
+
+import {
+	Segment,
+	ProcessedSegment,
+	SoundEffect,
+	VisualEffect,
+	Image,
+} from "@/types/script.types";
 
 /**
  * 인트로 스크립트를 전처리하여 각 세그먼트가 시작될 때
