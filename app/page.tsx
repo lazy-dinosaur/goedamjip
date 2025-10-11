@@ -13,6 +13,7 @@ import { introScript } from "./introScript";
 import { getStoryAssets } from "@/util/getResources";
 import { getAssetsMap } from "@/lib/asset";
 import MainClient from "@/feature/MainClient";
+import { preprocessScript } from "@/util/preprocessScript";
 
 export default async function Home() {
 	const assetLists = getStoryAssets(introScript);
@@ -21,10 +22,11 @@ export default async function Home() {
 		"MUSIC_DREAD_REALIZATION",
 		"DRONE_UNSTABLE_AIR",
 	]);
+	const preprocessedIntroScript = preprocessScript(introScript);
 
 	return (
 		<PageWrapper className={"select-none"}>
-			<MainClient assets={assets} introScript={introScript} />
+			<MainClient assets={assets} introScript={preprocessedIntroScript} />
 		</PageWrapper>
 	);
 }
