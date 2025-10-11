@@ -1,12 +1,16 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback, Dispatch, SetStateAction } from "react";
 import { Howler } from "howler";
 
 interface ReactivationModalProps {
+	needsReactivationState: [boolean, Dispatch<SetStateAction<boolean>>];
 	onReactivationStateChange?: (needsReactivation: boolean) => void;
 }
 
-export default function ReactivationModal({ onReactivationStateChange }: ReactivationModalProps) {
-	const [needsReactivation, setNeedsReactivation] = useState(false);
+export default function ReactivationModal({
+	needsReactivationState,
+	onReactivationStateChange,
+}: ReactivationModalProps) {
+	const [needsReactivation, setNeedsReactivation] = needsReactivationState;
 
 	// 모바일 기기 감지
 	const isMobile =
