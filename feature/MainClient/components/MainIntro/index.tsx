@@ -9,7 +9,7 @@ import { useGSAP } from "@gsap/react";
 import audioManager from "@/lib/audio/audioManager";
 import visualEffectManager from "@/lib/visual/visualEffectManager";
 import imageManager from "@/lib/image/imageManager";
-import { ProcessedSegment } from "@/util/preprocessScript";
+import { ProcessedSegment } from "@/types/script.types";
 interface MainIntroProps {
 	introScript: ProcessedSegment[];
 	changeStage: () => void;
@@ -690,7 +690,7 @@ export default function MainIntro({
 						))}
 					</div>
 				))}
-				<ContinueMark ref={continueRef} />
+				<ContinueMark userIntereacted={userIntereacted} />
 			</div>
 		</ComponentWrapper>
 	);
