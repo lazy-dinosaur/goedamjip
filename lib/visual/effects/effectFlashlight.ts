@@ -35,9 +35,9 @@ export const EFFECT_FLASHLIGHT: VisualEffectCreator = (options = {}) => {
 		width: ${sizes.backgroundSize}px;
 		height: ${sizes.backgroundSize}px;
 		background: radial-gradient(circle at center,
-			rgba(255, 255, 200, 0.25) 0%,
-			rgba(255, 255, 150, 0.15) 30%,
-			rgba(255, 255, 100, 0.08) 50%,
+			rgba(255, 255, 255, 0.25) 0%,
+			rgba(255, 255, 255, 0.15) 30%,
+			rgba(255, 255, 255, 0.08) 50%,
 			transparent 80%);
 		border-radius: 50%;
 		pointer-events: none;
@@ -72,7 +72,7 @@ export const EFFECT_FLASHLIGHT: VisualEffectCreator = (options = {}) => {
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.80);
+		background-color: rgba(0, 0, 0, 0.60);
 		z-index: 3;
 		pointer-events: none;
 	`;
