@@ -685,11 +685,12 @@ export default function MainIntro({
 		const handleVisibilityChange = () => {
 			if (document.hidden) {
 				// 화면이 숨겨질 때 음소거
+				setUserInterected(true);
 				Howler.mute(true);
 				visualEffectManager.stopAll();
 				imageManager.clearAll();
 			} else {
-				setUserInterected(false);
+				setUserInterected(true);
 			}
 		};
 
