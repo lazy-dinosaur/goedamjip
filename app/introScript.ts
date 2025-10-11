@@ -1,24 +1,27 @@
 // 사운드 이펙트 타입
-interface SoundEffect {
+export interface SoundEffect {
 	tag: string;
 	status?: "start" | "stop";
 	repeat?: number;
+	loop?: boolean;
 }
 
 // 비주얼 이펙트 타입
-interface VisualEffect {
-	tag: string;
-	status?: "start" | "stop";
-}
+export type VisualEffect =
+	| string
+	| {
+			tag: string;
+			status?: "start" | "stop";
+	  };
 
 // 텍스트 이펙트 타입
-type TextEffect = string;
+export type TextEffect = string;
 
 // 이미지 타입
-interface Image {
+export interface Image {
 	url: string | null;
 	type: "background" | "overlay" | "jumpscare";
-	sustain_until: string; // segment ID
+	sustain_until?: string; // segment ID
 }
 
 // 라인 이펙트 타입
@@ -44,16 +47,16 @@ export interface Line {
 }
 
 // 세그먼트 이펙트 타입
-interface SegmentEffects {
+export interface SegmentEffects {
 	soundEffects: SoundEffect[];
 	visualEffects: VisualEffect[];
 }
 
 // 배경 타입
-interface Background {
+export interface Background {
 	url: string | null;
 	type: "background";
-	sustain_until: string; // segment ID
+	sustain_until?: string; // segment ID
 }
 
 // 세그먼트 타입
