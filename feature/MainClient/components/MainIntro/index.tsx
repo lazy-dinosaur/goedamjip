@@ -1,5 +1,4 @@
 "use client";
-import { Segment } from "@/app/introScript";
 import ComponentWrapper from "@/component/ComponentWrapper";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import TextEffect from "@/lib/text/textEffect";
@@ -10,8 +9,9 @@ import { useGSAP } from "@gsap/react";
 import audioManager from "@/lib/audio/audioManager";
 import visualEffectManager from "@/lib/visual/visualEffectManager";
 import imageManager from "@/lib/image/imageManager";
+import { ProcessedSegment } from "@/util/preprocessScript";
 interface MainIntroProps {
-	introScript: Segment[];
+	introScript: ProcessedSegment[];
 	changeStage: () => void;
 }
 type PendingStop = {
@@ -126,10 +126,10 @@ export default function MainIntro({
 							setTimeout(() => changeStage(), 300);
 						});
 					} else {
-						// 다음 세그먼트로 넘어가기 전에 현재 세그먼트 종료를 위한 이미지 정리
-						const nextSegmentId = introScript[currentSegment + 1]?.id;
-						if (nextSegmentId) {
-							imageManager.clearBySegment(nextSegmentId);
+						// 현재 세그먼트가 끝날 때 해당 세그먼트의 이미지 정리
+						const currentSegmentId = introScript[currentSegment]?.id;
+						if (currentSegmentId) {
+							imageManager.clearBySegment(currentSegmentId);
 						}
 						setCurrentSegment((prev) =>
 							segmentCounts - 1 > prev ? prev + 1 : prev,
