@@ -80,8 +80,7 @@ export const SCREEN_FLICKER: VisualEffectCreator = (options = {}) => {
 		// Set initial dark state for text
 		if (targetElement) {
 			gsap.set(targetElement, {
-				opacity: 0.75,
-				filter: "brightness(0.75)",
+				filter: "brightness(0.3)",
 			});
 		}
 	}, 100);
@@ -91,33 +90,33 @@ export const SCREEN_FLICKER: VisualEffectCreator = (options = {}) => {
 
 	// Flicker pattern (8 second cycle: 3s flicker + 5s stable)
 	const flickerPattern = [
-		{ time: 0, opacity: 0, textOpacity: 0.5, textBrightness: 0.7 },
-		{ time: 0.06, opacity: 1, textOpacity: 1, textBrightness: 1 }, // 2%
-		{ time: 0.12, opacity: 0.1, textOpacity: 0.6, textBrightness: 0.75 }, // 4%
-		{ time: 0.24, opacity: 1, textOpacity: 1, textBrightness: 1 }, // 8%
-		{ time: 0.3, opacity: 0.2, textOpacity: 0.6, textBrightness: 0.75 }, // 10%
-		{ time: 0.33, opacity: 0.9, textOpacity: 1, textBrightness: 1 }, // 11%
-		{ time: 0.36, opacity: 0, textOpacity: 0.5, textBrightness: 0.7 }, // 12%
-		{ time: 0.9, opacity: 0, textOpacity: 0.5, textBrightness: 0.7 }, // 30%
-		{ time: 0.96, opacity: 0.8, textOpacity: 1, textBrightness: 1 }, // 32%
-		{ time: 0.99, opacity: 0.1, textOpacity: 0.6, textBrightness: 0.75 }, // 33%
-		{ time: 1.05, opacity: 1, textOpacity: 1, textBrightness: 1 }, // 35%
-		{ time: 1.14, opacity: 0, textOpacity: 0.5, textBrightness: 0.7 }, // 38%
-		{ time: 1.8, opacity: 0, textOpacity: 0.5, textBrightness: 0.7 }, // 60%
-		{ time: 1.83, opacity: 0.7, textOpacity: 1, textBrightness: 1 }, // 61%
-		{ time: 1.86, opacity: 0.1, textOpacity: 0.6, textBrightness: 0.75 }, // 62%
-		{ time: 1.89, opacity: 0.95, textOpacity: 1, textBrightness: 1 }, // 63%
-		{ time: 1.95, opacity: 0, textOpacity: 0.5, textBrightness: 0.7 }, // 65%
-		{ time: 2.4, opacity: 0, textOpacity: 0.5, textBrightness: 0.7 },
-		{ time: 2.46, opacity: 0.9, textOpacity: 1, textBrightness: 1 },
-		{ time: 2.52, opacity: 0.2, textOpacity: 0.6, textBrightness: 0.75 },
-		{ time: 2.58, opacity: 1, textOpacity: 1, textBrightness: 1 },
-		{ time: 2.7, opacity: 0.1, textOpacity: 0.6, textBrightness: 0.75 },
-		{ time: 2.76, opacity: 0.95, textOpacity: 1, textBrightness: 1 },
+		{ time: 0, opacity: 0, textBrightness: 0.3 },
+		{ time: 0.06, opacity: 1, textBrightness: 1.0 }, // 2%
+		{ time: 0.12, opacity: 0.1, textBrightness: 0.35 }, // 4%
+		{ time: 0.24, opacity: 1, textBrightness: 1.0 }, // 8%
+		{ time: 0.3, opacity: 0.2, textBrightness: 0.35 }, // 10%
+		{ time: 0.33, opacity: 0.9, textBrightness: 0.95 }, // 11%
+		{ time: 0.36, opacity: 0, textBrightness: 0.3 }, // 12%
+		{ time: 0.9, opacity: 0, textBrightness: 0.3 }, // 30%
+		{ time: 0.96, opacity: 0.8, textBrightness: 0.95 }, // 32%
+		{ time: 0.99, opacity: 0.1, textBrightness: 0.35 }, // 33%
+		{ time: 1.05, opacity: 1, textBrightness: 1.0 }, // 35%
+		{ time: 1.14, opacity: 0, textBrightness: 0.3 }, // 38%
+		{ time: 1.8, opacity: 0, textBrightness: 0.3 }, // 60%
+		{ time: 1.83, opacity: 0.7, textBrightness: 0.9 }, // 61%
+		{ time: 1.86, opacity: 0.1, textBrightness: 0.35 }, // 62%
+		{ time: 1.89, opacity: 0.95, textBrightness: 1.0 }, // 63%
+		{ time: 1.95, opacity: 0, textBrightness: 0.3 }, // 65%
+		{ time: 2.4, opacity: 0, textBrightness: 0.3 },
+		{ time: 2.46, opacity: 0.9, textBrightness: 0.95 },
+		{ time: 2.52, opacity: 0.2, textBrightness: 0.35 },
+		{ time: 2.58, opacity: 1, textBrightness: 1.0 },
+		{ time: 2.7, opacity: 0.1, textBrightness: 0.35 },
+		{ time: 2.76, opacity: 0.95, textBrightness: 1.0 },
 		// Transition to stable bright state
-		{ time: 3, opacity: 1, textOpacity: 1, textBrightness: 1 },
+		{ time: 3, opacity: 1, textBrightness: 1.0 },
 		// Hold stable bright state for 5 seconds
-		{ time: 8, opacity: 1, textOpacity: 1, textBrightness: 1 },
+		{ time: 8, opacity: 1, textBrightness: 1.0 },
 	];
 
 	// Build timeline
@@ -143,7 +142,6 @@ export const SCREEN_FLICKER: VisualEffectCreator = (options = {}) => {
 				tl.to(
 					targetElement,
 					{
-						opacity: step.textOpacity,
 						filter: `brightness(${step.textBrightness})`,
 						duration: duration,
 						ease: "none",
@@ -164,9 +162,8 @@ export const SCREEN_FLICKER: VisualEffectCreator = (options = {}) => {
 			gsap.set(lightBeam, { clearProps: "all" });
 			if (targetElement) {
 				gsap.set(targetElement, {
-					opacity: 1,
 					filter: "none",
-					clearProps: "opacity,filter",
+					clearProps: "filter",
 				});
 			}
 		},
