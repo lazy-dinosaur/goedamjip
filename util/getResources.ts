@@ -26,17 +26,21 @@ export const getStoryAssets = (script: Segment[]) => {
 	});
 	const visuals = script.map((seg) => {
 		const segmentEffects = seg.segmentEffects.visualEffects
-			.map((effect) => effect.tag)
+			.map((effect) => (typeof effect == "string" ? effect : effect.tag))
 			.filter((v) => typeof v == "string");
 		const preLineEffects = seg.lines
 			.flatMap((line) =>
-				line.preLineEffects.visualEffects.flatMap((effect) => effect.tag),
+				line.preLineEffects.visualEffects.flatMap((effect) =>
+					typeof effect == "string" ? effect : effect.tag,
+				),
 			)
 			.filter((v) => typeof v == "string");
 		const chunkEffects = seg.lines
 			.flatMap((line) =>
 				line.chunks.flatMap((chunk) =>
-					chunk.visualEffects?.flatMap((effect) => effect.tag),
+					chunk.visualEffects?.flatMap((effect) =>
+						typeof effect == "string" ? effect : effect.tag,
+					),
 				),
 			)
 			.filter((v) => typeof v == "string");
