@@ -3207,6 +3207,8 @@ export const introScript: Segment[] = [
 					tag: "DRONE_LOOMING_PRESENCE",
 					status: "stop",
 				},
+			],
+			visualEffects: [
 				{
 					tag: "EFFECT_FLASHLIGHT",
 					status: "stop",
@@ -3216,7 +3218,6 @@ export const introScript: Segment[] = [
 					status: "stop",
 				},
 			],
-			visualEffects: [],
 		},
 	},
 	{
