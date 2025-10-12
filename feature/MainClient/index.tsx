@@ -2,11 +2,12 @@
 import { GetAssetsMap } from "@/lib/supabase/asset";
 import MainTitle from "./components/MainTitle";
 import MainIntro from "./components/MainIntro";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import MainMenu from "./components/MainMenu";
 import ReactivationModal from "@/component/ReactivationModal";
 import { ProcessedSegment } from "@/types/script.types";
 import { useLoadingProgress } from "@/hooks/useLoading";
+import audioManager from "@/lib/audio/audioManager";
 
 interface MainClientProps {
 	assets: GetAssetsMap;
@@ -66,7 +67,11 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					isAudioLoaded={isAudioLoaded}
 					changeStage={
 						!skipIntroSetting
-							? () => changeStage("intro")
+							? () => {
+									audioManager.stop("MUSIC_DREAD_REALIZATION");
+									audioManager.stop("DRONE_UNSTABLE_AIR");
+									changeStage("intro");
+								}
 							: () => changeStage("menu")
 					}
 				/>
