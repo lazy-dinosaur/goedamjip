@@ -1,5 +1,5 @@
 "use client";
-import { GetAssetsMap } from "@/lib/asset";
+import { GetAssetsMap } from "@/lib/supabase/asset";
 import MainTitle from "./components/MainTitle";
 import MainIntro from "./components/MainIntro";
 import { useState, useCallback, useEffect } from "react";
@@ -27,7 +27,6 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	const [currentStage, setCurrentStage] = useState<"title" | "intro" | "menu">(
 		"title",
 	);
-	const [didWatchIntro, setDidWatchIntro] = useState(false); // 인트로를 봤는지 추적
 	const [currentSegment, setCurrentSegment] = useState(0); // currentSegment를 상위로 이동
 
 	const changeStage = useCallback((stage: "title" | "intro" | "menu") => {
@@ -40,10 +39,6 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 
 	const handleSegmentChange = useCallback((newSegment: number) => {
 		setCurrentSegment(newSegment);
-	}, []);
-
-	const introWatched = useCallback(() => {
-		setDidWatchIntro(true);
 	}, []);
 
 	// MainMenu에 전달할 함수
@@ -69,7 +64,11 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 				<MainTitle
 					loadingProgress={loadingProgress}
 					isAudioLoaded={isAudioLoaded}
-					changeStage={() => changeStage("intro")}
+					changeStage={
+						!skipIntroSetting
+							? () => changeStage("intro")
+							: () => changeStage("menu")
+					}
 				/>
 			)}
 			{currentStage === "intro" && (

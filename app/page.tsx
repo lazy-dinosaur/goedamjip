@@ -11,7 +11,7 @@
 import PageWrapper from "@/component/PaperWrapper";
 import { introScript } from "./introScript";
 import { getStoryAssets } from "@/util/getResources";
-import { getAssetsMap } from "@/lib/asset";
+import { getAssetsMap } from "@/lib/supabase/asset";
 import MainClient from "@/feature/MainClient";
 import { preprocessScript } from "@/util/preprocessScript";
 

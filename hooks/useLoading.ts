@@ -1,4 +1,4 @@
-import { GetAssetsMap } from "@/lib/asset";
+import { GetAssetsMap } from "@/lib/supabase/asset";
 import audioManager from "@/lib/audio/audioManager";
 import imageManager from "@/lib/image/imageManager";
 import visualEffectManager from "@/lib/visual/visualEffectManager";
