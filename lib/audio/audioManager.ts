@@ -148,6 +148,20 @@ class AudioManager {
 		});
 	}
 
+	stopAllSound(fadeDuration: number = 500) {
+		this.cache.forEach((howl, key) => {
+			// 재생 중인 모든 오디오 정리
+			if (howl.playing()) {
+				howl.fade(howl.volume(), 0, fadeDuration);
+
+				// fade 완료 후 stop
+				setTimeout(() => {
+					howl.stop();
+				}, fadeDuration);
+			}
+		});
+	}
+
 	clearCache(): void {
 		this.cache.forEach((howl) => {
 			howl.unload();

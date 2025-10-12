@@ -111,7 +111,7 @@ export default function MainIntro({
 								} else if (effect.type == "visual") {
 									return new Promise<void>((resolve) => {
 										visualEffectManager.stop(effect.id);
-										setTimeout(() => resolve(), 1000);
+										setTimeout(() => resolve(), 500);
 									});
 								}
 								return Promise.resolve();
@@ -121,6 +121,10 @@ export default function MainIntro({
 						// 모든 cleanup이 완료되면 changeStage 호출
 						Promise.all(cleanupPromises).then(() => {
 							pendingStopsRef.current.clear();
+							// 모든 매니저 정리 (혹시 빠진 것들 방지)
+							audioManager.stopAllSound(500);
+							visualEffectManager.stopAll();
+							imageManager.clearAll();
 							setTimeout(() => changeStage(), 300);
 						});
 					} else {
