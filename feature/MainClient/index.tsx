@@ -58,6 +58,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 
 	const [needsReactivation, setNeedsReactivation] = useState(false);
 	const [needsRecover, setNeedsRecover] = useState(false);
+	audioManager.setGlobalVolume(0.6);
 
 	return (
 		<>
