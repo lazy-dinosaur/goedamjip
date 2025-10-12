@@ -297,7 +297,7 @@ export default function MainIntro({
 				linesRef.current.clear();
 
 				// Step 2: linesRef에 TextEffect 생성 & 청크 추가
-				introScript[currentSegment].lines.forEach((line, lineIdx) => {
+				currentSegmentData.lines.forEach((line, lineIdx) => {
 					const lineTextEffect = new TextEffect();
 					const getRevealEffect = (effects: string[]): string | undefined => {
 						return effects.find((effect) => revealEffects.includes(effect));
@@ -447,8 +447,11 @@ export default function MainIntro({
 				// 순차적으로 라인 실행하는 async 함수
 				const playLinesSequentially = async () => {
 					for (const [lineIdx, lineTextEffect] of linesRef.current.entries()) {
+						const lineData = currentSegmentData.lines[lineIdx];
+						if (!lineData) return; // 안전 체크
+
 						const { image, soundEffects, visualEffects } =
-							introScript[currentSegment].lines[lineIdx].preLineEffects;
+							lineData.preLineEffects;
 
 						// preLineEffects 이미지가 있으면 먼저 처리 (await로 대기)
 						if (
@@ -469,23 +472,26 @@ export default function MainIntro({
 						playSounds(soundEffects);
 						playVisuals(visualEffects);
 
-						// 라인 애니메이션 시작
-						lineTextEffect.play();
+						// 라인 애니메이션 완료를 Promise로 대기
+						await new Promise<void>((resolve) => {
+							const tl = lineTextEffect.getTimeline();
 
-						// 마지막 라인이면 complete 이벤트 추가
-						if (lineIdx == lineCount - 1) {
-							lineTextEffect.getTimeline().eventCallback("onComplete", () => {
-								userInteractionTimeoutRef.current = setTimeout(() => {
-									setUserInterected(false);
-								}, 800);
+							// 타임라인 완료 시 호출될 콜백
+							tl.eventCallback("onComplete", () => {
+								// 마지막 라인이면 사용자 인터랙션 가능하게 설정
+								if (lineIdx == lineCount - 1) {
+									userInteractionTimeoutRef.current = setTimeout(() => {
+										setUserInterected(false);
+									}, 800);
+								}
+
+								// lineInterval 후 다음 라인으로
+								setTimeout(() => resolve(), lineInterval);
 							});
-						}
 
-						// 라인 애니메이션이 끝날 때까지 대기
-						const lineDuration = lineTextEffect.getTimeline().duration() * 1000;
-						await new Promise((resolve) =>
-							setTimeout(resolve, lineDuration + lineInterval),
-						);
+							// 애니메이션 시작
+							lineTextEffect.play();
+						});
 					}
 				};
 
@@ -530,7 +536,9 @@ export default function MainIntro({
 
 		needsRecover ? recoverInit() : initSegment();
 
-		return segmentCleanup;
+		return () => {
+			segmentCleanup();
+		};
 	}, [currentSegment, introScript, needsRecover]);
 
 	// 모바일 기기 감지
