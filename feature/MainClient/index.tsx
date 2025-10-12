@@ -72,7 +72,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					changeStage={() => changeStage("intro")}
 				/>
 			)}
-			{currentStage === "intro" && !needsReactivation && (
+			{currentStage === "intro" && (
 				<MainIntro
 					introScript={introScript}
 					needsRecoverState={[needsRecover, setNeedsRecover]}
