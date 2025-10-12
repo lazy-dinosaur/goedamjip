@@ -21,7 +21,6 @@ import {
 	SoundEffect,
 	VisualEffect,
 } from "@/types/script.types";
-
 interface MainIntroProps {
 	introScript: ProcessedSegment[];
 	changeStage: () => void;
@@ -29,7 +28,6 @@ interface MainIntroProps {
 	currentSegment: number;
 	onSegmentChange: (newSegment: number) => void;
 }
-
 type PendingStop = {
 	type: "audio" | "visual" | "image";
 	id: string;
@@ -72,11 +70,18 @@ export default function MainIntro({
 
 		linesRef.current.forEach((effect, lineIdx) => {
 			const tl = effect.getTimeline();
+
+			// 원래 timeScale 저장
 			const originalTimeScale = tl.timeScale();
+
+			// reverse는 2배 속도로
 			tl.timeScale(2);
 
 			tl.eventCallback("onReverseComplete", () => {
+				// reverse 완료 후 원래 속도로 복구
 				tl.timeScale(originalTimeScale);
+
+				// 이 라인에 속한 chunk들의 opacity를 0으로 설정
 				const lineChunks = introScript[currentSegment].lines[lineIdx].chunks;
 				lineChunks.forEach((_, chunkIdx) => {
 					const element = chunksRef.current.get(
@@ -88,8 +93,11 @@ export default function MainIntro({
 				});
 
 				completedCount++;
+
+				// 모든 라인의 reverse가 완료되면
 				if (completedCount === totalLines) {
 					if (currentSegment == segmentCounts - 1) {
+						// 마지막 세그먼트: 모든 효과를 부드럽게 정리 후 changeStage
 						const cleanupPromises = Array.from(pendingStopsRef.current).map(
 							(effect) => {
 								if (effect.type == "audio") {
@@ -109,11 +117,14 @@ export default function MainIntro({
 								return Promise.resolve();
 							},
 						);
+
+						// 모든 cleanup이 완료되면 changeStage 호출
 						Promise.all(cleanupPromises).then(() => {
 							pendingStopsRef.current.clear();
 							setTimeout(() => changeStage(), 300);
 						});
 					} else {
+						// 현재 세그먼트가 끝날 때 해당 세그먼트의 이미지 정리
 						const currentSegmentId = introScript[currentSegment]?.id;
 						if (currentSegmentId) {
 							imageManager.clearBySegment(currentSegmentId);
@@ -125,6 +136,7 @@ export default function MainIntro({
 					}
 				}
 			});
+
 			effect.reverse();
 		});
 	}, [
@@ -140,11 +152,12 @@ export default function MainIntro({
 			if (effect.status == "start") {
 				audioManager.play(effect.tag, { loop: true });
 			} else if (effect.status == "stop") {
-				pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
+				pendingStopsRef.current.add({ id: effect.tag, type: "audio" }); // 저장만
 			} else if (effect.loop) {
 				audioManager.play(effect.tag, { loop: true });
-				pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
-			} else {
+				pendingStopsRef.current.add({ id: effect.tag, type: "audio" }); // 저장만
+			}
+			{
 				audioManager.play(effect.tag, { repeat: effect.repeat, loop: false });
 			}
 		});
@@ -188,7 +201,11 @@ export default function MainIntro({
 			instance.revert();
 		});
 		splitInstancesMap.current.clear();
+
+		// 모든 효과 정리
 		linesRef.current.forEach((effect) => effect.clearAll());
+
+		// 모든 청크 요소의 GSAP 애니메이션 정리
 		chunksRef.current.forEach((element) => {
 			if (element) {
 				gsap.killTweensOf(element);
@@ -198,6 +215,7 @@ export default function MainIntro({
 
 		if (recovery) {
 			audioManager.stopOnShots(0);
+			// 오디오/비주얼 효과 정리
 			pendingStopsRef.current.forEach((effect) => {
 				if (effect.type == "audio") {
 					audioManager.stop(effect.id);
@@ -207,6 +225,7 @@ export default function MainIntro({
 			});
 		} else {
 			audioManager.stopOnShots();
+			// 오디오/비주얼 효과 정리
 			pendingStopsRef.current.forEach((effect) => {
 				if (effect.type == "audio") {
 					audioManager.fade(effect.id, 1, 0, 500);
@@ -217,11 +236,15 @@ export default function MainIntro({
 			});
 		}
 		pendingStopsRef.current.clear();
+
+		// chunksRef 초기화
 		chunksRef.current.clear();
 	};
 
 	const segmentCleanup = (recovery?: boolean) => {
+		// SplitText 인스턴스들 정리
 		if (recovery) {
+			// pending된 setTimeout들 취소
 			if (userInteractionTimeoutRef.current) {
 				clearTimeout(userInteractionTimeoutRef.current);
 				userInteractionTimeoutRef.current = null;
@@ -234,64 +257,19 @@ export default function MainIntro({
 			imageManager.clearAll();
 			setUserInterected(true);
 		}
+
 		cleanUpEffects(recovery);
 	};
-
 	useLayoutEffect(() => {
-		// 순차적으로 라인 실행하는 async 함수 (Promise를 반환하도록 수정)
-		const playLinesSequentially = () => {
-			return new Promise<void>(async (resolveAll) => {
-				const lineCount = linesRef.current.size;
-
-				for (const [lineIdx, lineTextEffect] of linesRef.current.entries()) {
-					const lineData = introScript[currentSegment].lines[lineIdx];
-					if (!lineData) continue;
-
-					const { image, soundEffects, visualEffects } =
-						lineData.preLineEffects;
-
-					if (
-						image?.url &&
-						imageContainerRef.current &&
-						maskRef.current &&
-						screenRef.current
-					) {
-						await imageManager.addImage(
-							image.url,
-							image.type,
-							imageContainerRef.current,
-							maskRef.current,
-							image.sustain_until,
-						);
-					}
-					playSounds(soundEffects);
-					playVisuals(visualEffects);
-
-					// 각 라인 애니메이션이 끝날 때까지 기다립니다.
-					await new Promise<void>((resolveLine) => {
-						const tl = lineTextEffect.getTimeline();
-						tl.eventCallback("onComplete", () => {
-							if (lineIdx === lineCount - 1) {
-								userInteractionTimeoutRef.current = setTimeout(() => {
-									setUserInterected(false);
-								}, 800);
-							}
-							setTimeout(resolveLine, 100); // 다음 라인으로 넘어가기 전 딜레이
-						});
-						lineTextEffect.play();
-					});
-				}
-				resolveAll(); // 모든 라인 재생 완료
-			});
-		};
-
-		const initSegment = async () => {
-			if (visualEffectsRef.current && !needsRecover) {
+		const initSegment = async (recovery?: boolean) => {
+			// visualEffectManager 초기화
+			if (visualEffectsRef.current && !recovery) {
 				visualEffectManager.init(visualEffectsRef.current);
 			}
 
-			// 1. 배경 이미지와 세그먼트 효과를 먼저 실행
+			// Background 이미지 먼저 처리 (await로 애니메이션 완료 대기)
 			const currentSegmentData = introScript[currentSegment];
+
 			if (
 				currentSegmentData.background?.url &&
 				imageContainerRef.current &&
@@ -303,130 +281,228 @@ export default function MainIntro({
 					"background",
 					imageContainerRef.current,
 					maskRef.current,
+					// screenRef.current,
 					currentSegmentData.background.sustain_until,
 				);
 			}
+
 			const { soundEffects, visualEffects } = currentSegmentData.segmentEffects;
+
 			playSounds(soundEffects);
 			playVisuals(visualEffects);
 
-			// 2. 위 과정이 끝난 후, 라인 애니메이션 시작
-			linesRef.current.clear();
-			currentSegmentData.lines.forEach((line, lineIdx) => {
-				const lineTextEffect = new TextEffect();
-				const getRevealEffect = (effects: string[]): string | undefined => {
-					return effects.find((effect) => revealEffects.includes(effect));
-				};
+			// 이전 세그먼트 청크들 opacity 초기화
+			// Step 1: chunksRef 등록 완료 대기
+			setTimeout(() => {
+				linesRef.current.clear();
 
-				line.chunks.forEach((chunk, chunkIdx) => {
-					const ref = chunksRef.current.get(`line${lineIdx}-chunk${chunkIdx}`);
-					if (ref) {
-						const currentRevealEffect = getRevealEffect(
-							chunk.textEffects ?? [],
+				// Step 2: linesRef에 TextEffect 생성 & 청크 추가
+				currentSegmentData.lines.forEach((line, lineIdx) => {
+					const lineTextEffect = new TextEffect();
+					const getRevealEffect = (effects: string[]): string | undefined => {
+						return effects.find((effect) => revealEffects.includes(effect));
+					};
+
+					line.chunks.forEach((chunk, chunkIdx) => {
+						const ref = chunksRef.current.get(
+							`line${lineIdx}-chunk${chunkIdx}`,
 						);
-						if (
-							!currentRevealEffect ||
-							currentRevealEffect == "FADE_IN" ||
-							currentRevealEffect == "RISE_FROM_BOTTOM"
-						) {
-							if (splitInstancesMap.current.has(ref)) {
-								splitInstancesMap.current.get(ref)?.revert();
-								splitInstancesMap.current.delete(ref);
-							}
-							const splitInstance = SplitText.create(ref, {
-								type: "lines, words",
-								mask: "words",
-								linesClass: "line++",
-								wordsClass: "word++",
-								autoSplit: true,
-								tag: "span",
-								onSplit(self) {
-									gsap.set(ref, { opacity: 1 });
-									self.words.forEach((word) => {
-										gsap.set(word, { display: "inline-block" });
-										word.innerHTML = word.innerHTML + "&nbsp;";
-									});
-									const split = gsap.from(self.words, {
-										duration: 0.8,
-										y: 100,
-										autoAlpha: 0,
-										opacity: 0,
-										stagger: 0.1,
-									});
-									lineTextEffect.getTimeline().add(split, "-=0.3");
-									const { soundEffects, visualEffects, textEffects } = chunk;
-									lineTextEffect.getTimeline().call(
-										() => {
+						if (ref) {
+							const currentRevealEffect = getRevealEffect(
+								chunk.textEffects ?? [],
+							);
+							if (
+								!currentRevealEffect ||
+								currentRevealEffect == "FADE_IN" ||
+								currentRevealEffect == "RISE_FROM_BOTTOM"
+							) {
+								// 기존 SplitText가 있으면 revert
+								if (splitInstancesMap.current.has(ref)) {
+									const existingInstance = splitInstancesMap.current.get(ref);
+									existingInstance?.revert();
+									splitInstancesMap.current.delete(ref);
+								}
+
+								const splitInstance = SplitText.create(ref, {
+									type: "lines, words",
+									mask: "words",
+									linesClass: "line++",
+									wordsClass: "word++",
+									autoSplit: true,
+									tag: "span",
+									onSplit(self) {
+										// 부모 요소 opacity 복원
+										gsap.set(ref, { opacity: 1 });
+										// inline-block으로 설정해야 y transform이 동작함
+										self.words.forEach((word) => {
+											gsap.set(word, { display: "inline-block" });
+											// 마지막 단어가 아니면 공백 추가
+											word.innerHTML = word.innerHTML + "&nbsp;";
+											// if (index < self.words.length - 1) {
+											// }
+										});
+
+										const split = gsap.from(self.words, {
+											duration: 0.8,
+											y: 100,
+											autoAlpha: 0,
+											opacity: 0,
+											stagger: 0.1,
+										});
+
+										lineTextEffect.getTimeline().add(split, "-=0.3");
+
+										const { soundEffects, visualEffects, textEffects } = chunk;
+										lineTextEffect.getTimeline().call(
+											() => {
+												if (soundEffects && soundEffects.length > 0) {
+													// reverse 중일 때는 사운드 재생 안 함
+													if (lineTextEffect.getTimeline().reversed()) return;
+													playSounds(soundEffects);
+												}
+
+												if (visualEffects && visualEffects.length > 0) {
+													playVisuals(visualEffects);
+												}
+											},
+											undefined,
+											"<0.2",
+										); // ">" = 이전 애니메이션 끝
+										if (textEffects && textEffects.length > 0) {
+											playTexts(textEffects, lineTextEffect, ref);
+										}
+									},
+								});
+								splitInstancesMap.current.set(ref, splitInstance);
+							} else if (currentRevealEffect == "TYPEWRITER") {
+								// 기존 SplitText가 있으면 revert
+								if (splitInstancesMap.current.has(ref)) {
+									const existingInstance = splitInstancesMap.current.get(ref);
+									existingInstance?.revert();
+									splitInstancesMap.current.delete(ref);
+								}
+
+								lineTextEffect.addEffect("TYPEWRITER", ref);
+
+								const { soundEffects, visualEffects, textEffects } = chunk;
+								lineTextEffect.getTimeline().call(
+									() => {
+										if (soundEffects && soundEffects.length > 0) {
+											// reverse 중일 때는 사운드 재생 안 함
 											if (lineTextEffect.getTimeline().reversed()) return;
-											if (soundEffects && soundEffects.length > 0)
-												playSounds(soundEffects);
-											if (visualEffects && visualEffects.length > 0)
-												playVisuals(visualEffects);
-										},
-										undefined,
-										"<0.2",
-									);
-									if (textEffects && textEffects.length > 0) {
-										playTexts(textEffects, lineTextEffect, ref);
-									}
-								},
-							});
-							splitInstancesMap.current.set(ref, splitInstance);
-						} else if (currentRevealEffect == "TYPEWRITER") {
-							if (splitInstancesMap.current.has(ref)) {
-								splitInstancesMap.current.get(ref)?.revert();
-								splitInstancesMap.current.delete(ref);
-							}
-							lineTextEffect.addEffect("TYPEWRITER", ref);
-							const { soundEffects, visualEffects, textEffects } = chunk;
-							lineTextEffect.getTimeline().call(
-								() => {
-									if (lineTextEffect.getTimeline().reversed()) return;
-									if (soundEffects && soundEffects.length > 0)
-										playSounds(soundEffects);
-									if (visualEffects && visualEffects.length > 0)
-										playVisuals(visualEffects);
-								},
-								undefined,
-								"<0.2",
-							);
-							if (textEffects && textEffects.length > 0) {
-								playTexts(textEffects, lineTextEffect, ref);
-							}
-						} else if (currentRevealEffect == "TEXT_SCRAMBLE_GLITCH") {
-							if (splitInstancesMap.current.has(ref)) {
-								splitInstancesMap.current.get(ref)?.revert();
-								splitInstancesMap.current.delete(ref);
-							}
-							lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
-							const { soundEffects, visualEffects, textEffects } = chunk;
-							lineTextEffect.getTimeline().call(
-								() => {
-									if (lineTextEffect.getTimeline().reversed()) return;
-									if (soundEffects && soundEffects.length > 0)
-										playSounds(soundEffects);
-									if (visualEffects && visualEffects.length > 0)
-										playVisuals(visualEffects);
-								},
-								undefined,
-								"<0.2",
-							);
-							if (textEffects && textEffects.length > 0) {
-								playTexts(textEffects, lineTextEffect, ref);
+
+											playSounds(soundEffects);
+										}
+
+										if (visualEffects && visualEffects.length > 0) {
+											playVisuals(visualEffects);
+										}
+									},
+									undefined,
+									"<0.2",
+								); // ">" = 이전 애니메이션 끝
+
+								if (textEffects && textEffects.length > 0) {
+									playTexts(textEffects, lineTextEffect, ref);
+								}
+							} else if (currentRevealEffect == "TEXT_SCRAMBLE_GLITCH") {
+								// 기존 SplitText가 있으면 revert
+								if (splitInstancesMap.current.has(ref)) {
+									const existingInstance = splitInstancesMap.current.get(ref);
+									existingInstance?.revert();
+									splitInstancesMap.current.delete(ref);
+								}
+
+								lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
+
+								const { soundEffects, visualEffects, textEffects } = chunk;
+								lineTextEffect.getTimeline().call(
+									() => {
+										if (soundEffects && soundEffects.length > 0) {
+											if (lineTextEffect.getTimeline().reversed()) return;
+											playSounds(soundEffects);
+										}
+										if (visualEffects && visualEffects.length > 0) {
+											playVisuals(visualEffects);
+										}
+									},
+									undefined,
+									"<0.2",
+								);
+
+								if (textEffects && textEffects.length > 0) {
+									playTexts(textEffects, lineTextEffect, ref);
+								}
 							}
 						}
-					}
+					});
+
+					linesRef.current.set(lineIdx, lineTextEffect);
 				});
-				linesRef.current.set(lineIdx, lineTextEffect);
-			});
 
-			await playLinesSequentially();
+				// Step 3: linesRef 순차 재생
+				const lineCount = linesRef.current.size;
+				const lineInterval = 100;
+
+				// 순차적으로 라인 실행하는 async 함수
+				const playLinesSequentially = async () => {
+					for (const [lineIdx, lineTextEffect] of linesRef.current.entries()) {
+						const lineData = currentSegmentData.lines[lineIdx];
+						if (!lineData) return; // 안전 체크
+
+						const { image, soundEffects, visualEffects } =
+							lineData.preLineEffects;
+
+						// preLineEffects 이미지가 있으면 먼저 처리 (await로 대기)
+						if (
+							image?.url &&
+							imageContainerRef.current &&
+							maskRef.current &&
+							screenRef.current
+						) {
+							await imageManager.addImage(
+								image.url,
+								image.type,
+								imageContainerRef.current,
+								maskRef.current,
+								// screenRef.current,
+								image.sustain_until,
+							);
+						}
+						playSounds(soundEffects);
+						playVisuals(visualEffects);
+
+						// 라인 애니메이션 완료를 Promise로 대기
+						await new Promise<void>((resolve) => {
+							const tl = lineTextEffect.getTimeline();
+
+							// 타임라인 완료 시 호출될 콜백
+							tl.eventCallback("onComplete", () => {
+								// 마지막 라인이면 사용자 인터랙션 가능하게 설정
+								if (lineIdx == lineCount - 1) {
+									userInteractionTimeoutRef.current = setTimeout(() => {
+										setUserInterected(false);
+									}, 800);
+								}
+
+								// lineInterval 후 다음 라인으로
+								setTimeout(() => resolve(), lineInterval);
+							});
+
+							// 애니메이션 시작
+							lineTextEffect.play();
+						});
+					}
+				};
+
+				playLinesSequentially();
+			}, 0);
 		};
-
 		const recoverySegment = async () => {
 			if (visualEffectsRef.current) {
 				visualEffectManager.init(visualEffectsRef.current);
 			}
+
 			const currentSegmentData = introScript[currentSegment].inheritedEffects;
 			if (currentSegmentData.images.length > 0) {
 				const imagePromises = currentSegmentData.images.map((image) => {
@@ -447,6 +523,7 @@ export default function MainIntro({
 				});
 				await Promise.all(imagePromises);
 			}
+
 			const { audio: soundEffects, visual: visualEffects } = currentSegmentData;
 			playSounds(soundEffects);
 			playVisuals(visualEffects);
@@ -464,15 +541,18 @@ export default function MainIntro({
 		};
 	}, [currentSegment, introScript, needsRecover]);
 
+	// 모바일 기기 감지
 	const isMobile =
 		typeof window !== "undefined" &&
 		/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 	useEffect(() => {
 		if (!isMobile) return;
+
 		const handleVisibilityChange = () => {
 			segmentCleanup(true);
 		};
+
 		document.addEventListener("visibilitychange", handleVisibilityChange);
 		return () => {
 			document.removeEventListener("visibilitychange", handleVisibilityChange);
@@ -493,10 +573,12 @@ export default function MainIntro({
 				className="absolute inset-0 pointer-events-none w-full h-full"
 				style={{ zIndex: 60 }}
 			/>
+
 			<div
 				ref={visualEffectsRef}
 				className="absolute inset-0 pointer-events-none w-full h-full"
 			/>
+
 			<div
 				ref={screenRef}
 				className="max-w-4xl flex flex-col items-center justify-center space-y-5"
