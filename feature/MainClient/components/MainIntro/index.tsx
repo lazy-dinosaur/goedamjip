@@ -33,6 +33,13 @@ type PendingStop = {
 	id: string;
 };
 
+const revealEffects = [
+	"FADE_IN",
+	"TYPEWRITER",
+	"RISE_FROM_BOTTOM",
+	"TEXT_SCRAMBLE_GLITCH",
+];
+
 export default function MainIntro({
 	introScript,
 	needsRecoverState,
@@ -58,7 +65,6 @@ export default function MainIntro({
 
 	const onClick = useCallback(async () => {
 		setUserInterected(true);
-		audioManager.stopOnShots();
 		let completedCount = 0;
 		const totalLines = linesRef.current.size;
 
@@ -156,7 +162,7 @@ export default function MainIntro({
 			}
 		});
 	};
-	const playVisual = (visualEffects: VisualEffect[]) => {
+	const playVisuals = (visualEffects: VisualEffect[]) => {
 		visualEffects.forEach((effect) => {
 			if (typeof effect == "object" && effect.status === "start") {
 				visualEffectManager.play(effect.tag, { loop: true });
@@ -174,7 +180,86 @@ export default function MainIntro({
 			}
 		});
 	};
+	const playTexts = (
+		textEffects: string[],
+		textEffectInstance: TextEffect,
+		textContainer: HTMLSpanElement,
+	) => {
+		textEffects.forEach((effectName) => {
+			if (!revealEffects.includes(effectName)) {
+				textEffectInstance.addEffect(
+					effectName,
+					textContainer,
+					undefined,
+					"-=0.3",
+				);
+			}
+		});
+	};
+	const cleanUpEffects = (recovery?: boolean) => {
+		splitInstancesMap.current.forEach((instance) => {
+			instance.revert();
+		});
+		splitInstancesMap.current.clear();
 
+		// 모든 효과 정리
+		linesRef.current.forEach((effect) => effect.clearAll());
+
+		// 모든 청크 요소의 GSAP 애니메이션 정리
+		chunksRef.current.forEach((element) => {
+			if (element) {
+				gsap.killTweensOf(element);
+				gsap.set(element, { clearProps: "all" });
+			}
+		});
+
+		if (recovery) {
+			audioManager.stopOnShots(0);
+			// 오디오/비주얼 효과 정리
+			pendingStopsRef.current.forEach((effect) => {
+				if (effect.type == "audio") {
+					audioManager.stop(effect.id);
+				} else if (effect.type == "visual") {
+					visualEffectManager.stop(effect.id);
+				}
+			});
+		} else {
+			audioManager.stopOnShots();
+			// 오디오/비주얼 효과 정리
+			pendingStopsRef.current.forEach((effect) => {
+				if (effect.type == "audio") {
+					audioManager.fade(effect.id, 1, 0, 500);
+					setTimeout(() => audioManager.stop(effect.id), 500);
+				} else if (effect.type == "visual") {
+					visualEffectManager.stop(effect.id);
+				}
+			});
+		}
+		pendingStopsRef.current.clear();
+
+		// chunksRef 초기화
+		chunksRef.current.clear();
+	};
+
+	const segmentCleanup = (recovery?: boolean) => {
+		// SplitText 인스턴스들 정리
+		if (recovery) {
+			// pending된 setTimeout들 취소
+			if (userInteractionTimeoutRef.current) {
+				clearTimeout(userInteractionTimeoutRef.current);
+				userInteractionTimeoutRef.current = null;
+			}
+			if (recoveryTimeoutRef.current) {
+				clearTimeout(recoveryTimeoutRef.current);
+				recoveryTimeoutRef.current = null;
+			}
+			visualEffectManager.stopAll();
+			imageManager.clearAll();
+			setUserInterected(true);
+		}
+
+		cleanUpEffects(recovery);
+	};
 	useLayoutEffect(() => {
 		const initSegment = async (recovery?: boolean) => {
 			// visualEffectManager 초기화
@@ -204,14 +289,7 @@ export default function MainIntro({
 			const { soundEffects, visualEffects } = currentSegmentData.segmentEffects;
 
 			playSounds(soundEffects);
-			playVisual(visualEffects);
-
-			const revealEffects = [
-				"FADE_IN",
-				"TYPEWRITER",
-				"RISE_FROM_BOTTOM",
-				"TEXT_SCRAMBLE_GLITCH",
-			];
+			playVisuals(visualEffects);
 
 			// 이전 세그먼트 청크들 opacity 초기화
 			// Step 1: chunksRef 등록 완료 대기
@@ -274,9 +352,9 @@ export default function MainIntro({
 
 										lineTextEffect.getTimeline().add(split, "-=0.3");
 
+										const { soundEffects, visualEffects, textEffects } = chunk;
 										lineTextEffect.getTimeline().call(
 											() => {
-												const { soundEffects, visualEffects } = chunk;
 												if (soundEffects && soundEffects.length > 0) {
 													// reverse 중일 때는 사운드 재생 안 함
 													if (lineTextEffect.getTimeline().reversed()) return;
@@ -284,23 +362,14 @@ export default function MainIntro({
 												}
 
 												if (visualEffects && visualEffects.length > 0) {
-													playVisual(visualEffects);
+													playVisuals(visualEffects);
 												}
 											},
 											undefined,
 											"<0.2",
 										); // ">" = 이전 애니메이션 끝
-										if (chunk.textEffects && chunk.textEffects.length > 0) {
-											chunk.textEffects.forEach((effectName) => {
-												if (!revealEffects.includes(effectName)) {
-													lineTextEffect.addEffect(
-														effectName,
-														ref,
-														undefined,
-														"-=0.3",
-													);
-												}
-											});
+										if (textEffects && textEffects.length > 0) {
+											playTexts(textEffects, lineTextEffect, ref);
 										}
 									},
 								});
@@ -315,9 +384,9 @@ export default function MainIntro({
 
 								lineTextEffect.addEffect("TYPEWRITER", ref);
 
+								const { soundEffects, visualEffects, textEffects } = chunk;
 								lineTextEffect.getTimeline().call(
 									() => {
-										const { soundEffects, visualEffects } = chunk;
 										if (soundEffects && soundEffects.length > 0) {
 											// reverse 중일 때는 사운드 재생 안 함
 											if (lineTextEffect.getTimeline().reversed()) return;
@@ -326,24 +395,15 @@ export default function MainIntro({
 										}
 
 										if (visualEffects && visualEffects.length > 0) {
-											playVisual(visualEffects);
+											playVisuals(visualEffects);
 										}
 									},
 									undefined,
 									"<0.2",
 								); // ">" = 이전 애니메이션 끝
 
-								if (chunk.textEffects && chunk.textEffects.length > 0) {
-									chunk.textEffects.forEach((effectName) => {
-										if (!revealEffects.includes(effectName)) {
-											lineTextEffect.addEffect(
-												effectName,
-												ref,
-												undefined,
-												"-=0.3",
-											);
-										}
-									});
+								if (textEffects && textEffects.length > 0) {
+									playTexts(textEffects, lineTextEffect, ref);
 								}
 							} else if (currentRevealEffect == "TEXT_SCRAMBLE_GLITCH") {
 								// 기존 SplitText가 있으면 revert
@@ -355,32 +415,23 @@ export default function MainIntro({
 
 								lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
 
+								const { soundEffects, visualEffects, textEffects } = chunk;
 								lineTextEffect.getTimeline().call(
 									() => {
-										const { soundEffects, visualEffects } = chunk;
 										if (soundEffects && soundEffects.length > 0) {
 											if (lineTextEffect.getTimeline().reversed()) return;
 											playSounds(soundEffects);
 										}
 										if (visualEffects && visualEffects.length > 0) {
-											playVisual(visualEffects);
+											playVisuals(visualEffects);
 										}
 									},
 									undefined,
 									"<0.2",
 								);
 
-								if (chunk.textEffects && chunk.textEffects.length > 0) {
-									chunk.textEffects.forEach((effectName) => {
-										if (!revealEffects.includes(effectName)) {
-											lineTextEffect.addEffect(
-												effectName,
-												ref,
-												undefined,
-												"-=0.3",
-											);
-										}
-									});
+								if (textEffects && textEffects.length > 0) {
+									playTexts(textEffects, lineTextEffect, ref);
 								}
 							}
 						}
@@ -416,7 +467,7 @@ export default function MainIntro({
 							);
 						}
 						playSounds(soundEffects);
-						playVisual(visualEffects);
+						playVisuals(visualEffects);
 
 						// 라인 애니메이션 시작
 						lineTextEffect.play();
@@ -469,7 +520,7 @@ export default function MainIntro({
 
 			const { audio: soundEffects, visual: visualEffects } = currentSegmentData;
 			playSounds(soundEffects);
-			playVisual(visualEffects);
+			playVisuals(visualEffects);
 		};
 
 		const recoverInit = async () => {
@@ -479,39 +530,7 @@ export default function MainIntro({
 
 		needsRecover ? recoverInit() : initSegment();
 
-		return () => {
-			// SplitText 인스턴스들 정리
-			splitInstancesMap.current.forEach((instance) => {
-				instance.revert();
-			});
-			splitInstancesMap.current.clear();
-
-			// 모든 효과 정리
-			linesRef.current.forEach((effect) => effect.clearAll());
-
-			// 모든 청크 요소의 GSAP 애니메이션 정리
-			chunksRef.current.forEach((element) => {
-				if (element) {
-					gsap.killTweensOf(element);
-					gsap.set(element, { clearProps: "all" });
-				}
-			});
-
-			// 오디오/비주얼 효과 정리
-			pendingStopsRef.current.forEach((effect) => {
-				if (effect.type == "audio") {
-					audioManager.fade(effect.id, 1, 0, 500);
-					setTimeout(() => audioManager.stop(effect.id), 500);
-				} else if (effect.type == "visual") {
-					visualEffectManager.stop(effect.id);
-				}
-				// 원본 ref에서도 제거
-			});
-			pendingStopsRef.current.clear();
-
-			// chunksRef 초기화
-			chunksRef.current.clear();
-		};
+		return segmentCleanup;
 	}, [currentSegment, introScript, needsRecover]);
 
 	// 모바일 기기 감지
@@ -523,50 +542,7 @@ export default function MainIntro({
 		if (!isMobile) return;
 
 		const handleVisibilityChange = () => {
-			// pending된 setTimeout들 취소
-			if (userInteractionTimeoutRef.current) {
-				clearTimeout(userInteractionTimeoutRef.current);
-				userInteractionTimeoutRef.current = null;
-			}
-			if (recoveryTimeoutRef.current) {
-				clearTimeout(recoveryTimeoutRef.current);
-				recoveryTimeoutRef.current = null;
-			}
-
-			splitInstancesMap.current.forEach((instance) => {
-				instance.revert();
-			});
-			splitInstancesMap.current.clear();
-
-			// 모든 효과 정리
-			linesRef.current.forEach((effect) => effect.clearAll());
-
-			// 모든 청크 요소의 GSAP 애니메이션 정리
-			chunksRef.current.forEach((element) => {
-				if (element) {
-					gsap.killTweensOf(element);
-					gsap.set(element, { clearProps: "all" });
-				}
-			});
-
-			// 오디오/비주얼 효과 정리
-			pendingStopsRef.current.forEach((effect) => {
-				if (effect.type == "audio") {
-					audioManager.stop(effect.id);
-				} else if (effect.type == "visual") {
-					visualEffectManager.stop(effect.id);
-				}
-				// 원본 ref에서도 제거
-			});
-			pendingStopsRef.current.clear();
-
-			// chunksRef 초기화
-			chunksRef.current.clear();
-
-			audioManager.stopOnShots(0);
-			visualEffectManager.stopAll();
-			imageManager.clearAll();
-			setUserInterected(true);
+			segmentCleanup(true);
 		};
 
 		document.addEventListener("visibilitychange", handleVisibilityChange);
