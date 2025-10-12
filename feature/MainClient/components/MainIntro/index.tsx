@@ -16,7 +16,11 @@ import { ContinueMark } from "@/component/ContinueMark";
 import audioManager from "@/lib/audio/audioManager";
 import visualEffectManager from "@/lib/visual/visualEffectManager";
 import imageManager from "@/lib/image/imageManager";
-import { ProcessedSegment } from "@/types/script.types";
+import {
+	ProcessedSegment,
+	SoundEffect,
+	VisualEffect,
+} from "@/types/script.types";
 interface MainIntroProps {
 	introScript: ProcessedSegment[];
 	changeStage: () => void;
@@ -49,8 +53,9 @@ export default function MainIntro({
 	const imageContainerRef = useRef<HTMLDivElement>(null);
 	const screenRef = useRef<HTMLDivElement>(null);
 	const maskRef = useRef<HTMLDivElement>(null);
+	const userInteractionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const recoveryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-	// clicke
 	const onClick = useCallback(async () => {
 		setUserInterected(true);
 		audioManager.stopOnShots();
@@ -136,6 +141,40 @@ export default function MainIntro({
 		onSegmentChange,
 	]);
 
+	const playSounds = (soundEffects: SoundEffect[]) => {
+		soundEffects.forEach((effect) => {
+			if (effect.status == "start") {
+				audioManager.play(effect.tag, { loop: true });
+			} else if (effect.status == "stop") {
+				pendingStopsRef.current.add({ id: effect.tag, type: "audio" }); // 저장만
+			} else if (effect.loop) {
+				audioManager.play(effect.tag, { loop: true });
+				pendingStopsRef.current.add({ id: effect.tag, type: "audio" }); // 저장만
+			}
+			{
+				audioManager.play(effect.tag, { repeat: effect.repeat, loop: false });
+			}
+		});
+	};
+	const playVisual = (visualEffects: VisualEffect[]) => {
+		visualEffects.forEach((effect) => {
+			if (typeof effect == "object" && effect.status === "start") {
+				visualEffectManager.play(effect.tag, { loop: true });
+			} else if (typeof effect == "object" && effect.status === "stop") {
+				pendingStopsRef.current.add({ id: effect.tag, type: "visual" });
+			} else {
+				visualEffectManager.play(
+					typeof effect == "object" ? effect.tag : effect,
+					{ loop: true },
+				);
+				pendingStopsRef.current.add({
+					id: typeof effect == "object" ? effect.tag : effect,
+					type: "visual",
+				});
+			}
+		});
+	};
+
 	useLayoutEffect(() => {
 		const initSegment = async (recovery?: boolean) => {
 			// visualEffectManager 초기화
@@ -145,6 +184,7 @@ export default function MainIntro({
 
 			// Background 이미지 먼저 처리 (await로 애니메이션 완료 대기)
 			const currentSegmentData = introScript[currentSegment];
+
 			if (
 				currentSegmentData.background?.url &&
 				imageContainerRef.current &&
@@ -162,37 +202,9 @@ export default function MainIntro({
 			}
 
 			const { soundEffects, visualEffects } = currentSegmentData.segmentEffects;
-			soundEffects.forEach((effect) => {
-				if (effect.status == "start") {
-					audioManager.play(effect.tag, { loop: true });
-				} else if (effect.status == "stop") {
-					pendingStopsRef.current.add({ id: effect.tag, type: "audio" }); // 저장만
-				} else {
-					audioManager.play(effect.tag, { repeat: effect.repeat, loop: false });
 
-					pendingStopsRef.current.add({
-						id: effect.tag,
-						type: "audio",
-					}); // 저장만
-				}
-			});
-
-			visualEffects.forEach((effect) => {
-				if (typeof effect == "object" && effect.status === "start") {
-					visualEffectManager.play(effect.tag, { loop: true });
-				} else if (typeof effect == "object" && effect.status === "stop") {
-					pendingStopsRef.current.add({ id: effect.tag, type: "visual" });
-				} else {
-					visualEffectManager.play(
-						typeof effect == "object" ? effect.tag : effect,
-						{ loop: true },
-					);
-					pendingStopsRef.current.add({
-						id: typeof effect == "object" ? effect.tag : effect,
-						type: "visual",
-					});
-				}
-			});
+			playSounds(soundEffects);
+			playVisual(visualEffects);
 
 			const revealEffects = [
 				"FADE_IN",
@@ -264,75 +276,15 @@ export default function MainIntro({
 
 										lineTextEffect.getTimeline().call(
 											() => {
-												if (
-													chunk.soundEffects &&
-													chunk.soundEffects.length > 0
-												) {
+												const { soundEffects, visualEffects } = chunk;
+												if (soundEffects && soundEffects.length > 0) {
 													// reverse 중일 때는 사운드 재생 안 함
 													if (lineTextEffect.getTimeline().reversed()) return;
-
-													chunk.soundEffects?.forEach((effect) => {
-														if (effect.status == "start") {
-															audioManager.play(effect.tag, { loop: true });
-														} else if (effect.status == "stop") {
-															pendingStopsRef.current.add({
-																id: effect.tag,
-																type: "audio",
-															}); // 저장만
-														} else if (effect.loop == true) {
-															audioManager.play(effect.tag, { loop: true });
-															pendingStopsRef.current.add({
-																id: effect.tag,
-																type: "audio",
-															}); // 저장만
-														} else {
-															audioManager.play(effect.tag, {
-																loop: false,
-																repeat: effect.repeat,
-															});
-
-															pendingStopsRef.current.add({
-																id: effect.tag,
-																type: "audio",
-															}); // 저장만
-														}
-													});
+													playSounds(soundEffects);
 												}
 
-												if (
-													chunk.visualEffects &&
-													chunk.visualEffects.length > 0
-												) {
-													chunk.visualEffects.forEach((effect) => {
-														if (
-															typeof effect == "object" &&
-															effect.status === "start"
-														) {
-															visualEffectManager.play(effect.tag, {
-																loop: true,
-															});
-														} else if (
-															typeof effect == "object" &&
-															effect.status === "stop"
-														) {
-															pendingStopsRef.current.add({
-																id: effect.tag,
-																type: "visual",
-															});
-														} else {
-															visualEffectManager.play(
-																typeof effect == "object" ? effect.tag : effect,
-																{ loop: true },
-															);
-															pendingStopsRef.current.add({
-																id:
-																	typeof effect == "object"
-																		? effect.tag
-																		: effect,
-																type: "visual",
-															});
-														}
-													});
+												if (visualEffects && visualEffects.length > 0) {
+													playVisual(visualEffects);
 												}
 											},
 											undefined,
@@ -365,64 +317,16 @@ export default function MainIntro({
 
 								lineTextEffect.getTimeline().call(
 									() => {
-										if (chunk.soundEffects && chunk.soundEffects.length > 0) {
+										const { soundEffects, visualEffects } = chunk;
+										if (soundEffects && soundEffects.length > 0) {
 											// reverse 중일 때는 사운드 재생 안 함
 											if (lineTextEffect.getTimeline().reversed()) return;
 
-											chunk.soundEffects?.forEach((effect) => {
-												if (effect.status == "start") {
-													audioManager.play(effect.tag, { loop: true });
-												} else if (effect.status == "stop") {
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "audio",
-													}); // 저장만
-												} else if (effect.loop == true) {
-													audioManager.play(effect.tag, { loop: true });
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "audio",
-													}); // 저장만
-												} else {
-													audioManager.play(effect.tag, {
-														loop: false,
-														repeat: effect.repeat,
-													});
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "audio",
-													}); // 저장만
-												}
-											});
+											playSounds(soundEffects);
 										}
 
-										if (chunk.visualEffects && chunk.visualEffects.length > 0) {
-											chunk.visualEffects.forEach((effect) => {
-												if (
-													typeof effect == "object" &&
-													effect.status === "start"
-												) {
-													visualEffectManager.play(effect.tag, { loop: true });
-												} else if (
-													typeof effect == "object" &&
-													effect.status === "stop"
-												) {
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "visual",
-													});
-												} else {
-													visualEffectManager.play(
-														typeof effect == "object" ? effect.tag : effect,
-														{ loop: true },
-													);
-
-													pendingStopsRef.current.add({
-														id: typeof effect == "object" ? effect.tag : effect,
-														type: "visual",
-													});
-												}
-											});
+										if (visualEffects && visualEffects.length > 0) {
+											playVisual(visualEffects);
 										}
 									},
 									undefined,
@@ -453,62 +357,13 @@ export default function MainIntro({
 
 								lineTextEffect.getTimeline().call(
 									() => {
-										if (chunk.soundEffects && chunk.soundEffects.length > 0) {
+										const { soundEffects, visualEffects } = chunk;
+										if (soundEffects && soundEffects.length > 0) {
 											if (lineTextEffect.getTimeline().reversed()) return;
-
-											chunk.soundEffects?.forEach((effect) => {
-												if (effect.status == "start") {
-													audioManager.play(effect.tag, { loop: true });
-												} else if (effect.status == "stop") {
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "audio",
-													});
-												} else if (effect.loop == true) {
-													audioManager.play(effect.tag, { loop: true });
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "audio",
-													}); // 저장만
-												} else {
-													audioManager.play(effect.tag, {
-														loop: false,
-														repeat: effect.repeat,
-													});
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "audio",
-													}); // 저장만
-												}
-											});
+											playSounds(soundEffects);
 										}
-										if (chunk.visualEffects && chunk.visualEffects.length > 0) {
-											chunk.visualEffects.forEach((effect) => {
-												if (
-													typeof effect == "object" &&
-													effect.status === "start"
-												) {
-													visualEffectManager.play(effect.tag, { loop: true });
-												} else if (
-													typeof effect == "object" &&
-													effect.status === "stop"
-												) {
-													pendingStopsRef.current.add({
-														id: effect.tag,
-														type: "visual",
-													});
-												} else {
-													visualEffectManager.play(
-														typeof effect == "object" ? effect.tag : effect,
-														{ loop: true },
-													);
-
-													pendingStopsRef.current.add({
-														id: typeof effect == "object" ? effect.tag : effect,
-														type: "visual",
-													});
-												}
-											});
+										if (visualEffects && visualEffects.length > 0) {
+											playVisual(visualEffects);
 										}
 									},
 									undefined,
@@ -560,41 +415,8 @@ export default function MainIntro({
 								image.sustain_until,
 							);
 						}
-
-						soundEffects.forEach((effect) => {
-							if (effect.status == "start") {
-								audioManager.play(effect.tag, { loop: true });
-							} else if (effect.status == "stop") {
-								pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
-							} else {
-								audioManager.play(effect.tag, {
-									repeat: effect.repeat,
-									loop: false,
-								});
-								pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
-							}
-						});
-
-						visualEffects.forEach((effect) => {
-							if (typeof effect == "object" && effect.status === "start") {
-								visualEffectManager.play(effect.tag, { loop: true });
-							} else if (
-								typeof effect == "object" &&
-								effect.status === "stop"
-							) {
-								pendingStopsRef.current.add({ id: effect.tag, type: "visual" });
-							} else {
-								visualEffectManager.play(
-									typeof effect == "object" ? effect.tag : effect,
-									{ loop: true },
-								);
-
-								pendingStopsRef.current.add({
-									id: typeof effect == "object" ? effect.tag : effect,
-									type: "visual",
-								});
-							}
-						});
+						playSounds(soundEffects);
+						playVisual(visualEffects);
 
 						// 라인 애니메이션 시작
 						lineTextEffect.play();
@@ -602,7 +424,7 @@ export default function MainIntro({
 						// 마지막 라인이면 complete 이벤트 추가
 						if (lineIdx == lineCount - 1) {
 							lineTextEffect.getTimeline().eventCallback("onComplete", () => {
-								setTimeout(() => {
+								userInteractionTimeoutRef.current = setTimeout(() => {
 									setUserInterected(false);
 								}, 800);
 							});
@@ -646,42 +468,13 @@ export default function MainIntro({
 			}
 
 			const { audio: soundEffects, visual: visualEffects } = currentSegmentData;
-
-			soundEffects.forEach((effect) => {
-				if (effect.status == "start") {
-					audioManager.play(effect.tag, { loop: true });
-				} else if (effect.status == "stop") {
-					pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
-				} else {
-					audioManager.play(effect.tag, {
-						repeat: effect.repeat,
-						loop: false,
-					});
-					pendingStopsRef.current.add({ id: effect.tag, type: "audio" });
-				}
-			});
-
-			visualEffects.forEach((effect) => {
-				if (typeof effect == "object" && effect.status === "start") {
-					visualEffectManager.play(effect.tag, { loop: true });
-				} else if (typeof effect == "object" && effect.status === "stop") {
-					pendingStopsRef.current.add({ id: effect.tag, type: "visual" });
-				} else {
-					visualEffectManager.play(
-						typeof effect == "object" ? effect.tag : effect,
-						{ loop: true },
-					);
-					pendingStopsRef.current.add({
-						id: typeof effect == "object" ? effect.tag : effect,
-						type: "visual",
-					});
-				}
-			});
+			playSounds(soundEffects);
+			playVisual(visualEffects);
 		};
 
 		const recoverInit = async () => {
 			await recoverySegment();
-			setTimeout(() => setNeedRecover(false), 800);
+			recoveryTimeoutRef.current = setTimeout(() => setNeedRecover(false), 800);
 		};
 
 		needsRecover ? recoverInit() : initSegment();
@@ -730,46 +523,50 @@ export default function MainIntro({
 		if (!isMobile) return;
 
 		const handleVisibilityChange = () => {
-			if (document.hidden) {
-				// 화면이 숨겨질 때 음소거
-				//
-				//
-				// SplitText 인스턴스들 정리
-				splitInstancesMap.current.forEach((instance) => {
-					instance.revert();
-				});
-				splitInstancesMap.current.clear();
-
-				// 모든 효과 정리
-				linesRef.current.forEach((effect) => effect.clearAll());
-
-				// 모든 청크 요소의 GSAP 애니메이션 정리
-				chunksRef.current.forEach((element) => {
-					if (element) {
-						gsap.killTweensOf(element);
-						gsap.set(element, { clearProps: "all" });
-					}
-				});
-
-				pendingStopsRef.current.forEach((effect) => {
-					if (effect.type == "audio") {
-						audioManager.stop(effect.id);
-					} else if (effect.type == "visual") {
-						visualEffectManager.stop(effect.id);
-					}
-					// 원본 ref에서도 제거
-				});
-				pendingStopsRef.current.clear();
-				chunksRef.current.clear();
-
-				audioManager.stopOnShots();
-				setUserInterected(true);
-				Howler.mute(true);
-				visualEffectManager.stopAll();
-				imageManager.clearAll();
-			} else {
-				setUserInterected(true);
+			// pending된 setTimeout들 취소
+			if (userInteractionTimeoutRef.current) {
+				clearTimeout(userInteractionTimeoutRef.current);
+				userInteractionTimeoutRef.current = null;
 			}
+			if (recoveryTimeoutRef.current) {
+				clearTimeout(recoveryTimeoutRef.current);
+				recoveryTimeoutRef.current = null;
+			}
+
+			splitInstancesMap.current.forEach((instance) => {
+				instance.revert();
+			});
+			splitInstancesMap.current.clear();
+
+			// 모든 효과 정리
+			linesRef.current.forEach((effect) => effect.clearAll());
+
+			// 모든 청크 요소의 GSAP 애니메이션 정리
+			chunksRef.current.forEach((element) => {
+				if (element) {
+					gsap.killTweensOf(element);
+					gsap.set(element, { clearProps: "all" });
+				}
+			});
+
+			// 오디오/비주얼 효과 정리
+			pendingStopsRef.current.forEach((effect) => {
+				if (effect.type == "audio") {
+					audioManager.stop(effect.id);
+				} else if (effect.type == "visual") {
+					visualEffectManager.stop(effect.id);
+				}
+				// 원본 ref에서도 제거
+			});
+			pendingStopsRef.current.clear();
+
+			// chunksRef 초기화
+			chunksRef.current.clear();
+
+			audioManager.stopOnShots(0);
+			visualEffectManager.stopAll();
+			imageManager.clearAll();
+			setUserInterected(true);
 		};
 
 		document.addEventListener("visibilitychange", handleVisibilityChange);
