@@ -681,7 +681,7 @@ export default function MainIntro({
 
 		const recoverInit = async () => {
 			await recoverySegment();
-			setNeedRecover(false);
+			setTimeout(() => setNeedRecover(false), 800);
 		};
 
 		needsRecover ? recoverInit() : initSegment();
@@ -727,7 +727,7 @@ export default function MainIntro({
 		/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 	useEffect(() => {
-		// if (!isMobile) return;
+		if (!isMobile) return;
 
 		const handleVisibilityChange = () => {
 			if (document.hidden) {
@@ -805,7 +805,7 @@ export default function MainIntro({
 				{introScript[currentSegment].lines.map((line, lineIdx) => (
 					<div
 						key={`seg${currentSegment}-line-${lineIdx}`}
-						className="relative md:max-w-9/10 text-center text-korean"
+						className="relative w-full md:max-w-9/10"
 					>
 						{line.chunks.map((chunk, chunkIdx) => (
 							<span
