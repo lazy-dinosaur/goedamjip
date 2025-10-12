@@ -2585,7 +2585,7 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "ROOMTONE_HOUSE_CREAK",
+					tag: "ROOMTONE_HOUSE_CREAKS",
 					status: "stop",
 				},
 				{
