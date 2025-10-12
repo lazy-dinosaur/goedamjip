@@ -24,7 +24,7 @@ export const SCREEN_FLICKER: VisualEffectCreator = (options = {}) => {
 		inset: 0;
 		/* KEY 2: 곱하기 효과를 위해 순수한 검은색 대신 어두운 회색을 사용합니다. */
 		/* 100% 검은색은 모든 것을 검게 만들어버립니다. */
-		background: rgb(40, 40, 40);
+		background: rgb(60, 60, 60);
 		pointer-events: none;
 	`;
 
