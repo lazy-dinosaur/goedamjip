@@ -1,4 +1,11 @@
-import { useEffect, useCallback, Dispatch, SetStateAction } from "react";
+import {
+	useEffect,
+	useCallback,
+	Dispatch,
+	SetStateAction,
+	useRef,
+	useState,
+} from "react";
 import { Howler } from "howler";
 
 interface ReactivationModalProps {
@@ -11,6 +18,8 @@ export default function ReactivationModal({
 	onReactivationStateChange,
 }: ReactivationModalProps) {
 	const [needsReactivation, setNeedsReactivation] = needsReactivationState;
+	const [canClick, setCanClick] = useState(false);
+	const safeDelayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	// 모바일 기기 감지
 	const isMobile =
@@ -38,7 +47,26 @@ export default function ReactivationModal({
 		};
 	}, [isMobile, onReactivationStateChange]);
 
+	// needsReactivation이 true가 되면 500ms 후 클릭 가능하게
+	useEffect(() => {
+		if (needsReactivation) {
+			setCanClick(false);
+			safeDelayTimeoutRef.current = setTimeout(() => {
+				setCanClick(true);
+			}, 800);
+		}
+
+		return () => {
+			if (safeDelayTimeoutRef.current) {
+				clearTimeout(safeDelayTimeoutRef.current);
+				safeDelayTimeoutRef.current = null;
+			}
+		};
+	}, [needsReactivation]);
+
 	const handleReactivation = useCallback(async () => {
+		if (!canClick) return; // 500ms 이전에는 클릭 무시
+
 		try {
 			// Howler 음소거 해제
 			Howler.mute(false);
@@ -53,7 +81,7 @@ export default function ReactivationModal({
 		} catch (error) {
 			console.error("Failed to reactivate audio:", error);
 		}
-	}, [onReactivationStateChange]);
+	}, [canClick, onReactivationStateChange]);
 
 	if (!needsReactivation) return null;
 
