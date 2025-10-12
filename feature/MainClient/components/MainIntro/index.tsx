@@ -620,6 +620,10 @@ export default function MainIntro({
 			}, 0);
 		};
 		const recoverySegment = async () => {
+			if (visualEffectsRef.current) {
+				visualEffectManager.init(visualEffectsRef.current);
+			}
+
 			const currentSegmentData = introScript[currentSegment].inheritedEffects;
 			if (currentSegmentData.images.length > 0) {
 				const imagePromises = currentSegmentData.images.map((image) => {
@@ -723,12 +727,30 @@ export default function MainIntro({
 		/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 	useEffect(() => {
-		if (!isMobile) return;
+		// if (!isMobile) return;
 
 		const handleVisibilityChange = () => {
 			if (document.hidden) {
 				// 화면이 숨겨질 때 음소거
 				//
+				//
+				// SplitText 인스턴스들 정리
+				splitInstancesMap.current.forEach((instance) => {
+					instance.revert();
+				});
+				splitInstancesMap.current.clear();
+
+				// 모든 효과 정리
+				linesRef.current.forEach((effect) => effect.clearAll());
+
+				// 모든 청크 요소의 GSAP 애니메이션 정리
+				chunksRef.current.forEach((element) => {
+					if (element) {
+						gsap.killTweensOf(element);
+						gsap.set(element, { clearProps: "all" });
+					}
+				});
+
 				pendingStopsRef.current.forEach((effect) => {
 					if (effect.type == "audio") {
 						audioManager.stop(effect.id);
@@ -738,6 +760,9 @@ export default function MainIntro({
 					// 원본 ref에서도 제거
 				});
 				pendingStopsRef.current.clear();
+				chunksRef.current.clear();
+
+				audioManager.stopOnShots();
 				setUserInterected(true);
 				Howler.mute(true);
 				visualEffectManager.stopAll();
@@ -780,7 +805,7 @@ export default function MainIntro({
 				{introScript[currentSegment].lines.map((line, lineIdx) => (
 					<div
 						key={`seg${currentSegment}-line-${lineIdx}`}
-						className="relative w-full"
+						className="relative md:max-w-9/10 text-center text-korean"
 					>
 						{line.chunks.map((chunk, chunkIdx) => (
 							<span
