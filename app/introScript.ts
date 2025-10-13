@@ -18,38 +18,59 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "실제로 작년 겨울 가평에서 일어난 사건이었어.",
+				text: "실제로 경기도 산간지역에서 있었던 일이야.",
 				chunks: [
 					{
-						content: "실제로 작년 겨울 가평에서 일어난 사건이었어.",
+						content: "실제로 경기도 산간지역에서 있었던 일이야.",
 					},
 				],
 				preLineEffects: {
 					image: null,
-					soundEffects: [],
+					soundEffects: [
+						{
+							tag: "CROW_CAW_SINGLE",
+						},
+					],
 					visualEffects: [],
 				},
 			},
 		],
-		background: null,
+		background: {
+			url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-1",
+			type: "background",
+			sustain_until: "seg-7",
+		},
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "ROOMTONE_EMPTY_NEUTRAL",
+					tag: "DRONE_LOOMING_PRESENCE",
+					status: "start",
+				},
+				{
+					tag: "WIND_LEAVES_GENTLE",
 					status: "start",
 				},
 			],
-			visualEffects: [],
+			visualEffects: [
+				{
+					tag: "OVERLAY_FOG",
+					status: "start",
+				},
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "start",
+				},
+			],
 		},
 	},
 	{
 		id: "seg-2",
 		lines: [
 			{
-				text: "천광교라는 곳 들어본 적 있어?",
+				text: "강민호라는 사람이 있었어.",
 				chunks: [
 					{
-						content: "천광교라는 곳 들어본 적 있어?",
+						content: "강민호라는 사람이 있었어.",
 					},
 				],
 				preLineEffects: {
@@ -59,10 +80,10 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "사이비 종교로 유명한 그 곳 말이야.",
+				text: "42살, 제약회사 연구원이었는데.",
 				chunks: [
 					{
-						content: "사이비 종교로 유명한 그 곳 말이야.",
+						content: "42살, 제약회사 연구원이었는데.",
 					},
 				],
 				preLineEffects: {
@@ -82,24 +103,27 @@ export const introScript: Segment[] = [
 		id: "seg-3",
 		lines: [
 			{
-				text: "이진우라는 다큐멘터리 감독이 있었어.",
+				text: "어느 날 병원에서 깨어났어.",
 				chunks: [
 					{
-						content: "이진우라는 다큐멘터리 감독이 있었어.",
+						content: "어느 날 병원에서 깨어났어.",
 					},
 				],
 				preLineEffects: {
 					image: null,
-					soundEffects: [],
-					visualEffects: [],
+					soundEffects: [
+						{
+							tag: "HEART_MONITOR_STEADY",
+						},
+					],
+					visualEffects: ["SCREEN_BLUR"],
 				},
 			},
 			{
-				text: "35살, 10년 동안 그 교단에서 신앙생활을 했던 사람이었거든.",
+				text: "기억을 완전히 잃은 채로.",
 				chunks: [
 					{
-						content:
-							"35살, 10년 동안 그 교단에서 신앙생활을 했던 사람이었거든.",
+						content: "기억을 완전히 잃은 채로.",
 					},
 				],
 				preLineEffects: {
@@ -119,15 +143,10 @@ export const introScript: Segment[] = [
 		id: "seg-4",
 		lines: [
 			{
-				text: "온라인에서 천광교를 비판하는 댓글들이 너무 많아졌거든.",
+				text: "의사가 말하길, 산에서 쓰러진 채로 발견됐다더군.",
 				chunks: [
 					{
-						content: "온라인에서 천광교를 비판하는 댓글들이 너무 많아졌거든.",
-						soundEffects: [
-							{
-								tag: "KEYBOARD_TYPING",
-							},
-						],
+						content: "의사가 말하길, 산에서 쓰러진 채로 발견됐다더군.",
 					},
 				],
 				preLineEffects: {
@@ -137,10 +156,10 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "이진우는 참을 수가 없었어.",
+				text: "머리에 큰 상처가 있었다고 해.",
 				chunks: [
 					{
-						content: "이진우는 참을 수가 없었어.",
+						content: "머리에 큰 상처가 있었다고 해.",
 					},
 				],
 				preLineEffects: {
@@ -160,10 +179,10 @@ export const introScript: Segment[] = [
 		id: "seg-5",
 		lines: [
 			{
-				text: "밤마다 그 댓글들을 읽으면서 손끝이 떨렸거든.",
+				text: "그런데 이상한 건.",
 				chunks: [
 					{
-						content: "밤마다 그 댓글들을 읽으면서 손끝이 떨렸거든.",
+						content: "그런데 이상한 건.",
 					},
 				],
 				preLineEffects: {
@@ -173,176 +192,15 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "분노가 치밀어 올랐어.",
+				text: "손가락 끝이 계속 따끔거렸다는 거야.",
 				chunks: [
 					{
-						content: "분노가 치밀어 올랐어.",
+						content: "손가락 끝이 계속 따끔거렸다는 거야.",
 						soundEffects: [
 							{
-								tag: "HEARTBEAT_FAST",
+								tag: "MALE_BREATH_CLOSE",
 							},
 						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "ROOMTONE_EMPTY_NEUTRAL",
-					status: "stop",
-				},
-			],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-6",
-		lines: [
-			{
-				text: "그래서 결심했어.",
-				chunks: [
-					{
-						content: "그래서 결심했어.",
-						soundEffects: [
-							{
-								tag: "SWITCH_CLICK_FLAT",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "교단의 진짜 모습을 보여주는 다큐멘터리를 만들겠다고.",
-				chunks: [
-					{
-						content: "교단의 진짜 모습을 보여주는 다큐멘터리를 만들겠다고.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SURROUNDED_THREAT",
-					status: "start",
-				},
-				{
-					tag: "DRONE_SURROUNDED_THREAT",
-					status: "stop",
-				},
-			],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-7",
-		lines: [
-			{
-				text: "2023년 12월, 눈 쌓인 가평의 천광교 수련원에 도착했어.",
-				chunks: [
-					{
-						content: "2023년 12월, 눈 쌓인 가평의 천광교 수련원에 도착했어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "TWIG_SNAP_CLOSE",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "울창한 산속 3층 건물이었거든.",
-				chunks: [
-					{
-						content: "울창한 산속 3층 건물이었거든.",
-						soundEffects: [
-							{
-								tag: "WOOD_CREAK",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: {
-			url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-7",
-			type: "background",
-			sustain_until: "seg-10",
-		},
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "FOREST_AMBIENCE_NIGHT",
-					status: "start",
-				},
-				{
-					tag: "FOREST_AMBIENCE_NIGHT",
-					status: "stop",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "OVERLAY_SNOWFALL",
-					status: "start",
-				},
-				{
-					tag: "OVERLAY_SNOWFALL",
-					status: "stop",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-8",
-		lines: [
-			{
-				text: "건물에 들어서자마자 등골이 서늘해졌어.",
-				chunks: [
-					{
-						content: "건물에 들어서자마자",
-					},
-					{
-						content: "등골이 서늘해졌어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "난방이 부족해서 온통 차가웠거든.",
-				chunks: [
-					{
-						content: "난방이 부족해서 온통 차가웠거든.",
 					},
 				],
 				preLineEffects: {
@@ -359,13 +217,112 @@ export const introScript: Segment[] = [
 		},
 	},
 	{
-		id: "seg-9",
+		id: "seg-6",
 		lines: [
 			{
-				text: "교주 박천광을 만났어.",
+				text: "퇴원하면서 본인 소지품을 받았어.",
 				chunks: [
 					{
-						content: "교주 박천광을 만났어.",
+						content: "퇴원하면서 본인 소지품을 받았어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "ZIPPER_SOUND",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "그 안에 'BioChem Lab' 출입증이 들어있었어.",
+				chunks: [
+					{
+						content: "그 안에 'BioChem Lab' 출입증이 들어있었어.",
+						textEffects: ["INK_REVEAL"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_LOOMING_PRESENCE",
+					status: "stop",
+				},
+				{
+					tag: "WIND_LEAVES_GENTLE",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "OVERLAY_FOG",
+					status: "stop",
+				},
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-7",
+		lines: [
+			{
+				text: "민호는 그곳으로 가봤어.",
+				chunks: [
+					{
+						content: "민호는 그곳으로 가봤어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "FOOTSTEP_EXTERIOR_SLOW_HEAVY",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "혹시 자신의 과거를 알 수 있을까 해서.",
+				chunks: [
+					{
+						content: "혹시 자신의 과거를 알 수 있을까 해서.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-8",
+		lines: [
+			{
+				text: "경기도 산골짜기 깊숙한 곳.",
+				chunks: [
+					{
+						content: "경기도 산골짜기 깊숙한 곳.",
 					},
 				],
 				preLineEffects: {
@@ -375,10 +332,78 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "58살의 그는 20년 전부터 그곳을 이끌어왔어.",
+				text: "을씨년스럽게 버려진 연구소 건물이 있었어.",
 				chunks: [
 					{
-						content: "58살의 그는 20년 전부터 그곳을 이끌어왔어.",
+						content: "을씨년스럽게 버려진 연구소 건물이 있었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: {
+			url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-8",
+			type: "background",
+			sustain_until: "seg-9",
+		},
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "WIND_LEAVES_GENTLE",
+					status: "start",
+				},
+				{
+					tag: "WIND_LEAVES_GENTLE",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "OVERLAY_FOG",
+					status: "start",
+				},
+				{
+					tag: "OVERLAY_FOG",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-9",
+		lines: [
+			{
+				text: "정문은 굳게 잠겨 있었지만.",
+				chunks: [
+					{
+						content: "정문은 굳게 잠겨 있었지만.",
+						soundEffects: [
+							{
+								tag: "METAL_CREAK",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "옆쪽 창문이 깨져 있었어.",
+				chunks: [
+					{
+						content: "옆쪽 창문이 깨져 있었어.",
+						soundEffects: [
+							{
+								tag: "GLASS_BREAK",
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -398,10 +423,15 @@ export const introScript: Segment[] = [
 		id: "seg-10",
 		lines: [
 			{
-				text: '"우리의 기적을 세상에 알려달라"',
+				text: "민호는 그 안으로 들어갔어.",
 				chunks: [
 					{
-						content: '"우리의 기적을 세상에 알려달라"',
+						content: "민호는 그 안으로 들어갔어.",
+						soundEffects: [
+							{
+								tag: "FOOTSTEPS_TUNNEL",
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -411,10 +441,69 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "박천광이 이진우에게 말했어.",
+				text: "손전등 불빛만이 어둠을 비추고 있었어.",
 				chunks: [
 					{
-						content: "박천광이 이진우에게 말했어.",
+						content: "손전등 불빛만이 어둠을 비추고 있었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "SWITCH_ONOFF_TOGGLE",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
+		background: {
+			url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-10",
+			type: "background",
+			sustain_until: "seg-20",
+		},
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_WAREHOUSE_ECHO",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "EFFECT_FLASHLIGHT",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-11",
+		lines: [
+			{
+				text: "복도 양쪽으로 실험실들이 늘어서 있었어.",
+				chunks: [
+					{
+						content: "복도 양쪽으로 실험실들이 늘어서 있었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "한 발, 한 발, 조심스럽게 걸어갔어.",
+				chunks: [
+					{
+						content: "한 발, 한 발, 조심스럽게 걸어갔어.",
+						soundEffects: [
+							{
+								tag: "FOOTSTEP_LIGHT_TAPS",
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -431,79 +520,31 @@ export const introScript: Segment[] = [
 		},
 	},
 	{
-		id: "seg-11",
-		lines: [
-			{
-				text: "첫 촬영이 시작됐어.",
-				chunks: [
-					{
-						content: "첫 촬영이 시작됐어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "3층 법당에서 신도들이 기도하는 모습을 담았거든.",
-				chunks: [
-					{
-						content: "3층 법당에서",
-					},
-					{
-						content: "신도들이 기도하는 모습을 담았거든.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: {
-			url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-11",
-			type: "background",
-			sustain_until: "seg-43",
-		},
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
 		id: "seg-12",
 		lines: [
 			{
-				text: "법당 중앙에는 아름다운 백자 향로가 있었어.",
+				text: "첫 번째 실험실을 들여다봤어.",
 				chunks: [
 					{
-						content: "법당 중앙에는",
-					},
-					{
-						content: "아름다운 백자 향로가 있었어.",
+						content: "첫 번째 실험실을 들여다봤어.",
 					},
 				],
 				preLineEffects: {
-					image: {
-						url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-12",
-						type: "overlay",
-						sustain_until: "seg-15",
-					},
+					image: null,
 					soundEffects: [],
 					visualEffects: [],
 				},
 			},
 			{
-				text: "조선 후기 작품으로 보이는 고급스러운 물건이었어.",
+				text: "깨진 유리관들이 바닥에 널려 있었어.",
 				chunks: [
 					{
-						content: "조선 후기 작품으로 보이는",
-					},
-					{
-						content: "고급스러운 물건이었어.",
+						content: "깨진 유리관들이 바닥에 널려 있었어.",
+						soundEffects: [
+							{
+								tag: "GLASS_BREAK",
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -523,13 +564,10 @@ export const introScript: Segment[] = [
 		id: "seg-13",
 		lines: [
 			{
-				text: "이상하게도 그 향로에서는 미세한 온기가 느껴졌어.",
+				text: "두 번째 실험실도 마찬가지였어.",
 				chunks: [
 					{
-						content: "이상하게도",
-					},
-					{
-						content: "그 향로에서는 미세한 온기가 느껴졌어.",
+						content: "두 번째 실험실도 마찬가지였어.",
 					},
 				],
 				preLineEffects: {
@@ -539,10 +577,15 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "마치 살아있는 것처럼 말이야.",
+				text: "벽면에는 이상한 얼룩들이 묻어 있었어.",
 				chunks: [
 					{
-						content: "마치 살아있는 것처럼 말이야.",
+						content: "벽면에는 이상한 얼룩들이 묻어 있었어.",
+						soundEffects: [
+							{
+								tag: "INSECT_SWARM_BUZZING",
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -562,10 +605,10 @@ export const introScript: Segment[] = [
 		id: "seg-14",
 		lines: [
 			{
-				text: "신도들은 그 향로 앞에서 조용히 기도했어.",
+				text: "세 번째 실험실에서 멈췄어.",
 				chunks: [
 					{
-						content: "신도들은 그 향로 앞에서 조용히 기도했어.",
+						content: "세 번째 실험실에서 멈췄어.",
 					},
 				],
 				preLineEffects: {
@@ -575,10 +618,15 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "카메라는 그 평화로운 장면을 담고 있었고.",
+				text: "뭔가 다른 냄새가 났거든.",
 				chunks: [
 					{
-						content: "카메라는 그 평화로운 장면을 담고 있었고.",
+						content: "뭔가 다른 냄새가 났거든.",
+						soundEffects: [
+							{
+								tag: "INSECT_SWARM_BUZZING",
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -598,111 +646,32 @@ export const introScript: Segment[] = [
 		id: "seg-15",
 		lines: [
 			{
-				text: "그런데 갑자기였어.",
+				text: "그때 벽을 손전등으로 비춰봤어.",
 				chunks: [
 					{
-						content: "그런데 갑자기였어.",
+						content: "그때 벽을 손전등으로 비춰봤어.",
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [
 						{
-							tag: "AUDIO_CUTOUT_ABRUPT",
+							tag: "SWITCH_CLICK_FLAT",
 						},
 					],
 					visualEffects: [],
 				},
 			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SUBVERTING_CHAOS",
-					status: "start",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "VISUAL_VIGNETTE",
-					status: "start",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-16",
-		lines: [
 			{
-				text: "향로에서 연기가 솟아올랐어.",
+				text: "아무것도 없는 것 같았어.",
 				chunks: [
 					{
-						content: "향로에서 연기가 솟아올랐어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "FEMALE_GHOST_PRESENCE",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [
-				{
-					tag: "OVERLAY_FOG",
-					status: "start",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-17",
-		lines: [
-			{
-				text: "이진우가 카메라 LCD를 내려다봤는데...",
-				chunks: [
-					{
-						content: "이진우가 카메라 LCD를 내려다봤는데...",
+						content: "아무것도 없는 것 같았어.",
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "연기 속에서 여인의 기괴한 형상이 보였어.",
-				chunks: [
-					{
-						content: "연기 속에서 여인의 기괴한 형상이 보였어.",
-						textEffects: ["PULSE_SLOW"],
-						soundEffects: [
-							{
-								tag: "SWALLOWING_NERVOUS",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: {
-						url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-17",
-						type: "overlay",
-						sustain_until: "seg-19",
-					},
-					soundEffects: [
-						{
-							tag: "FEMALE_BREATH_CLOSE",
-						},
-					],
 					visualEffects: [],
 				},
 			},
@@ -714,24 +683,30 @@ export const introScript: Segment[] = [
 		},
 	},
 	{
-		id: "seg-18",
+		id: "seg-16",
 		lines: [
 			{
-				text: "순간 심장이 빨리 뛰기 시작했지만 이진우는 흥분했어.",
+				text: '"아무것도 없네..."',
 				chunks: [
 					{
-						content: "순간 심장이 빨리 뛰기 시작했지만",
-						soundEffects: [
-							{
-								tag: "HEARTBEAT_FAST",
-							},
-						],
+						content: '"아무것도 없네..."',
+						textEffects: ["JITTER"],
 					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "민호가 중얼거렸어.",
+				chunks: [
 					{
-						content: "이진우는 흥분했어.",
+						content: "민호가 중얼거렸어.",
 						soundEffects: [
 							{
-								tag: "MALE_BREATH_CLOSE",
+								tag: "SWALLOWING_NERVOUS",
 							},
 						],
 					},
@@ -742,12 +717,94 @@ export const introScript: Segment[] = [
 					visualEffects: [],
 				},
 			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_WAREHOUSE_ECHO",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "EFFECT_FLASHLIGHT",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-17",
+		lines: [
 			{
-				text: '"이것이 바로 증거다!" 하면서 말이야.',
+				text: "쨍!",
 				chunks: [
 					{
-						content: '"이것이 바로 증거다!" 하면서 말이야.',
-						textEffects: ["PULSE_FAST"],
+						content: "쨍!",
+						textEffects: ["SHAKE"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "GLASS_SHATTER",
+						},
+					],
+					visualEffects: ["SCREEN_SHAKE"],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_SURROUNDED_THREAT",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "SCREEN_FLICKER",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-18",
+		lines: [
+			{
+				text: "어디선가 유리가 깨지는 소리가 났어.",
+				chunks: [
+					{
+						content: "어디선가 유리가 깨지는 소리가 났어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "WINDOW_GLASS_SHATTER",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "깜짝 놀란 민호가 손전등을 떨어뜨렸어.",
+				chunks: [
+					{
+						content: "깜짝 놀란 민호가",
+					},
+					{
+						content: "손전등을 떨어뜨렸어.",
+						soundEffects: [
+							{
+								tag: "METAL_IMPACT_DULL",
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -767,28 +824,29 @@ export const introScript: Segment[] = [
 		id: "seg-19",
 		lines: [
 			{
-				text: "교주는 그 향로에 대해 설명해줬어.",
+				text: "다시 주워서 벽을 비춰보니.",
 				chunks: [
 					{
-						content: "교주는 그 향로에 대해 설명해줬어.",
+						content: "다시 주워서 벽을 비춰보니.",
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [
 						{
-							tag: "TIBETAN_MONK_CHANT",
+							tag: "SWITCH_CLICK_FLAT",
 						},
 					],
 					visualEffects: [],
 				},
 			},
 			{
-				text: '"20년 전 구입한 신성한 유물"이라고 했어.',
+				text: "깊게 파인 긁힌 자국들이 선명하게 드러나 있었어.",
 				chunks: [
 					{
-						content: '"20년 전 구입한 신성한 유물"이라고 했어.',
-						textEffects: ["STYLE_FONT_ANCIENT_TRACE"],
+						content: "깊게 파인 긁힌 자국들이 선명하게 드러나 있었어.",
+						textEffects: ["INK_REVEAL"],
+						visualEffects: ["OVERLAY_HANDPRINT"],
 					},
 				],
 				preLineEffects: {
@@ -802,17 +860,13 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "DRONE_SUBVERTING_CHAOS",
+					tag: "DRONE_SURROUNDED_THREAT",
 					status: "stop",
 				},
 			],
 			visualEffects: [
 				{
-					tag: "VISUAL_VIGNETTE",
-					status: "stop",
-				},
-				{
-					tag: "OVERLAY_FOG",
+					tag: "SCREEN_FLICKER",
 					status: "stop",
 				},
 			],
@@ -822,14 +876,21 @@ export const introScript: Segment[] = [
 		id: "seg-20",
 		lines: [
 			{
-				text: "그날 밤 편집하면서 이진우는 이상한 것들을 발견했어.",
+				text: "뒤로 넘어지면서 민호는 깨달았어.",
 				chunks: [
 					{
-						content: "그날 밤 편집하면서 이진우는 이상한 것들을 발견했어.",
-						textEffects: ["INK_REVEAL"],
+						content: "뒤로 넘어지면서",
 						soundEffects: [
 							{
-								tag: "KEYBOARD_TYPING",
+								tag: "BREATH_HEAVY_PANIC",
+							},
+						],
+					},
+					{
+						content: "민호는 깨달았어.",
+						soundEffects: [
+							{
+								tag: "HEARTBEAT_SUDDEN_LOUD",
 							},
 						],
 					},
@@ -841,11 +902,11 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "하지만 모두 '영적 현상의 증거'로 해석했거든.",
+				text: "이곳에서 뭔가 끔찍한 일이 있었다는 걸.",
 				chunks: [
 					{
-						content: "하지만 모두 '영적 현상의 증거'로 해석했거든.",
-						textEffects: ["TYPEWRITER"],
+						content: "이곳에서 뭔가 끔찍한 일이 있었다는 걸.",
+						textEffects: ["PULSE_SLOW"],
 					},
 				],
 				preLineEffects: {
@@ -859,21 +920,21 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "ANALOG_TAPE_HISS",
+					tag: "ROOMTONE_BASEMENT_HUM",
 					status: "start",
 				},
 				{
-					tag: "ANALOG_TAPE_HISS",
+					tag: "ROOMTONE_BASEMENT_HUM",
 					status: "stop",
 				},
 			],
 			visualEffects: [
 				{
-					tag: "SCREEN_BLUR",
+					tag: "VISUAL_VIGNETTE",
 					status: "start",
 				},
 				{
-					tag: "SCREEN_BLUR",
+					tag: "VISUAL_VIGNETTE",
 					status: "stop",
 				},
 			],
@@ -883,195 +944,13 @@ export const introScript: Segment[] = [
 		id: "seg-21",
 		lines: [
 			{
-				text: "2일차 촬영이 시작됐어.",
+				text: "급하게 연구소를 나와서 마을로 향했어.",
 				chunks: [
 					{
-						content: "2일차 촬영이 시작됐어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "CONGREGATION_CHANT_RITUAL",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "신도들의 '기적 체험'을 계속 담았어.",
-				chunks: [
-					{
-						content: "신도들의 '기적 체험'을 계속 담았어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SURROUNDED_THREAT",
-					status: "start",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "VISUAL_CANDLE_FLICKER",
-					status: "start",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-22",
-		lines: [
-			{
-				text: "윤미선이라는 67살 할머니가 증언했어.",
-				chunks: [
-					{
-						content: "윤미선이라는 67살 할머니가 증언했어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: '"향로의 치유를 받았다"하면서 감격했거든.',
-				chunks: [
-					{
-						content: '"향로의 치유를 받았다"하면서 감격했거든.',
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SURROUNDED_THREAT",
-					status: "stop",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "VISUAL_CANDLE_FLICKER",
-					status: "stop",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-23",
-		lines: [
-			{
-				text: "그런데 할머니의 눈동자가 이상했어.",
-				chunks: [
-					{
-						content: "그런데 할머니의 눈동자가 이상했어.",
-					},
-					{
-						content: "초점이 없이 허공을 바라보고 있었어.",
-						textEffects: ["JITTER"],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "CURSE_WHISPER_LOW",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SCANNER_SIGNAL",
-					status: "start",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "SCREEN_BLUR",
-					status: "start",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-24",
-		lines: [
-			{
-				text: "다른 신도들도 마찬가지였어.",
-				chunks: [
-					{
-						content: "다른 신도들도 마찬가지였어.",
-					},
-					{
-						content: "모두 같은 표정으로 중얼거리고 있었거든.",
-						textEffects: ["PULSE_SLOW"],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "GHOSTLY_WHISPERS_OVERLAPPING",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SCANNER_SIGNAL",
-					status: "stop",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "SCREEN_BLUR",
-					status: "stop",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-25",
-		lines: [
-			{
-				text: "그런데 이상한 일이 일어났어.",
-				chunks: [
-					{
-						content: "그런데 이상한 일이 일어났어.",
-						textEffects: ["JITTER"],
-					},
-					{
-						content: "어제 촬영에 참여했던 윤미선이 갑자기 사라진 거야.",
+						content: "급하게 연구소를 나와서 마을로 향했어.",
 						soundEffects: [
 							{
-								tag: "SWALLOWING_NERVOUS",
+								tag: "FOOTSTEP_EXTERIOR_RUN",
 							},
 						],
 					},
@@ -1083,11 +962,72 @@ export const introScript: Segment[] = [
 				},
 			},
 		],
+		background: {
+			url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-21",
+			type: "background",
+			sustain_until: "seg-28",
+		},
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "RURAL_AMBIENCE_NIGHT",
+					status: "start",
+				},
+				{
+					tag: "RURAL_AMBIENCE_NIGHT",
+					status: "stop",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-22",
+		lines: [
+			{
+				text: "근데 마을 사람들 반응이 이상했어.",
+				chunks: [
+					{
+						content: "근데 마을 사람들 반응이 이상했어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "BioChem Lab 얘기만 나오면 다들 피했거든.",
+				chunks: [
+					{
+						content: "BioChem Lab 얘기만 나오면 ",
+					},
+					{
+						content: "다들 피했거든.",
+						soundEffects: [
+							{
+								tag: "SHUSH_CLOSE",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "FOOTSTEP_EXTERIOR_SLOW_HEAVY",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
 		background: null,
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "ROOMTONE_EMPTY_NEUTRAL",
+					tag: "DRONE_UNSTABLE_PULSE",
 					status: "start",
 				},
 			],
@@ -1100,16 +1040,13 @@ export const introScript: Segment[] = [
 		},
 	},
 	{
-		id: "seg-26",
+		id: "seg-23",
 		lines: [
 			{
-				text: "이진우가 찾아보니 할머니 방은 텅 비어있었어.",
+				text: "첫 번째 만난 아주머니는.",
 				chunks: [
 					{
-						content: "이진우가 찾아보니 할머니 방은 텅 비어있었어.",
-					},
-					{
-						content: "침구도, 옷도 모든 게 그대로인데 사람만 없었어.",
+						content: "첫 번째 만난 아주머니는.",
 					},
 				],
 				preLineEffects: {
@@ -1119,20 +1056,25 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "침구도, 옷도 모든 게 그대로인데 사람만 없었어.",
+				text: '"그런 곳은 모른다"며 문을 쾅 닫아버렸어.',
 				chunks: [
 					{
-						content: "이진우가 방 구석구석을 살폈다.",
+						content: '"그런 곳은 모른다"며 ',
 					},
 					{
-						content: "침구도, 옷도 모든 게 그대로인데 사람만 없었어.",
+						content: "문을 쾅 닫아버렸어.",
+						soundEffects: [
+							{
+								tag: "MALE_BREATH_CLOSE",
+							},
+						],
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [
 						{
-							tag: "PENCIL_WRITING",
+							tag: "DOOR_SLAM",
 						},
 					],
 					visualEffects: [],
@@ -1141,9 +1083,116 @@ export const introScript: Segment[] = [
 		],
 		background: null,
 		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-24",
+		lines: [
+			{
+				text: "두 번째 만난 아저씨는.",
+				chunks: [
+					{
+						content: "두 번째 만난 아저씨는.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "고개만 절레절레 흔들며 도망가듯 사라졌어.",
+				chunks: [
+					{
+						content: "고개만 절레절레 흔들며 도망가듯 사라졌어.",
+						textEffects: ["JITTER"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "FOOTSTEP_EXTERIOR_RUN",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-25",
+		lines: [
+			{
+				text: "그러던 중 박할아버지라는 분을 만났어.",
+				chunks: [
+					{
+						content: "그러던 중 박할아버지라는 분을 만났어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-26",
+		lines: [
+			{
+				text: "박할아버지가 민호를 유심히 쳐다봤어.",
+				chunks: [
+					{
+						content: "박할아버지가 민호를 유심히 쳐다봤어.",
+						textEffects: ["JITTER"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: '"당신... 혹시 그때 그 사람?"',
+				chunks: [
+					{
+						content: '"당신... 혹시 그때 그 사람?"',
+						textEffects: ["STYLE_BOLD"],
+						soundEffects: [
+							{
+								tag: "MALE_BREATH_CLOSE",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "ROOMTONE_EMPTY_NEUTRAL",
+					tag: "DRONE_UNSTABLE_PULSE",
 					status: "stop",
 				},
 			],
@@ -1159,19 +1208,28 @@ export const introScript: Segment[] = [
 		id: "seg-27",
 		lines: [
 			{
-				text: "밤늦게 이진우는 혼자 법당에서 촬영을 계속했어.",
+				text: "박할아버지가 신문 기사 하나를 내밀었어.",
 				chunks: [
 					{
-						content: "밤늦게 이진우는 혼자 법당에서 촬영을 계속했어.",
-						soundEffects: [
-							{
-								tag: "BREATH_SHAKY_PANIC",
-							},
-						],
+						content: "박할아버지가 신문 기사 하나를 내밀었어.",
 					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "PAGE_TURN",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "'불법 인체실험 의혹, BioChem Lab 강제 폐쇄'",
+				chunks: [
 					{
-						content: "조용한 공간, 향로만이 어둠 속에서 빛나고 있었어.",
-						textEffects: ["GLOW"],
+						content: "'불법 인체실험 의혹, BioChem Lab 강제 폐쇄'",
+						textEffects: ["INK_REVEAL", "STYLE_BOLD"],
 					},
 				],
 				preLineEffects: {
@@ -1185,17 +1243,13 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "ROOMTONE_BASEMENT_HUM",
+					tag: "ANALOG_TAPE_HISS",
 					status: "start",
-				},
-				{
-					tag: "ROOMTONE_BASEMENT_HUM",
-					status: "stop",
 				},
 			],
 			visualEffects: [
 				{
-					tag: "VISUAL_CANDLE_FLICKER",
+					tag: "SCREEN_BLUR",
 					status: "start",
 				},
 			],
@@ -1205,35 +1259,34 @@ export const introScript: Segment[] = [
 		id: "seg-28",
 		lines: [
 			{
-				text: "이상하게도 향로에서 맥박 같은 진동이 느껴졌어.",
+				text: '"이 기사 한번 읽어보시오."',
 				chunks: [
 					{
-						content: "이상하게도 향로에서 맥박 같은 진동이 느껴졌어.",
-					},
-					{
-						content: "살아있는 심장처럼 말이야.",
-						textEffects: ["PULSE_SLOW"],
+						content: '"이 기사 한번 읽어보시오."',
 						soundEffects: [
 							{
-								tag: "HEARTBEAT_SUDDEN_LOUD",
+								tag: "MALE_BREATH_CLOSE",
 							},
 						],
 					},
 				],
 				preLineEffects: {
-					image: {
-						url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-28",
-						type: "overlay",
-						sustain_until: "seg-31",
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "박할아버지의 목소리가 차갑게 식어있었어.",
+				chunks: [
+					{
+						content: "박할아버지의 목소리가 차갑게 식어있었어.",
+						textEffects: ["PULSE_SLOW"],
 					},
-					soundEffects: [
-						{
-							tag: "HEARTBEAT_FAST",
-						},
-						{
-							tag: "GHOSTLY_WHISPERS_OVERLAPPING",
-						},
-					],
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
 					visualEffects: [],
 				},
 			},
@@ -1242,104 +1295,135 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "DRONE_MACHINE_HEART",
-					status: "start",
+					tag: "ANALOG_TAPE_HISS",
+					status: "stop",
 				},
 			],
-			visualEffects: [],
+			visualEffects: [
+				{
+					tag: "SCREEN_BLUR",
+					status: "stop",
+				},
+			],
 		},
 	},
 	{
 		id: "seg-29",
 		lines: [
 			{
-				text: "쿵쾅",
+				text: "민호는 자기 집으로 돌아갔어.",
 				chunks: [
 					{
-						content: "쿵쾅",
-						textEffects: ["PULSE_FAST"],
+						content: "민호는 자기 집으로 돌아갔어.",
 						soundEffects: [
 							{
-								tag: "HEARTBEAT_SUDDEN_LOUD",
+								tag: "FOOTSTEP_LIGHT_TAPS",
 							},
 						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-30",
-		lines: [
-			{
-				text: "이진우의 심장이 향로와 같은 리듬으로 뛰기 시작했어.",
-				chunks: [
-					{
-						content: "이진우의 심장이 향로와 같은 리듬으로 뛰기 시작했어.",
-						textEffects: ["PULSE_SLOW"],
-						soundEffects: [
-							{
-								tag: "HEARTBEAT_FAST",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-31",
-		lines: [
-			{
-				text: "마이크를 통해 뭔가 들렸어.",
-				chunks: [
-					{
-						content: "마이크를 통해 뭔가 들렸어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "여성의 낮고 애절한 소리였거든.",
-				chunks: [
-					{
-						content: "여성의 낮고 애절한 소리였거든.",
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [
 						{
-							tag: "AUDIO_RESUME_WITH_NOISE",
-						},
-						{
-							tag: "FEMALE_SOBBING_DISTANT",
+							tag: "DOOR_OPEN",
 						},
 					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "더 많은 단서를 찾아보려고.",
+				chunks: [
+					{
+						content: "더 많은 단서를 찾아보려고.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: {
+			url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-29",
+			type: "background",
+			sustain_until: "seg-65",
+		},
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_HOUSE_CREAKS",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "start",
+				},
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-30",
+		lines: [
+			{
+				text: "거실을 뒤졌지만 별다른 건 없었어.",
+				chunks: [
+					{
+						content: "거실을 뒤졌지만 별다른 건 없었어.",
+						soundEffects: [
+							{
+								tag: "CLOTH_DRAGGING",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [
+				{
+					tag: "EFFECT_FLASHLIGHT",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-31",
+		lines: [
+			{
+				text: "침실 옷장도 열어봤어. 평범한 옷들만 걸려 있었어.",
+				chunks: [
+					{
+						content: "침실 옷장도 열어봤어.",
+						soundEffects: [
+							{
+								tag: "DOOR_CREAK_SLOW",
+							},
+						],
+					},
+					{
+						content: "평범한 옷들만 걸려 있었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
 					visualEffects: [],
 				},
 			},
@@ -1354,11 +1438,18 @@ export const introScript: Segment[] = [
 		id: "seg-32",
 		lines: [
 			{
-				text: "으으음...",
+				text: "부엌 서랍들도 하나씩 다 열어봤어. 일상적인 물건들뿐이었어.",
 				chunks: [
 					{
-						content: "으으음...",
-						textEffects: ["JITTER"],
+						content: "부엌 서랍들도 하나씩 다 열어봤어.",
+						soundEffects: [
+							{
+								tag: "WOOD_CREAK",
+							},
+						],
+					},
+					{
+						content: "일상적인 물건들뿐이었어.",
 					},
 				],
 				preLineEffects: {
@@ -1378,11 +1469,79 @@ export const introScript: Segment[] = [
 		id: "seg-33",
 		lines: [
 			{
-				text: "이진우의 목덜미에 소름이 돋았어.",
+				text: "마지막으로 서재에 들어갔어.",
 				chunks: [
 					{
-						content: "이진우의 목덜미에 소름이 돋았어.",
-						textEffects: ["GLOW_RED"],
+						content: "마지막으로 서재에 들어갔어.",
+					},
+				],
+				preLineEffects: {
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-33",
+						type: "overlay",
+						sustain_until: "seg-35",
+					},
+					soundEffects: [
+						{
+							tag: "METAL_CREAK",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-34",
+		lines: [
+			{
+				text: "그 안에서 나온 게. 두꺼운 실험 일지와 거액의 현금다발이었어.",
+				chunks: [
+					{
+						content: "그 안에서 나온 게.",
+					},
+					{
+						content: "두꺼운 실험 일지와 거액의 현금다발이었어.",
+						soundEffects: [
+							{
+								tag: "PAGE_TURN",
+								repeat: 3,
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-35",
+		lines: [
+			{
+				text: "민호는 책상에 앉아서 일지를 펼쳤어.",
+				chunks: [
+					{
+						content: "민호는 책상에 앉아서 일지를 펼쳤어.",
+						soundEffects: [
+							{
+								tag: "PAGE_TURN",
+								repeat: 2,
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -1392,103 +1551,18 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "헤드폰을 벗고 주변을 둘러봤지만 아무것도 들리지 않았거든.",
+				text: "서류를 정리하는데. 종이에 집중하고 있었어.",
 				chunks: [
 					{
-						content:
-							"헤드폰을 벗고 주변을 둘러봤지만 아무것도 들리지 않았거든.",
+						content: "서류를 정리하는데.",
 						soundEffects: [
 							{
-								tag: "MALE_BREATH_CLOSE",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "RECORDING_PLAYBACK_STOP",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_MACHINE_HEART",
-					status: "stop",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "VISUAL_CANDLE_FLICKER",
-					status: "stop",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-34",
-		lines: [
-			{
-				text: "3일차가 되자 더 많은 신도들이 이상해졌어.",
-				chunks: [
-					{
-						content: "3일차가 되자 더 많은 신도들이 이상해졌어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "CONGREGATION_CHANT_RITUAL",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SUBVERTING_CHAOS",
-					status: "start",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "SCREEN_FLICKER",
-					status: "start",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-35",
-		lines: [
-			{
-				text: "한 신도는 손톱으로 자신의 팔을 긁어대더라. 피가 흘러도 멈추지 않았어.",
-				chunks: [
-					{
-						content: "한 신도는 손톱으로 자신의 팔을 긁어대더라.",
-						soundEffects: [
-							{
-								tag: "CLAW_SCRATCH",
+								tag: "PENCIL_WRITING",
 							},
 						],
 					},
 					{
-						content: "피가 흘러도 멈추지 않았어.",
-						soundEffects: [
-							{
-								tag: "LIQUID_DRIPPING_HEAVY",
-							},
-						],
+						content: "종이에 집중하고 있었어.",
 					},
 				],
 				preLineEffects: {
@@ -1508,50 +1582,64 @@ export const introScript: Segment[] = [
 		id: "seg-36",
 		lines: [
 			{
-				text: "다른 신도는 벽을 보며 누군가와 대화를 나누고 있었어.",
+				text: "첫 페이지를 넘기고.",
 				chunks: [
 					{
-						content: "다른 신도는 벽을 보며 누군가와 대화를 나누고 있었어.",
+						content: "첫 페이지를 넘기고.",
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [
 						{
-							tag: "MALE_WHISPER_CLOSE",
+							tag: "PAGE_TURN",
 						},
 					],
 					visualEffects: [],
 				},
 			},
 			{
-				text: '"네, 알겠습니다. 따르겠습니다"라고 중얼거리면서.',
+				text: "두 번째 페이지를 보고.",
 				chunks: [
 					{
-						content: '"네, 알겠습니다. 따르겠습니다"라고 중얼거리면서.',
+						content: "두 번째 페이지를 보고.",
 					},
 				],
 				preLineEffects: {
 					image: null,
-					soundEffects: [],
+					soundEffects: [
+						{
+							tag: "PAGE_TURN",
+						},
+					],
 					visualEffects: [],
 				},
 			},
 		],
 		background: null,
 		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
+			soundEffects: [
+				{
+					tag: "ROOMTONE_HOUSE_CREAKS",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "EFFECT_FLASHLIGHT",
+					status: "stop",
+				},
+			],
 		},
 	},
 	{
 		id: "seg-37",
 		lines: [
 			{
-				text: "교주 박천광도 불안해하더라.",
+				text: "세 번째 페이지에서 멈췄어.",
 				chunks: [
 					{
-						content: "교주 박천광도 불안해하더라.",
+						content: "세 번째 페이지에서 멈췄어.",
 					},
 				],
 				preLineEffects: {
@@ -1561,10 +1649,14 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "이마에 식은땀이 흐르고 있었거든.",
+				text: "자신의 사인이 선명하게 적혀 있었거든.",
 				chunks: [
 					{
-						content: "이마에 식은땀이 흐르고 있었거든.",
+						content: "자신의 사인이",
+					},
+					{
+						content: "선명하게 적혀 있었거든.",
+						textEffects: ["INK_REVEAL"],
 						soundEffects: [
 							{
 								tag: "SWALLOWING_NERVOUS",
@@ -1573,26 +1665,44 @@ export const introScript: Segment[] = [
 					},
 				],
 				preLineEffects: {
-					image: null,
-					soundEffects: [],
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-37",
+						type: "overlay",
+						sustain_until: "seg-38",
+					},
+					soundEffects: [
+						{
+							tag: "HEARTBEAT_SUDDEN_LOUD",
+						},
+					],
 					visualEffects: [],
 				},
 			},
 		],
 		background: null,
 		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
+			soundEffects: [
+				{
+					tag: "DRONE_SURROUNDED_THREAT",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "start",
+				},
+			],
 		},
 	},
 	{
 		id: "seg-38",
 		lines: [
 			{
-				text: '"촬영을 잠시 중단하는 게 어떨까"라고 말했어.',
+				text: "그런데 갑자기.",
 				chunks: [
 					{
-						content: '"촬영을 잠시 중단하는 게 어떨까"라고 말했어.',
+						content: "그런데 갑자기.",
 					},
 				],
 				preLineEffects: {
@@ -1602,21 +1712,29 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "하지만 목소리가 떨리고 있었어.",
+				text: "손가락 끝에서 뭔가 꿈틀거렸어.",
 				chunks: [
 					{
-						content: "하지만 목소리가 떨리고 있었어.",
+						content: "손가락 끝에서",
+					},
+					{
+						content: "뭔가 꿈틀거렸어.",
+						textEffects: ["JITTER"],
 						soundEffects: [
 							{
-								tag: "BREATH_SHAKY_PANIC",
+								tag: "CREATURE_CHITTERING",
 							},
 						],
 					},
 				],
 				preLineEffects: {
 					image: null,
-					soundEffects: [],
-					visualEffects: [],
+					soundEffects: [
+						{
+							tag: "HIGH_PITCH_RINGING_EARS",
+						},
+					],
+					visualEffects: ["SCREEN_SHAKE"],
 				},
 			},
 		],
@@ -1630,10 +1748,55 @@ export const introScript: Segment[] = [
 		id: "seg-39",
 		lines: [
 			{
-				text: "이진우는 더욱 열정적이었어.",
+				text: "검은 실 같은 게 피부 밑에서 꿈틀거리며 나오고 있었어.",
 				chunks: [
 					{
-						content: "이진우는 더욱 열정적이었어.",
+						content: "검은 실 같은 게 피부 밑에서",
+					},
+					{
+						content: "꿈틀거리며 나오고 있었어.",
+						soundEffects: [
+							{
+								tag: "LIQUID_DRIPPING_HEAVY",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-39",
+						type: "overlay",
+						sustain_until: "seg-40",
+					},
+					soundEffects: [
+						{
+							tag: "SLITHERING_ON_FLOOR",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-40",
+		lines: [
+			{
+				text: '"아악!"',
+				chunks: [
+					{
+						content: '"아악!"',
+						textEffects: ["SHAKE"],
+						soundEffects: [
+							{
+								tag: "MALE_SCREAM_TERROR",
+							},
+						],
 					},
 				],
 				preLineEffects: {
@@ -1643,11 +1806,66 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: '"이건 신앙의 시험이야!" 하면서 계속 촬영했거든.',
+				text: "민호가 손을 격렬하게 흔들었어.",
 				chunks: [
 					{
-						content: '"이건 신앙의 시험이야!" 하면서 계속 촬영했거든.',
-						textEffects: ["STYLE_BOLD"],
+						content: "민호가 손을 격렬하게 흔들었어.",
+						soundEffects: [
+							{
+								tag: "BREATH_HEAVY_PANIC",
+							},
+						],
+						visualEffects: ["SCREEN_SHAKE"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_SURROUNDED_THREAT",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-41",
+		lines: [
+			{
+				text: "책상을 박차고 일어나서.",
+				chunks: [
+					{
+						content: "책상을 박차고 일어나서.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "FOOTSTEP_WOOD_RUN_LIGHT",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "거울로 뛰어갔어.",
+				chunks: [
+					{
+						content: "거울로 뛰어갔어.",
 						soundEffects: [
 							{
 								tag: "HEARTBEAT_FAST",
@@ -1666,26 +1884,34 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "DRONE_SUBVERTING_CHAOS",
+					tag: "DRONE_LOOMING_PRESENCE",
+					status: "start",
+				},
+				{
+					tag: "DRONE_LOOMING_PRESENCE",
 					status: "stop",
 				},
 			],
 			visualEffects: [
 				{
-					tag: "SCREEN_FLICKER",
+					tag: "SCREEN_BLUR",
+					status: "start",
+				},
+				{
+					tag: "SCREEN_BLUR",
 					status: "stop",
 				},
 			],
 		},
 	},
 	{
-		id: "seg-40",
+		id: "seg-42",
 		lines: [
 			{
-				text: "오후 촬영 중이었어.",
+				text: "거울 속 자신의 얼굴을 봤어.",
 				chunks: [
 					{
-						content: "오후 촬영 중이었어.",
+						content: "거울 속 자신의 얼굴을 봤어.",
 					},
 				],
 				preLineEffects: {
@@ -1695,15 +1921,32 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "밝은 낮, 여러 사람들이 함께 있는 안전한 상황이었어.",
+				text: "눈동자에 미세한 검은 점들이 박혀 있었어.",
 				chunks: [
 					{
-						content: "밝은 낮, 여러 사람들이 함께 있는 안전한 상황이었어.",
+						content: "눈동자에",
+					},
+					{
+						content: "미세한 검은 점들이 박혀 있었어.",
+						textEffects: ["GLITCH"],
+						soundEffects: [
+							{
+								tag: "SWALLOWING_NERVOUS",
+							},
+						],
 					},
 				],
 				preLineEffects: {
-					image: null,
-					soundEffects: [],
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-42",
+						type: "overlay",
+						sustain_until: "seg-44",
+					},
+					soundEffects: [
+						{
+							tag: "HIGH_PITCH_RINGING_EARS",
+						},
+					],
 					visualEffects: [],
 				},
 			},
@@ -1712,89 +1955,13 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "CITY_AMBIENCE_DAY",
+					tag: "ANALOG_TAPE_HISS",
 					status: "start",
 				},
 			],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-41",
-		lines: [
-			{
-				text: "딸깍",
-				chunks: [
-					{
-						content: "딸깍",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "SWITCH_CLICK_FLAT",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-42",
-		lines: [
-			{
-				text: "카메라 셔터가 눌러지는 순간, 뷰파인더를 들여다보는데...",
-				chunks: [
-					{
-						content: "카메라 셔터가 눌러지는 순간, 뷰파인더를 들여다보는데...",
-					},
-				],
-				preLineEffects: {
-					image: {
-						url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-42",
-						type: "overlay",
-						sustain_until: "seg-43",
-					},
-					soundEffects: [
-						{
-							tag: "GHOSTLY_WHISPERS_OVERLAPPING",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "검은 그림자들이 향로 주변을 맴돌고 있었어.",
-				chunks: [
-					{
-						content: "검은 그림자들이 향로 주변을 맴돌고 있었어.",
-						soundEffects: [
-							{
-								tag: "HEARTBEAT_SUDDEN_LOUD",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
 			visualEffects: [
 				{
-					tag: "VISUAL_CANDLE_FLICKER",
+					tag: "OVERLAY_GLITCH",
 					status: "start",
 				},
 			],
@@ -1804,31 +1971,17 @@ export const introScript: Segment[] = [
 		id: "seg-43",
 		lines: [
 			{
-				text: "이진우가 카메라에서 눈을 떼고 직접 봤지만 아무것도 없었어.",
+				text: "다시 서재로 돌아가서 실험 일지를 읽어봤어.",
 				chunks: [
 					{
-						content: "이진우가 카메라에서 눈을 떼고 직접 봤지만",
-						textEffects: ["GLITCH"],
+						content: "다시 서재로 돌아가서 ",
 					},
 					{
-						content: "아무것도 없었어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "점점 손끝이 떨리기 시작했거든.",
-				chunks: [
-					{
-						content: "점점 손끝이 떨리기 시작했거든.",
-						textEffects: ["JITTER"],
+						content: "실험 일지를 읽어봤어.",
 						soundEffects: [
 							{
-								tag: "BREATH_SHAKY_PANIC",
+								tag: "PAGE_TURN",
+								repeat: 3,
 							},
 						],
 					},
@@ -1842,50 +1995,32 @@ export const introScript: Segment[] = [
 		],
 		background: null,
 		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "CITY_AMBIENCE_DAY",
-					status: "stop",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "VISUAL_CANDLE_FLICKER",
-					status: "stop",
-				},
-			],
+			soundEffects: [],
+			visualEffects: [],
 		},
 	},
 	{
 		id: "seg-44",
 		lines: [
 			{
-				text: "그날 밤 이진우는 교단 자료실로 갔어.",
+				text: "첫 번째 기록.",
 				chunks: [
 					{
-						content: "그날 밤 이진우는 교단 자료실로 갔어.",
-						soundEffects: [
-							{
-								tag: "FOOTSTEP_WOOD_NORMAL_CREAKY",
-							},
-						],
+						content: "첫 번째 기록.",
 					},
 				],
 				preLineEffects: {
 					image: null,
-					soundEffects: [
-						{
-							tag: "DOOR_CREAK_SLOW",
-						},
-					],
+					soundEffects: [],
 					visualEffects: [],
 				},
 			},
 			{
-				text: "향로의 진짜 출처를 알아보려고 했어.",
+				text: "'피험자 001, 남성 45세, 노숙자'",
 				chunks: [
 					{
-						content: "향로의 진짜 출처를 알아보려고 했어.",
+						content: "'피험자 001, 남성 45세, 노숙자'",
+						textEffects: ["TYPEWRITER"],
 					},
 				],
 				preLineEffects: {
@@ -1895,34 +2030,20 @@ export const introScript: Segment[] = [
 				},
 			},
 		],
-		background: {
-			url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-44",
-			type: "background",
-			sustain_until: "seg-52",
-		},
+		background: null,
 		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "ROOMTONE_BASEMENT_HUM",
-					status: "start",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "EFFECT_FLASHLIGHT",
-					status: "start",
-				},
-			],
+			soundEffects: [],
+			visualEffects: [],
 		},
 	},
 	{
 		id: "seg-45",
 		lines: [
 			{
-				text: "자료실은 먼지 냄새와 곰팡이 냄새가 진동했어.",
+				text: "두 번째 기록.",
 				chunks: [
 					{
-						content: "자료실은 먼지 냄새와 곰팡이 냄새가 진동했어.",
+						content: "두 번째 기록.",
 					},
 				],
 				preLineEffects: {
@@ -1932,306 +2053,10 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "오래된 서류들이 쌓여있었거든.",
+				text: "'피험자 002, 여성 38세, 노숙자'",
 				chunks: [
 					{
-						content: "오래된 서류들이 쌓여있었거든.",
-						textEffects: ["STYLE_FONT_ANCIENT_TRACE"],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-46",
-		lines: [
-			{
-				text: "거기서 충격적인 기록을 발견했어.",
-				chunks: [
-					{
-						content: "거기서 충격적인 기록을 발견했어.",
-						soundEffects: [
-							{
-								tag: "PAGE_TURN",
-								repeat: 5,
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "조선 후기 문서들이었거든.",
-				chunks: [
-					{
-						content: "조선 후기 문서들이었거든.",
-						textEffects: ["INK_REVEAL"],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-47",
-		lines: [
-			{
-				text: "그 향로는 무당 월선의 유품이었어.",
-				chunks: [
-					{
-						content: "그 향로는 무당 월선의 유품이었어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "CURSE_WHISPER_LOW",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "억울하게 죽임을 당한 후 원한이 깃들었다고 기록되어 있었어.",
-				chunks: [
-					{
-						content:
-							"억울하게 죽임을 당한 후 원한이 깃들었다고 기록되어 있었어.",
-						textEffects: ["GLOW_RED"],
-						soundEffects: [
-							{
-								tag: "SWALLOWING_NERVOUS",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-48",
-		lines: [
-			{
-				text: "이진우는 떨리는 손으로 더 읽어나갔어.",
-				chunks: [
-					{
-						content: "이진우는 떨리는 손으로 더 읽어나갔어.",
-						textEffects: ["JITTER"],
-						soundEffects: [
-							{
-								tag: "BREATH_SHAKY_PANIC",
-							},
-						],
-					},
-					{
-						content: '"그 향로에 접촉한 자는 모두..."',
-						textEffects: ["TEXT_SCRAMBLE_GLITCH"],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "GHOSTLY_WHISPERS_OVERLAPPING",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-49",
-		lines: [
-			{
-				text: "문서에는 끔찍한 내용들이 적혀있었어.",
-				chunks: [
-					{
-						content: "문서에는 끔찍한 내용들이 적혀있었어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "실종, 변사, 그리고 이상한 행동들이 반복됐다고 했거든.",
-				chunks: [
-					{
-						content: "실종, 변사, 그리고 이상한 행동들이 반복됐다고 했거든.",
-						textEffects: ["PULSE_SLOW"],
-						soundEffects: [
-							{
-								tag: "GHOSTLY_VOICE_PHASING",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-50",
-		lines: [
-			{
-				text: "김소영 간부가 뒤에서 속삭였어.",
-				chunks: [
-					{
-						content: "김소영 간부가 뒤에서 속삭였어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "FEMALE_WHISPER_CLOSE",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-			{
-				text: '"이제 그만하세요. 너무 위험해요."',
-				chunks: [
-					{
-						content: '"이제 그만하세요. 너무 위험해요."',
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-51",
-		lines: [
-			{
-				text: "김소영의 얼굴은 창백했어.",
-				chunks: [
-					{
-						content: "김소영의 얼굴은 창백했어.",
-						soundEffects: [
-							{
-								tag: "SWALLOWING_NERVOUS",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "다리까지 후들거리고 있었어.",
-				chunks: [
-					{
-						content: "다리까지 후들거리고 있었어.",
-						soundEffects: [
-							{
-								tag: "BREATH_SHAKY_PANIC",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-52",
-		lines: [
-			{
-				text: "하지만 이진우는 들을 수 없었어.",
-				chunks: [
-					{
-						content: "하지만 이진우는 들을 수 없었어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "HEARTBEAT_FAST",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "진실을 알아야겠다고 생각했거든.",
-				chunks: [
-					{
-						content: "진실을 알아야겠다고 생각했거든.",
+						content: "'피험자 002, 여성 38세, 노숙자'",
 						textEffects: ["TYPEWRITER"],
 					},
 				],
@@ -2246,26 +2071,26 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "ROOMTONE_BASEMENT_HUM",
+					tag: "ANALOG_TAPE_HISS",
 					status: "stop",
 				},
 			],
-			visualEffects: [],
+			visualEffects: [
+				{
+					tag: "OVERLAY_GLITCH",
+					status: "stop",
+				},
+			],
 		},
 	},
 	{
-		id: "seg-53",
+		id: "seg-46",
 		lines: [
 			{
-				text: "카메라를 들고 3층 법당으로 올라갔어.",
+				text: "세 번째 기록에서 충격을 받았어.",
 				chunks: [
 					{
-						content: "카메라를 들고 3층 법당으로 올라갔어.",
-						soundEffects: [
-							{
-								tag: "FOOTSTEPS_TUNNEL",
-							},
-						],
+						content: "세 번째 기록에서 충격을 받았어.",
 					},
 				],
 				preLineEffects: {
@@ -2274,37 +2099,28 @@ export const introScript: Segment[] = [
 					visualEffects: [],
 				},
 			},
-		],
-		background: {
-			url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-53",
-			type: "background",
-			sustain_until: "seg-70",
-		},
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "ROOMTONE_WAREHOUSE_ECHO",
-					status: "start",
-				},
-			],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-54",
-		lines: [
 			{
-				text: "삐걱",
+				text: "'공급업체: 강민호, 수수료: 500만원'",
 				chunks: [
 					{
-						content: "삐걱",
+						content: "'공급업체: 강민호, 수수료: 500만원'",
+						textEffects: ["INK_REVEAL"],
+						soundEffects: [
+							{
+								tag: "SWALLOWING_NERVOUS",
+							},
+						],
 					},
 				],
 				preLineEffects: {
-					image: null,
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-46",
+						type: "overlay",
+						sustain_until: "seg-47",
+					},
 					soundEffects: [
 						{
-							tag: "DOOR_CREAK_SLOW",
+							tag: "HEARTBEAT_SUDDEN_LOUD",
 						},
 					],
 					visualEffects: [],
@@ -2313,18 +2129,46 @@ export const introScript: Segment[] = [
 		],
 		background: null,
 		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
+			soundEffects: [
+				{
+					tag: "DRONE_UNSTABLE_AIR",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "SCREEN_FLICKER",
+					status: "start",
+				},
+			],
 		},
 	},
 	{
-		id: "seg-55",
+		id: "seg-47",
 		lines: [
 			{
-				text: "떨리는 손으로 문을 열었어.",
+				text: "실험 일지를 읽어보니 충격적인 내용이었어.",
 				chunks: [
 					{
-						content: "떨리는 손으로 문을 열었어.",
+						content: "실험 일지를 읽어보니 충격적인 내용이었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "민호 자신이 노숙자들을 실험체로 공급하는 중개업자였다는 거야. 거액의 돈을 받고 말이야.",
+				chunks: [
+					{
+						content:
+							"민호 자신이 노숙자들을 실험체로 공급하는 중개업자였다는 거야. ",
+					},
+					{
+						content: "거액의 돈을 받고 말이야.",
+						textEffects: ["JITTER"],
 						soundEffects: [
 							{
 								tag: "BREATH_SHAKY_PANIC",
@@ -2341,18 +2185,28 @@ export const introScript: Segment[] = [
 		],
 		background: null,
 		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
+			soundEffects: [
+				{
+					tag: "DRONE_UNSTABLE_AIR",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "SCREEN_FLICKER",
+					status: "stop",
+				},
+			],
 		},
 	},
 	{
-		id: "seg-56",
+		id: "seg-48",
 		lines: [
 			{
-				text: "잠깐 정적이 흘렀어.",
+				text: "그날 밤 잠자리에 들었어.",
 				chunks: [
 					{
-						content: "잠깐 정적이 흘렀어.",
+						content: "그날 밤 잠자리에 들었어.",
 					},
 				],
 				preLineEffects: {
@@ -2362,33 +2216,10 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "아무것도 일어나지 않을 것 같았거든.",
+				text: "하지만 쉽게 잠이 오지 않았어.",
 				chunks: [
 					{
-						content: "아무것도 일어나지 않을 것 같았거든.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-57",
-		lines: [
-			{
-				text: "그런데...",
-				chunks: [
-					{
-						content: "그런데...",
+						content: "하지만 쉽게 잠이 오지 않았어.",
 					},
 				],
 				preLineEffects: {
@@ -2402,141 +2233,218 @@ export const introScript: Segment[] = [
 		segmentEffects: {
 			soundEffects: [
 				{
-					tag: "ROOMTONE_WAREHOUSE_ECHO",
+					tag: "ROOMTONE_EMPTY_NEUTRAL",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-49",
+		lines: [
+			{
+				text: "새벽 2시쯤 되어서야 겨우 잠들었어.",
+				chunks: [
+					{
+						content: "새벽 2시쯤 되어서야 겨우 잠들었어.",
+						soundEffects: [
+							{
+								tag: "BREATH_CALMING_DOWN",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_EMPTY_NEUTRAL",
 					status: "stop",
 				},
 			],
 			visualEffects: [
 				{
-					tag: "EFFECT_FLASHLIGHT",
+					tag: "VISUAL_VIGNETTE",
 					status: "stop",
 				},
 			],
 		},
 	},
 	{
-		id: "seg-58",
+		id: "seg-50",
 		lines: [
 			{
-				text: "향로에서 완전한 형상이 나타났어.",
+				text: "민호는 악몽을 꿨어.",
 				chunks: [
 					{
-						content: "향로에서",
+						content: "민호는 악몽을 꿨어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "실험실의 모든 캡슐이 동시에 깨지는 꿈이었어.",
+				chunks: [
+					{
+						content: "실험실의 모든 캡슐이 동시에 깨지는 꿈이었어.",
+						textEffects: ["JITTER"],
+						soundEffects: [
+							{
+								tag: "GLASS_SHATTER",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: ["SCREEN_SHAKE"],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_UNSTABLE_PULSE",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "SCREEN_BLUR",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-51",
+		lines: [
+			{
+				text: "하나씩 깨지기 시작하더니.",
+				chunks: [
+					{
+						content: "하나씩 깨지기 시작하더니.",
+						soundEffects: [
+							{
+								tag: "GLASS_SQUEAK",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "둘, 셋, 넷.",
+				chunks: [
+					{
+						content: "둘, 셋, 넷.",
+						soundEffects: [
+							{
+								tag: "GLASS_SHATTER",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: ["SCREEN_SHAKE"],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-52",
+		lines: [
+			{
+				text: "모든 캡슐이 산산조각 났어.",
+				chunks: [
+					{
+						content: "모든 캡슐이 산산조각 났어.",
+						soundEffects: [
+							{
+								tag: "GLASS_SHATTER",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: ["SCREEN_SHAKE"],
+				},
+			},
+			{
+				text: "형체 불명의 검은 덩어리들이 바닥을 기어다니고 있었어.",
+				chunks: [
+					{
+						content: "형체 불명의 검은 덩어리들이 ",
 					},
 					{
-						content: "완전한 형상이 나타났어.",
+						content: "바닥을 기어다니고 있었어.",
+						textEffects: ["JITTER"],
 					},
 				],
 				preLineEffects: {
 					image: {
-						url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-58",
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-52",
 						type: "overlay",
-						sustain_until: "seg-59",
+						sustain_until: "seg-52",
 					},
 					soundEffects: [
 						{
-							tag: "FEMALE_GHOST_PRESENCE",
+							tag: "SLITHERING_ON_FLOOR",
 						},
 						{
-							tag: "GHOSTLY_WHISPERS_OVERLAPPING",
+							tag: "LIQUID_DRIPPING_HEAVY",
 						},
 					],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "여자의 모습이었는데, 입을 크게 벌리고 있었어.",
-				chunks: [
-					{
-						content: "여자의 모습이었는데,",
-					},
-					{
-						content: "입을 크게 벌리고 있었어.",
-						textEffects: ["JITTER"],
-						soundEffects: [
-							{
-								tag: "GHOSTLY_VOICE_PHASING",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
+					visualEffects: ["SCREEN_SHAKE"],
 				},
 			},
 		],
 		background: null,
 		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SCANNER_SIGNAL",
-					status: "start",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "VISUAL_CANDLE_FLICKER",
-					status: "start",
-				},
-			],
+			soundEffects: [],
+			visualEffects: [],
 		},
 	},
 	{
-		id: "seg-59",
+		id: "seg-53",
 		lines: [
 			{
-				text: "아아아악!",
+				text: '"아니야!"',
 				chunks: [
 					{
-						content: "아아아악!",
-						textEffects: ["PULSE_FAST"],
-						soundEffects: [
-							{
-								tag: "FEMALE_SCREAM_TERROR",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "MUSIC_STINGER_SYNTH_SHRIEK",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "DRONE_SCANNER_SIGNAL",
-					status: "stop",
-				},
-			],
-			visualEffects: [
-				{
-					tag: "VISUAL_CANDLE_FLICKER",
-					status: "stop",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-60",
-		lines: [
-			{
-				text: "월선의 형상이 소리를 지르며 이진우를 향해 달려왔어.",
-				chunks: [
-					{
-						content: "월선의 형상이 소리를 지르며 ",
-					},
-					{
-						content: "이진우를 향해 달려왔어.",
+						content: '"아니야!"',
 						soundEffects: [
 							{
 								tag: "MALE_SCREAM_TERROR",
@@ -2545,113 +2453,21 @@ export const introScript: Segment[] = [
 					},
 				],
 				preLineEffects: {
-					image: {
-						url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-60",
-						type: "jumpscare",
-						sustain_until: "seg-60",
-					},
+					image: null,
 					soundEffects: [
 						{
-							tag: "MUSIC_STINGER_SYNTH_SHRIEK",
-						},
-						{
-							tag: "FEMALE_GHOST_PAIN_SCREAM",
+							tag: "STATIC_BURST_LOUD",
 						},
 					],
 					visualEffects: [],
 				},
 			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [
-				{
-					tag: "SCREEN_SHAKE",
-					status: "start",
-				},
-				{
-					tag: "OVERLAY_GLITCH",
-					status: "start",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-61",
-		lines: [
 			{
-				text: "이진우는 다리에 힘이 풀리며 뒤로 넘어졌어.",
+				text: "민호가 비명을 지르며 깨어났어.",
 				chunks: [
 					{
-						content: "이진우는 다리에 힘이 풀리며 ",
-					},
-					{
-						content: "뒤로 넘어졌어.",
+						content: "민호가 비명을 지르며 깨어났어.",
 						soundEffects: [
-							{
-								tag: "MALE_PAIN_CRY",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "하지만 반사적으로 카메라를 향로 쪽으로 향했어.",
-				chunks: [
-					{
-						content: "하지만 반사적으로 카메라를 향로 쪽으로 향했어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [],
-		},
-	},
-	{
-		id: "seg-62",
-		lines: [
-			{
-				text: "필사적으로 출구를 향해 뛰었어.",
-				chunks: [
-					{
-						content: "필사적으로 출구를 향해 뛰었어.",
-						soundEffects: [
-							{
-								tag: "FOOTSTEP_WOOD_RUN_LIGHT",
-							},
-						],
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "두근두근 심장이 터질 것처럼 뛰고 있었거든.",
-				chunks: [
-					{
-						content: "두근두근 심장이 터질 것처럼 뛰고 있었거든.",
-						textEffects: ["PULSE_FAST"],
-						soundEffects: [
-							{
-								tag: "HEARTBEAT_FAST",
-							},
 							{
 								tag: "BREATH_HEAVY_PANIC",
 							},
@@ -2672,17 +2488,446 @@ export const introScript: Segment[] = [
 		},
 	},
 	{
+		id: "seg-54",
+		lines: [
+			{
+				text: '"꿈이었구나..."',
+				chunks: [
+					{
+						content: '"꿈이었구나..."',
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "안도의 한숨을 쉬었어.",
+				chunks: [
+					{
+						content: "안도의 한숨을 쉬었어.",
+						soundEffects: [
+							{
+								tag: "SIGH_RELIEF",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_UNSTABLE_PULSE",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "SCREEN_BLUR",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-55",
+		lines: [
+			{
+				text: "그런데 침대 시트를 보는 순간.",
+				chunks: [
+					{
+						content: "그런데 침대 시트를 보는 순간.",
+					},
+				],
+				preLineEffects: {
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-55",
+						type: "overlay",
+						sustain_until: "seg-57",
+					},
+					soundEffects: [
+						{
+							tag: "CLOTH_DRAGGING",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "온몸에 소름이 돋았어.",
+				chunks: [
+					{
+						content: "온몸에 소름이 돋았어.",
+						soundEffects: [
+							{
+								tag: "HEARTBEAT_FAST",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_SCANNER_SIGNAL",
+					status: "start",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-56",
+		lines: [
+			{
+				text: "침대 전체가 검은 실들로 뒤덮여 있었어.",
+				chunks: [
+					{
+						content: "침대 전체가 검은 실들로 뒤덮여 있었어.",
+						textEffects: ["PULSE_SLOW"],
+						soundEffects: [
+							{
+								tag: "LIQUID_DRIPPING_HEAVY",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "마치 거미줄처럼 촘촘하게.",
+				chunks: [
+					{
+						content: "마치 거미줄처럼 촘촘하게.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-57",
+		lines: [
+			{
+				text: '"으아아아악!"',
+				chunks: [
+					{
+						content: '"으아아아악!"',
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "MALE_SCREAM_TERROR",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "민호가 비명을 지르며 침대에서 떨어졌어.",
+				chunks: [
+					{
+						content: "민호가 비명을 지르며 ",
+					},
+					{
+						content: "침대에서 떨어졌어.",
+						soundEffects: [
+							{
+								tag: "MALE_PAIN_CRY",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_SCANNER_SIGNAL",
+					status: "stop",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-58",
+		lines: [
+			{
+				text: "다음 날 아침 일어나니.",
+				chunks: [
+					{
+						content: "다음 날 아침 일어나니.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "침실 구석구석에 검은 실들이 자라기 시작했어.",
+				chunks: [
+					{
+						content: "침실 구석구석에",
+					},
+					{
+						content: "검은 실들이 자라기 시작했어.",
+						textEffects: ["INK_REVEAL"],
+					},
+				],
+				preLineEffects: {
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-58",
+						type: "overlay",
+						sustain_until: "seg-60",
+					},
+					soundEffects: [
+						{
+							tag: "SLITHERING_ON_FLOOR",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_UNSTABLE_PULSE",
+					status: "start",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-59",
+		lines: [
+			{
+				text: "화장실 거울에도.",
+				chunks: [
+					{
+						content: "화장실 거울에도.",
+						soundEffects: [
+							{
+								tag: "GLASS_SQUEAK",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "부엌 싱크대에도. 거실 소파 밑에도. 베란다 화분에도.",
+				chunks: [
+					{
+						content: "부엌 싱크대에도.",
+					},
+					{
+						content: "거실 소파 밑에도.",
+					},
+					{
+						content: "베란다 화분에도.",
+						soundEffects: [
+							{
+								tag: "SLITHERING_ON_FLOOR",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-60",
+		lines: [
+			{
+				text: "다음 날부터 집안 곳곳에서 검은 실들이 자라기 시작했어.",
+				chunks: [
+					{
+						content: "다음 날부터 집안 곳곳에서 검은 실들이 자라기 시작했어.",
+						textEffects: ["PULSE_SLOW"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-61",
+		lines: [
+			{
+				text: "민호가 화가 날 때마다.",
+				chunks: [
+					{
+						content: "민호가 화가 날 때마다.",
+						textEffects: ["JITTER"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "슬플 때마다. 무서워할 때마다.",
+				chunks: [
+					{
+						content: "슬플 때마다.",
+					},
+					{
+						content: "무서워할 때마다.",
+						soundEffects: [
+							{
+								tag: "CURSE_WHISPER_LOW",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-62",
+		lines: [
+			{
+				text: "실들이 더 빠르게 번식했어.",
+				chunks: [
+					{
+						content: "실들이 더 빠르게 번식했어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "특히 밤이 되면 더 심했어. 어둠 속에서 꿈틀거리는 게 보였거든.",
+				chunks: [
+					{
+						content: "특히 밤이 되면 더 심했어.",
+						textEffects: ["PULSE_FAST"],
+					},
+					{
+						content: "어둠 속에서 꿈틀거리는 게 보였거든.",
+						soundEffects: [
+							{
+								tag: "SLITHERING_ON_FLOOR",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_UNSTABLE_PULSE",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "SCREEN_FLICKER",
+					status: "start",
+				},
+				{
+					tag: "SCREEN_FLICKER",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
 		id: "seg-63",
 		lines: [
 			{
-				text: "문이 보였어, 탈출할 수 있을 것 같았거든.",
+				text: "일주일 후.",
 				chunks: [
 					{
-						content: "문이 보였어,",
-					},
-					{
-						content: "탈출할 수 있을 것 같았거든.",
-						textEffects: ["RISE_FROM_BOTTOM"],
+						content: "일주일 후.",
 					},
 				],
 				preLineEffects: {
@@ -2702,20 +2947,17 @@ export const introScript: Segment[] = [
 		id: "seg-64",
 		lines: [
 			{
-				text: "쾅!",
+				text: "'공동 연구자: 김영태, 주소: 경기도 ○○시 ○○동'",
 				chunks: [
 					{
-						content: "쾅!",
+						content: "'공동 연구자: 김영태, 주소: 경기도 ○○시 ○○동'",
+						textEffects: ["TYPEWRITER", "STYLE_UNDERLINE"],
 					},
 				],
 				preLineEffects: {
 					image: null,
-					soundEffects: [
-						{
-							tag: "DOOR_SLAM",
-						},
-					],
-					visualEffects: ["SCREEN_SHAKE"],
+					soundEffects: [],
+					visualEffects: [],
 				},
 			},
 		],
@@ -2729,79 +2971,13 @@ export const introScript: Segment[] = [
 		id: "seg-65",
 		lines: [
 			{
-				text: "갑자기 문이 닫혔어.",
+				text: "민호는 김 박사 집을 찾아갔어.",
 				chunks: [
 					{
-						content: "갑자기 문이 닫혔어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "DOOR_SLAM",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "박천광 교주가 문 앞을 막고 있었어.",
-				chunks: [
-					{
-						content: "박천광 교주가 문 앞을 막고 있었어.",
-					},
-				],
-				preLineEffects: {
-					image: {
-						url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-65",
-						type: "overlay",
-						sustain_until: "seg-77",
-					},
-					soundEffects: [
-						{
-							tag: "FOOTSTEP_HEAVY_LUMBERING",
-						},
-					],
-					visualEffects: [],
-				},
-			},
-		],
-		background: null,
-		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [
-				{
-					tag: "OVERLAY_GLITCH",
-					status: "start",
-				},
-			],
-		},
-	},
-	{
-		id: "seg-66",
-		lines: [
-			{
-				text: "교주의 눈동자가 하얗게 뒤집혀 있었어.",
-				chunks: [
-					{
-						content: "교주의 눈동자가 하얗게 뒤집혀 있었어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "입가에는 거품이 고여있었거든.",
-				chunks: [
-					{
-						content: "입가에는 거품이 고여있었거든.",
+						content: "민호는 김 박사 집을 찾아갔어.",
 						soundEffects: [
 							{
-								tag: "DEMON_LABORED_WHEEZE",
+								tag: "FOOTSTEP_EXTERIOR_SLOW_HEAVY",
 							},
 						],
 					},
@@ -2812,8 +2988,76 @@ export const introScript: Segment[] = [
 					visualEffects: [],
 				},
 			},
+			{
+				text: "혹시 해답이 있을까 해서.",
+				chunks: [
+					{
+						content: "혹시 해답이 있을까 해서.",
+						textEffects: ["STYLE_ITALIC"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
 		],
 		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "CITY_AMBIENCE_NIGHT",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "EFFECT_FLASHLIGHT",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-66",
+		lines: [
+			{
+				text: "김 박사 집은 단독주택이었어.",
+				chunks: [
+					{
+						content: "김 박사 집은 단독주택이었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "대문이 반쯤 열려 있었어.",
+				chunks: [
+					{
+						content: "대문이 반쯤 열려 있었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "DOOR_CREAK_SLOW",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
+		background: {
+			url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-66",
+			type: "background",
+			sustain_until: "seg-80",
+		},
 		segmentEffects: {
 			soundEffects: [],
 			visualEffects: [],
@@ -2823,27 +3067,27 @@ export const introScript: Segment[] = [
 		id: "seg-67",
 		lines: [
 			{
-				text: '"이제 너도 함께하자..."',
+				text: '"안녕하세요?"',
 				chunks: [
 					{
-						content: '"이제 너도 함께하자..."',
+						content: '"안녕하세요?"',
 					},
 				],
 				preLineEffects: {
 					image: null,
-					soundEffects: [
-						{
-							tag: "MALE_WHISPER_CLOSE",
-						},
-					],
+					soundEffects: [],
 					visualEffects: [],
 				},
 			},
 			{
-				text: "교주가 속삭였어.",
+				text: "민호가 조심스럽게 불러봤어. 대답이 없었어.",
 				chunks: [
 					{
-						content: "교주가 속삭였어.",
+						content: "민호가 조심스럽게 불러봤어.",
+					},
+					{
+						content: "대답이 없었어.",
+						textEffects: ["JITTER"],
 					},
 				],
 				preLineEffects: {
@@ -2863,30 +3107,30 @@ export const introScript: Segment[] = [
 		id: "seg-68",
 		lines: [
 			{
-				text: "배후에서 월선의 형상이 점점 커져갔어.",
+				text: "현관문도 열려 있었어.",
 				chunks: [
 					{
-						content: "배후에서 월선의 형상이 점점 커져갔어.",
+						content: "현관문도 열려 있었어.",
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [
 						{
-							tag: "FEMALE_GHOST_PRESENCE",
+							tag: "DOOR_CREAK_SLOW",
 						},
 					],
 					visualEffects: [],
 				},
 			},
 			{
-				text: "이진우의 온몸이 얼어붙었어.",
+				text: "신발을 벗고 들어갔어.",
 				chunks: [
 					{
-						content: "이진우의 온몸이 얼어붙었어.",
+						content: "신발을 벗고 들어갔어.",
 						soundEffects: [
 							{
-								tag: "SWALLOWING_NERVOUS",
+								tag: "FOOTSTEP_WOOD_NORMAL_CREAKY",
 							},
 						],
 					},
@@ -2908,33 +3152,35 @@ export const introScript: Segment[] = [
 		id: "seg-69",
 		lines: [
 			{
-				text: "카메라는 계속 돌아가고 있었어.",
+				text: "거실은 엉망이었어. 가구들이 뒤엎어져 있고. 부엌으로 가봤어. 그릇들이 바닥에 깨져 있었어.",
 				chunks: [
 					{
-						content: "카메라는 계속 돌아가고 있었어.",
+						content: "거실은 엉망이었어.",
+					},
+					{
+						content: "가구들이 뒤엎어져 있고.",
+					},
+					{
+						content: "부엌으로 가봤어.",
+						soundEffects: [
+							{
+								tag: "FOOTSTEP_WOOD_NORMAL_CREAKY",
+							},
+						],
+					},
+					{
+						content: "그릇들이 바닥에 깨져 있었어.",
+						soundEffects: [
+							{
+								tag: "GLASS_SHATTER",
+							},
+						],
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [],
 					visualEffects: [],
-				},
-			},
-			{
-				text: "화면이 흔들리며...",
-				chunks: [
-					{
-						content: "화면이 흔들리며...",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [
-						{
-							tag: "STATIC_BURST_LOUD",
-						},
-					],
-					visualEffects: ["SCREEN_SHAKE"],
 				},
 			},
 		],
@@ -2948,20 +3194,88 @@ export const introScript: Segment[] = [
 		id: "seg-70",
 		lines: [
 			{
-				text: "암전됐어.",
+				text: "집 안은 조용했어.",
 				chunks: [
 					{
-						content: "암전됐어.",
+						content: "집 안은 조용했어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "복도를 따라 안쪽으로 들어갔어.",
+				chunks: [
+					{
+						content: "복도를 따라 안쪽으로 들어갔어.",
+						soundEffects: [
+							{
+								tag: "FOOTSTEP_WOOD_NORMAL",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "CITY_AMBIENCE_NIGHT",
+					status: "stop",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-71",
+		lines: [
+			{
+				text: "침실 문이 살짝 열려 있었어.",
+				chunks: [
+					{
+						content: "침실 문이 살짝 열려 있었어.",
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [
 						{
-							tag: "RECORDING_PLAYBACK_STOP",
+							tag: "DOOR_CREAK_SLOW",
 						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "문을 밀고 들어가는 순간. 숨이 멎을 뻔했어.",
+				chunks: [
+					{
+						content: "문을 밀고 들어가는 순간.",
+					},
+					{
+						content: "숨이 멎을 뻔했어.",
+						soundEffects: [
+							{
+								tag: "HEARTBEAT_SUDDEN_LOUD",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
 						{
-							tag: "AUDIO_CUTOUT_ABRUPT",
+							tag: "DOOR_OPEN",
 						},
 					],
 					visualEffects: [],
@@ -2970,64 +3284,19 @@ export const introScript: Segment[] = [
 		],
 		background: null,
 		segmentEffects: {
-			soundEffects: [],
-			visualEffects: [
+			soundEffects: [
 				{
-					tag: "OVERLAY_GLITCH",
+					tag: "DRONE_STALKING_FEAR",
+					status: "start",
+				},
+				{
+					tag: "DRONE_STALKING_FEAR",
 					status: "stop",
 				},
 			],
-		},
-	},
-	{
-		id: "seg-71",
-		lines: [
-			{
-				text: "경찰이 발견한 건 카메라뿐이었어.",
-				chunks: [
-					{
-						content: "경찰이 발견한 건 카메라뿐이었어.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-			{
-				text: "이진우는 어디에도 없었거든.",
-				chunks: [
-					{
-						content: "이진우는 어디에도 없었거든.",
-					},
-				],
-				preLineEffects: {
-					image: null,
-					soundEffects: [],
-					visualEffects: [],
-				},
-			},
-		],
-		background: {
-			url: "goedamjip-story-image/68ebc7bc44d288b753c2c000/seg-71",
-			type: "background",
-			sustain_until: "seg-77",
-		},
-		segmentEffects: {
-			soundEffects: [
-				{
-					tag: "ROOMTONE_FLUORESCENT_BUZZ",
-					status: "start",
-				},
-				{
-					tag: "ANALOG_TAPE_HISS",
-					status: "start",
-				},
-			],
 			visualEffects: [
 				{
-					tag: "SCREEN_FLICKER",
+					tag: "VISUAL_VIGNETTE",
 					status: "start",
 				},
 			],
@@ -3037,31 +3306,41 @@ export const introScript: Segment[] = [
 		id: "seg-72",
 		lines: [
 			{
-				text: "카메라에는 마지막 순간까지 모든 게 기록되어 있었어.",
+				text: "침실에서 김 박사를 발견했어.",
 				chunks: [
 					{
-						content: "카메라에는 마지막 순간까지 모든 게 기록되어 있었어.",
-						soundEffects: [
-							{
-								tag: "AUDIO_RESUME_WITH_NOISE",
-							},
-						],
+						content: "침실에서 김 박사를 발견했어.",
 					},
 				],
 				preLineEffects: {
-					image: null,
-					soundEffects: [],
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-72",
+						type: "overlay",
+						sustain_until: "seg-80",
+					},
+					soundEffects: [
+						{
+							tag: "FABRIC_TEAR_SLOW",
+						},
+					],
 					visualEffects: [],
 				},
 			},
 			{
-				text: "하지만 경찰은 그 영상을 공개하지 않았어.",
+				text: "벽에 매달린 채로. 온몸이 검은 실로 뒤덮여 있었어. 이미 죽어있는 것 같았어.",
 				chunks: [
 					{
-						content: "하지만 경찰은 그 영상을 공개하지 않았어.",
+						content: "벽에 매달린 채로.",
+					},
+					{
+						content: "온몸이 검은 실로 뒤덮여 있었어.",
+					},
+					{
+						content: "이미 죽어있는 것 같았어.",
+						textEffects: ["INK_REVEAL"],
 						soundEffects: [
 							{
-								tag: "AUDIO_CUTOUT_ABRUPT",
+								tag: "MALE_GHOST_PRESENCE",
 							},
 						],
 					},
@@ -3075,7 +3354,12 @@ export const introScript: Segment[] = [
 		],
 		background: null,
 		segmentEffects: {
-			soundEffects: [],
+			soundEffects: [
+				{
+					tag: "DRONE_CRUSHING_PRESSURE",
+					status: "start",
+				},
+			],
 			visualEffects: [],
 		},
 	},
@@ -3083,11 +3367,10 @@ export const introScript: Segment[] = [
 		id: "seg-73",
 		lines: [
 			{
-				text: "그런데 이상하지 않아?",
+				text: '"이미 죽었으니 안전하겠지..."',
 				chunks: [
 					{
-						content: "그런데 이상하지 않아?",
-						textEffects: ["JITTER"],
+						content: '"이미 죽었으니 안전하겠지..."',
 					},
 				],
 				preLineEffects: {
@@ -3097,16 +3380,19 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "그 향로는 지금도 어디 있는지 아무도 몰라.",
+				text: "민호가 조심스럽게 다가갔어.",
 				chunks: [
 					{
-						content: "그 향로는 지금도 어디 있는지 아무도 몰라.",
-						textEffects: ["GLITCH"],
+						content: "민호가 조심스럽게 다가갔어.",
 					},
 				],
 				preLineEffects: {
 					image: null,
-					soundEffects: [],
+					soundEffects: [
+						{
+							tag: "WOOD_CREAK",
+						},
+					],
 					visualEffects: [],
 				},
 			},
@@ -3121,11 +3407,10 @@ export const introScript: Segment[] = [
 		id: "seg-74",
 		lines: [
 			{
-				text: "이진우가 촬영한 마지막 영상...",
+				text: "김 박사의 얼굴을 자세히 봤어.",
 				chunks: [
 					{
-						content: "이진우가 촬영한 마지막 영상...",
-						textEffects: ["TYPEWRITER"],
+						content: "김 박사의 얼굴을 자세히 봤어.",
 					},
 				],
 				preLineEffects: {
@@ -3135,13 +3420,16 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "경찰도 공개 안 하고 있어.",
+				text: "입술이 새까맣게 변해 있었어. 그 순간이었어.",
 				chunks: [
 					{
-						content: "경찰도 공개 안 하고 있어.",
+						content: "입술이 새까맣게 변해 있었어.",
+					},
+					{
+						content: "그 순간이었어.",
 						soundEffects: [
 							{
-								tag: "RECORDING_PLAYBACK_STOP",
+								tag: "HEARTBEAT_FAST",
 							},
 						],
 					},
@@ -3163,10 +3451,10 @@ export const introScript: Segment[] = [
 		id: "seg-75",
 		lines: [
 			{
-				text: "그 수련원 건물은 아직도 그대로 있어.",
+				text: "김 박사의 입이 갑자기 벌어졌어.",
 				chunks: [
 					{
-						content: "그 수련원 건물은 아직도 그대로 있어.",
+						content: "김 박사의 입이 갑자기 벌어졌어.",
 					},
 				],
 				preLineEffects: {
@@ -3176,16 +3464,33 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "하지만 아무도 가려고 하지 않아.",
+				text: "그 안에서 수십 개의 검은 실이 뱀처럼 꿈틀거리며 민호를 향해 뻗어왔어.",
 				chunks: [
 					{
-						content: "하지만 아무도 가려고 하지 않아.",
-						textEffects: ["PULSE_SLOW"],
+						content:
+							"그 안에서 수십 개의 검은 실이 뱀처럼 꿈틀거리며 민호를 향해 뻗어왔어.",
+						soundEffects: [
+							{
+								tag: "BREATH_HEAVY_PANIC",
+							},
+						],
+						visualEffects: ["SCREEN_SHAKE"],
 					},
 				],
 				preLineEffects: {
-					image: null,
-					soundEffects: [],
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-75",
+						type: "jumpscare",
+						sustain_until: "seg-75",
+					},
+					soundEffects: [
+						{
+							tag: "SLITHERING_ON_FLOOR",
+						},
+						{
+							tag: "HEARTBEAT_SUDDEN_LOUD",
+						},
+					],
 					visualEffects: [],
 				},
 			},
@@ -3200,10 +3505,69 @@ export const introScript: Segment[] = [
 		id: "seg-76",
 		lines: [
 			{
-				text: "근데 말이야...",
+				text: "민호는 문을 향해 비틀거리며 도망쳤어.",
 				chunks: [
 					{
-						content: "근데 말이야...",
+						content: "민호는 문을 향해 비틀거리며 도망쳤어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "FOOTSTEPS_TUNNEL",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "온몸이 벌벌 떨렸어.",
+				chunks: [
+					{
+						content: "온몸이 벌벌 떨렸어.",
+						soundEffects: [
+							{
+								tag: "BREATH_SHAKY_PANIC",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_CRUSHING_PRESSURE",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "stop",
+				},
+				{
+					tag: "EFFECT_FLASHLIGHT",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-77",
+		lines: [
+			{
+				text: "집으로 돌아와서.",
+				chunks: [
+					{
+						content: "집으로 돌아와서.",
 					},
 				],
 				preLineEffects: {
@@ -3213,19 +3577,384 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "최근에 다른 종교 단체에서 비슷한 향로를 구입했다는 소문이 있어.",
+				text: "손부터 씻었어. 그리고 실험 일지를 더 뒤졌어.",
+				chunks: [
+					{
+						content: "손부터 씻었어.",
+						soundEffects: [
+							{
+								tag: "FAUCET_DRIP",
+							},
+						],
+					},
+					{
+						content: "그리고 실험 일지를 더 뒤졌어.",
+						soundEffects: [
+							{
+								tag: "PAGE_TURN",
+								repeat: 3,
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_EMPTY_NEUTRAL",
+					status: "start",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-78",
+		lines: [
+			{
+				text: "50페이지. 100페이지. 150페이지.",
+				chunks: [
+					{
+						content: "50페이지. 100페이지. 150페이지.",
+						textEffects: ["TYPEWRITER"],
+						soundEffects: [
+							{
+								tag: "PAGE_TURN",
+								repeat: 3,
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-79",
+		lines: [
+			{
+				text: "'이 물질로 기생체의 번식을 일시적으로 늦출 수 있음'",
+				chunks: [
+					{
+						content: "'이 물질로 기생체의 번식을 일시적으로 늦출 수 있음'",
+						textEffects: ["INK_REVEAL"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "'부작용: 효과 지속시간 제한적'",
+				chunks: [
+					{
+						content: "'부작용: 효과 지속시간 제한적'",
+						textEffects: ["PULSE_SLOW"],
+						soundEffects: [
+							{
+								tag: "SWALLOWING_NERVOUS",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_EMPTY_NEUTRAL",
+					status: "stop",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-80",
+		lines: [
+			{
+				text: "이걸로 기생체의 번식을 늦출 수 있다는 내용이었어.",
+				chunks: [
+					{
+						content: "이걸로 기생체의 번식을 늦출 수 있다는 내용이었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "기록에 따르면. 연구소 지하 격리구역에 마지막 샘플이 있다고 했어.",
 				chunks: [
 					{
 						content:
-							"최근에 다른 종교 단체에서 비슷한 향로를 구입했다는 소문이 있어.",
-						textEffects: ["GLITCH"],
+							"기록에 따르면. 연구소 지하 격리구역에 마지막 샘플이 있다고 했어.",
+						textEffects: ["STYLE_UNDERLINE"],
+						soundEffects: [
+							{
+								tag: "SWALLOWING_NERVOUS",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_BASEMENT_HUM",
+					status: "start",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-81",
+		lines: [
+			{
+				text: "민호는 다시 연구소로 갔어.",
+				chunks: [
+					{
+						content: "민호는 다시 연구소로 갔어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "이번엔 손전등 여러 개를 준비했어.",
+				chunks: [
+					{
+						content: "이번엔 손전등 여러 개를 준비했어.",
+						soundEffects: [
+							{
+								tag: "SWITCH_ONOFF_TOGGLE",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: {
+			url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-81",
+			type: "background",
+			sustain_until: "seg-94",
+		},
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_FLUORESCENT_BUZZ",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "EFFECT_FLASHLIGHT",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-82",
+		lines: [
+			{
+				text: "연구소 로비에서 지하로 내려가는 계단을 찾았어.",
+				chunks: [
+					{
+						content: "연구소 로비에서 지하로 내려가는 계단을 찾았어.",
+						soundEffects: [
+							{
+								tag: "FOOTSTEPS_TUNNEL",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "한 층. 두 층.",
+				chunks: [
+					{
+						content: "한 층. 두 층.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-83",
+		lines: [
+			{
+				text: "세 번째 지하층에서 멈췄어.",
+				chunks: [
+					{
+						content: "세 번째 지하층에서 멈췄어.",
 					},
 				],
 				preLineEffects: {
 					image: null,
 					soundEffects: [
 						{
-							tag: "CHURCH_BELL_TOLLING_SLOW",
+							tag: "DOOR_CREAK_SLOW",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "'격리구역'이라는 표지판이 보였거든.",
+				chunks: [
+					{
+						content: "'격리구역'이라는 표지판이 보였거든.",
+						textEffects: ["STYLE_UNDERLINE"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-84",
+		lines: [
+			{
+				text: "지하로 내려가니 더욱 음산했어.",
+				chunks: [
+					{
+						content: "지하로 내려가니 더욱 음산했어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "공기도 차갑고 습했어.",
+				chunks: [
+					{
+						content: "공기도 차갑고 습했어.",
+						soundEffects: [
+							{
+								tag: "LIQUID_DRIPPING_SLOW",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_STALKING_FEAR",
+					status: "start",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-85",
+		lines: [
+			{
+				text: "격리구역 문은 전자잠금이었는데.",
+				chunks: [
+					{
+						content: "격리구역 문은 전자잠금이었는데.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "정전으로 열려 있었어. 안쪽에는 여러 개의 냉장고가 있었어.",
+				chunks: [
+					{
+						content: "정전으로 열려 있었어.",
+					},
+					{
+						content: "안쪽에는 여러 개의 냉장고가 있었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "DOOR_OPEN",
 						},
 					],
 					visualEffects: [],
@@ -3239,14 +3968,852 @@ export const introScript: Segment[] = [
 		},
 	},
 	{
-		id: "seg-77",
+		id: "seg-86",
 		lines: [
 			{
-				text: "정말 우연일까?",
+				text: "첫 번째 냉장고를 열어봤어.",
 				chunks: [
 					{
-						content: "정말 우연일까?",
-						textEffects: ["GLITCH"],
+						content: "첫 번째 냉장고를 열어봤어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "DOOR_CREAK_SLOW",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "빈 시험관들만 있었어. 두 번째 냉장고도 비어 있었어.",
+				chunks: [
+					{
+						content: "빈 시험관들만 있었어.",
+					},
+					{
+						content: "두 번째 냉장고도 비어 있었어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-87",
+		lines: [
+			{
+				text: "세 번째 냉장고에서 찾았어.",
+				chunks: [
+					{
+						content: "세 번째 냉장고에서 찾았어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "'XR-7' 라벨이 붙은 작은 병을.",
+				chunks: [
+					{
+						content: "'XR-7' 라벨이 붙은 작은 병을.",
+						textEffects: ["PULSE_SLOW"],
+					},
+				],
+				preLineEffects: {
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-87",
+						type: "overlay",
+						sustain_until: "seg-89",
+					},
+					soundEffects: [
+						{
+							tag: "GLASS_SQUEAK",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-88",
+		lines: [
+			{
+				text: "냉장고에서 마지막 억제제를 찾았어.",
+				chunks: [
+					{
+						content: "냉장고에서 마지막 억제제를 찾았어.",
+					},
+				],
+				preLineEffects: {
+					image: {
+						url: null,
+						type: "overlay",
+					},
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "떨리는 손으로 주사기에 넣었어.",
+				chunks: [
+					{
+						content: "떨리는 손으로 주사기에 넣었어.",
+						textEffects: ["JITTER"],
+						soundEffects: [
+							{
+								tag: "LIQUID_DRIPPING_SLOW",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-89",
+		lines: [
+			{
+				text: "팔에 주사를 놨어.",
+				chunks: [
+					{
+						content: "팔에 주사를 놨어.",
+					},
+				],
+				preLineEffects: {
+					image: {
+						url: null,
+						type: "overlay",
+					},
+					soundEffects: [
+						{
+							tag: "SIGH_RELIEF",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: '몸의 검은 실들이 움츠러드는 게 보였어. "이제 괜찮아..."',
+				chunks: [
+					{
+						content: "몸의 검은 실들이 움츠러드는 게 보였어.",
+						textEffects: ["PULSE_SLOW"],
+					},
+					{
+						content: '"이제 괜찮아..."',
+						soundEffects: [
+							{
+								tag: "BREATH_CALMING_DOWN",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-90",
+		lines: [
+			{
+				text: "그런데.",
+				chunks: [
+					{
+						content: "그런데.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "ROOMTONE_BASEMENT_HUM",
+					status: "stop",
+				},
+				{
+					tag: "ROOMTONE_FLUORESCENT_BUZZ",
+					status: "stop",
+				},
+				{
+					tag: "DRONE_STALKING_FEAR",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "EFFECT_FLASHLIGHT",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-91",
+		lines: [
+			{
+				text: "쿠우우우우웅!",
+				chunks: [
+					{
+						content: "쿠우우우우웅!",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "EXPLOSION_DISTANT",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_UNSTABLE_CORE",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "SCREEN_SHAKE",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-92",
+		lines: [
+			{
+				text: "연구소 전체가 진동했어.",
+				chunks: [
+					{
+						content: "연구소 전체가 진동했어.",
+						soundEffects: [
+							{
+								tag: "EXPLOSION_DISTANT",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "어디선가 울부짖는 소리가 들려왔어. 천장에서 먼지가 떨어지기 시작했어.",
+				chunks: [
+					{
+						content: "어디선가 울부짖는 소리가 들려왔어.",
+						soundEffects: [
+							{
+								tag: "VOICE_WAILING_DISTANT",
+							},
+						],
+					},
+					{
+						content: "천장에서 먼지가 떨어지기 시작했어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-93",
+		lines: [
+			{
+				text: "민호는 주사기를 떨어뜨리고 출구를 향해 뛰었어.",
+				chunks: [
+					{
+						content: "민호는 주사기를 떨어뜨리고 ",
+						soundEffects: [
+							{
+								tag: "GLASS_BREAK",
+							},
+						],
+					},
+					{
+						content: "출구를 향해 뛰었어.",
+						soundEffects: [
+							{
+								tag: "FOOTSTEPS_TUNNEL",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "계단을 뛰어 올라가면서. 뒤에서 무언가 따라오는 소리가 들렸어.",
+				chunks: [
+					{
+						content: "계단을 뛰어 올라가면서.",
+						soundEffects: [
+							{
+								tag: "FOOTSTEP_WOOD_RUN_LIGHT",
+							},
+						],
+					},
+					{
+						content: "뒤에서 무언가 따라오는 소리가 들렸어.",
+						soundEffects: [
+							{
+								tag: "CLOTH_DRAGGING",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_UNSTABLE_CORE",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "SCREEN_SHAKE",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-94",
+		lines: [
+			{
+				text: "연구소 밖으로 나와서.",
+				chunks: [
+					{
+						content: "연구소 밖으로 나와서.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "차에 실어둔 시멘트로 입구를 봉쇄했어. 더 이상 나올 수 없게.",
+				chunks: [
+					{
+						content: "차에 실어둔 시멘트로 입구를 봉쇄했어.",
+						soundEffects: [
+							{
+								tag: "METAL_IMPACT_DULL",
+							},
+						],
+					},
+					{
+						content: "더 이상 나올 수 없게.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "CITY_AMBIENCE_NIGHT",
+					status: "start",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-95",
+		lines: [
+			{
+				text: "차를 타고 도망치면서 백미러를 봤어.",
+				chunks: [
+					{
+						content: "차를 타고 도망치면서 백미러를 봤어.",
+					},
+				],
+				preLineEffects: {
+					image: {
+						url: "goedamjip-story-image/68ea7467f1ddfa774a49b000/seg-95",
+						type: "overlay",
+						sustain_until: "seg-100",
+					},
+					soundEffects: [
+						{
+							tag: "CREATURE_CHITTERING",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "연구소 창문 사이사이로. 검은 실들이 스며 나오고 있었어.",
+				chunks: [
+					{
+						content: "연구소 창문 사이사이로.",
+					},
+					{
+						content: "검은 실들이 스며 나오고 있었어.",
+						soundEffects: [
+							{
+								tag: "GLASS_SQUEAK",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-96",
+		lines: [
+			{
+				text: "민호의 몸에서 기생체는 잠시 얌전해졌어.",
+				chunks: [
+					{
+						content: "민호의 몸에서 기생체는 잠시 얌전해졌어.",
+						soundEffects: [
+							{
+								tag: "BREATH_CALMING_DOWN",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "하지만 억제제는 일시적일 뿐이었어.",
+				chunks: [
+					{
+						content: "하지만 억제제는 일시적일 뿐이었어.",
+						soundEffects: [
+							{
+								tag: "CREATURE_GUTTURAL_GROAN",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "CITY_AMBIENCE_NIGHT",
+					status: "stop",
+				},
+			],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-97",
+		lines: [
+			{
+				text: "그리고 연구소에서 나온 실들이.",
+				chunks: [
+					{
+						content: "그리고 연구소에서 나온 실들이.",
+						soundEffects: [
+							{
+								tag: "CREATURE_CHITTERING",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "산 전체로 퍼져나가기 시작했어.",
+				chunks: [
+					{
+						content: "산 전체로 퍼져나가기 시작했어.",
+						soundEffects: [
+							{
+								tag: "WIND_DRAFT_WHISTLE",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_LOOMING_PRESENCE",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-98",
+		lines: [
+			{
+				text: "근데 이상하지 않아?",
+				chunks: [
+					{
+						content: "근데 이상하지 않아?",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "그 연구소를 봉쇄한 지 1년이 지났는데도.",
+				chunks: [
+					{
+						content: "그 연구소를 봉쇄한 지 1년이 지났는데도.",
+						textEffects: ["JITTER"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-99",
+		lines: [
+			{
+				text: "아직도 그 주변에서는 실종자가 계속 나오고 있어.",
+				chunks: [
+					{
+						content: "아직도 그 주변에서는 실종자가 계속 나오고 있어.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "경찰 기록에 다 나와 있거든.",
+				chunks: [
+					{
+						content: "경찰 기록에 다 나와 있거든.",
+						textEffects: ["TYPEWRITER"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-100",
+		lines: [
+			{
+				text: "그리고 강민호?",
+				chunks: [
+					{
+						content: "그리고 강민호?",
+						textEffects: ["JITTER"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "그는 지금도 살아있어. 억제제를 찾아서 전국을 떠돌고 있다고 해.",
+				chunks: [
+					{
+						content: "그는 지금도 살아있어.",
+					},
+					{
+						content: "억제제를 찾아서 전국을 떠돌고 있다고 해.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_LOOMING_PRESENCE",
+					status: "stop",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "VISUAL_VIGNETTE",
+					status: "stop",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-101",
+		lines: [
+			{
+				text: "하지만 그의 몸에서 나오는 검은 실은.",
+				chunks: [
+					{
+						content: "하지만 그의 몸에서 나오는 검은 실은.",
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "FABRIC_TEAR_SLOW",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "갈수록 더 굵어지고 있다더군.",
+				chunks: [
+					{
+						content: "갈수록 더 굵어지고 있다더군.",
+						textEffects: ["JITTER"],
+						soundEffects: [
+							{
+								tag: "CLOTH_DRAGGING",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [
+				{
+					tag: "DRONE_SCANNER_SIGNAL",
+					status: "start",
+				},
+			],
+			visualEffects: [
+				{
+					tag: "OVERLAY_FOG",
+					status: "start",
+				},
+			],
+		},
+	},
+	{
+		id: "seg-102",
+		lines: [
+			{
+				text: "언젠가는 억제제도 소용없어질 거야.",
+				chunks: [
+					{
+						content: "언젠가는 억제제도 소용없어질 거야.",
+						textEffects: ["PULSE_SLOW"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "그때가 되면...",
+				chunks: [
+					{
+						content: "그때가 되면...",
+						textEffects: ["TYPEWRITER"],
+						soundEffects: [
+							{
+								tag: "SWALLOWING_NERVOUS",
+							},
+						],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [],
+					visualEffects: [],
+				},
+			},
+		],
+		background: null,
+		segmentEffects: {
+			soundEffects: [],
+			visualEffects: [],
+		},
+	},
+	{
+		id: "seg-103",
+		lines: [
+			{
+				text: "민호뿐만 아니라 우리 모두가.",
+				chunks: [
+					{
+						content: "민호뿐만 아니라 우리 모두가.",
+						textEffects: ["TEXT_SCRAMBLE_GLITCH"],
+					},
+				],
+				preLineEffects: {
+					image: null,
+					soundEffects: [
+						{
+							tag: "GHOSTLY_WHISPERS_OVERLAPPING",
+						},
+					],
+					visualEffects: [],
+				},
+			},
+			{
+				text: "그 검은 실들에게 잠식당할지도 모르겠어.",
+				chunks: [
+					{
+						content: "그 검은 실들에게 잠식당할지도 모르겠어.",
+						textEffects: ["SHAKE"],
+						soundEffects: [
+							{
+								tag: "BREATH_SHAKY_PANIC",
+							},
+						],
 					},
 				],
 				preLineEffects: {
