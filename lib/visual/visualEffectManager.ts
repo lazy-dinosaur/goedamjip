@@ -6,15 +6,19 @@ type VisualEffect = {
 	element: HTMLElement;
 	timeline?: gsap.core.Timeline;
 	cleanup?: () => void;
+	options?: { loop?: boolean };
 };
 
 class VisualEffectManager {
+	private static instance: VisualEffectManager;
 	private container: HTMLElement | null = null;
 	private activeEffects: Map<string, VisualEffect> = new Map();
 	private registry: VisualEffectRegistry;
 	private assetCache: Map<string, string> = new Map(); // tag_name → url
+	private resizeListenerRegistered: boolean = false;
+	private resizeTimeout: NodeJS.Timeout | null = null;
 
-	constructor() {
+	private constructor() {
 		this.registry = new VisualEffectRegistry();
 		// 모든 효과 등록
 		Object.entries(VisualEffectLibrary).forEach(([name, creator]) => {
@@ -22,6 +26,12 @@ class VisualEffectManager {
 		});
 	}
 
+	static getInstance() {
+		if (!VisualEffectManager.instance) {
+			VisualEffectManager.instance = new VisualEffectManager();
+		}
+		return VisualEffectManager.instance;
+	}
 	async preloadEffect(tagName: string, url: string): Promise<void> {
 		this.assetCache.set(tagName, url);
 
@@ -49,6 +59,33 @@ class VisualEffectManager {
 	init(container: HTMLElement) {
 		this.container = container;
 	}
+
+	private registerResizeListener() {
+		if (!this.resizeListenerRegistered) {
+			this.resizeListenerRegistered = true;
+			window.addEventListener("resize", this.handleResizeEvent);
+		}
+	}
+
+	private unregisterResizeListener() {
+		if (this.resizeListenerRegistered) {
+			window.removeEventListener("resize", this.handleResizeEvent);
+			this.resizeListenerRegistered = false;
+			if (this.resizeTimeout) {
+				clearTimeout(this.resizeTimeout);
+				this.resizeTimeout = null;
+			}
+		}
+	}
+
+	private handleResizeEvent = () => {
+		if (this.resizeTimeout) {
+			clearTimeout(this.resizeTimeout);
+		}
+		this.resizeTimeout = setTimeout(() => {
+			this.handleResize();
+		}, 200);
+	};
 
 	play(tag: string, options?: { loop?: boolean }) {
 		if (!this.container) {
@@ -80,7 +117,32 @@ class VisualEffectManager {
 			element: result.element,
 			timeline: result.timeline,
 			cleanup: result.cleanup,
+			options: options,
 		});
+
+		// 첫 번째 effect가 추가되면 resize 리스너 등록
+		if (this.activeEffects.size === 1) {
+			this.registerResizeListener();
+		}
+	}
+
+	stopImmediate(tag: string) {
+		const effect = this.activeEffects.get(tag);
+		if (!effect) return;
+
+		if (effect.timeline) {
+			effect.timeline.kill();
+		}
+		if (effect.cleanup) {
+			effect.cleanup();
+		}
+		effect.element.remove();
+		this.activeEffects.delete(tag);
+
+		// 모든 effect가 제거되면 resize 리스너 해제
+		if (this.activeEffects.size === 0) {
+			this.unregisterResizeListener();
+		}
 	}
 
 	stop(tag: string) {
@@ -100,6 +162,11 @@ class VisualEffectManager {
 				}
 				effect.element.remove();
 				this.activeEffects.delete(tag);
+
+				// 모든 effect가 제거되면 resize 리스너 해제
+				if (this.activeEffects.size === 0) {
+					this.unregisterResizeListener();
+				}
 			},
 		});
 	}
@@ -120,7 +187,38 @@ class VisualEffectManager {
 			this.stop(tag);
 		});
 	}
+
+	private handleResize() {
+		// 현재 활성화된 effects 정보 저장
+		const effectsToRestore: Array<{
+			tag: string;
+			options?: { loop?: boolean };
+		}> = [];
+		this.activeEffects.forEach((effect, tag) => {
+			effectsToRestore.push({ tag, options: effect.options });
+		});
+
+		// 모든 effects 즉시 정리
+		effectsToRestore.forEach(({ tag }) => {
+			this.stopImmediate(tag);
+		});
+
+		// effects 다시 재생
+		effectsToRestore.forEach(({ tag, options }) => {
+			this.play(tag, options);
+		});
+	}
+
+	destroy() {
+		// 모든 effects 정리 (stopImmediate가 자동으로 리스너 제거까지 처리)
+		const tags = Array.from(this.activeEffects.keys());
+		tags.forEach((tag) => {
+			this.stopImmediate(tag);
+		});
+
+		this.container = null;
+	}
 }
 
-const visualEffectManager = new VisualEffectManager();
+const visualEffectManager = VisualEffectManager.getInstance();
 export default visualEffectManager;
