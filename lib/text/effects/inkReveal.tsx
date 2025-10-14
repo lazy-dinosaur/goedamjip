@@ -6,7 +6,7 @@ export const INK_REVEAL: EffectCreator = (element, options = {}) => {
 	gsap.set(element, { opacity: 0 });
 	const tl = gsap.timeline();
 
-	const duration = options.duration ?? 0.6;
+	const duration = options.duration ?? 1.2;
 	const intensity = options.intensity ?? 1;
 
 	const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
