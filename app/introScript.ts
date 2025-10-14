@@ -491,10 +491,10 @@ export const introScript: Segment[] = [
 				},
 			},
 			{
-				text: "конвульсии처럼 격렬하게.",
+				text: "경련처럼 격렬하게.",
 				chunks: [
 					{
-						content: "конвульсии처럼 격렬하게.",
+						content: "경련처럼 격렬하게.",
 						textEffects: ["SHAKE"],
 						soundEffects: [
 							{
