@@ -4475,6 +4475,7 @@ export const introScript: Segment[] = [
 	},
 	{
 		id: "seg-71",
+		background: null,
 		lines: [
 			{
 				text: "선영을 차 밑으로 끌고 갔어. NX-7을 다리와 몸통에 여러 차례 주입했어.",
@@ -4560,6 +4561,7 @@ export const introScript: Segment[] = [
 	},
 	{
 		id: "seg-72",
+		background: null,
 		lines: [
 			{
 				text: "민우는 차 경보기를 작동시켰어. 나중에 자신이 '소리를 듣고' 온 것처럼 만들기 위해.",
@@ -4743,6 +4745,7 @@ export const introScript: Segment[] = [
 	},
 	{
 		id: "seg-74",
+		background: null,
 		lines: [
 			{
 				text: "민우는 수진을 의자에 앉히고 손과 발을 의자 프레임에 묶었어.",
@@ -4830,6 +4833,7 @@ export const introScript: Segment[] = [
 	},
 	{
 		id: "seg-75",
+		background: null,
 		lines: [
 			{
 				text: '복도에서 민우의 의식이 돌아왔어. "어? 내가 12층에 왜 왔지?"',
@@ -4890,6 +4894,7 @@ export const introScript: Segment[] = [
 	},
 	{
 		id: "seg-76",
+		background: null,
 		lines: [
 			{
 				text: "정신과 의사의 소견서에는 이렇게 나와 있어.",
