@@ -58,7 +58,6 @@ export default function MainIntro({
 	const splitInstancesMap = useRef<Map<HTMLElement, SplitText>>(new Map());
 
 	const imageContainerRef = useRef<HTMLDivElement>(null);
-	const screenRef = useRef<HTMLDivElement>(null);
 	const maskRef = useRef<HTMLDivElement>(null);
 	const userInteractionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const recoveryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -277,15 +276,13 @@ export default function MainIntro({
 			if (
 				currentSegmentData.background?.url &&
 				imageContainerRef.current &&
-				maskRef.current &&
-				screenRef.current
+				maskRef.current
 			) {
 				await imageManager.addImage(
 					currentSegmentData.background.url,
 					"background",
 					imageContainerRef.current,
 					maskRef.current,
-					// screenRef.current,
 					currentSegmentData.background.sustain_until,
 				);
 			}
@@ -339,7 +336,10 @@ export default function MainIntro({
 										gsap.set(ref, { opacity: 1 });
 										// inline-block으로 설정해야 y transform이 동작함
 										self.words.forEach((word) => {
-											gsap.set(word, { display: "inline-block" });
+											gsap.set(word, {
+												display: "inline-block",
+												whiteSpace: "nowrap",
+											});
 											// 마지막 단어가 아니면 공백 추가
 											word.innerHTML = word.innerHTML + "&nbsp;";
 											// if (index < self.words.length - 1) {
@@ -458,18 +458,12 @@ export default function MainIntro({
 							lineData.preLineEffects;
 
 						// preLineEffects 이미지가 있으면 먼저 처리 (await로 대기)
-						if (
-							image?.url &&
-							imageContainerRef.current &&
-							maskRef.current &&
-							screenRef.current
-						) {
+						if (image?.url && imageContainerRef.current && maskRef.current) {
 							await imageManager.addImage(
 								image.url,
 								image.type,
 								imageContainerRef.current,
 								maskRef.current,
-								// screenRef.current,
 								image.sustain_until,
 							);
 						}
@@ -583,10 +577,7 @@ export default function MainIntro({
 				className="absolute inset-0 pointer-events-none w-full h-full"
 			/>
 
-			<div
-				ref={screenRef}
-				className="max-w-4xl flex flex-col items-center justify-center space-y-5"
-			>
+			<div className="max-w-screen w-screen lg:w-full p-5 lg:max-w-4xl flex flex-col items-center justify-center space-y-5 text-center">
 				{introScript[currentSegment].lines.map((line, lineIdx) => (
 					<div
 						key={`seg${currentSegment}-line-${lineIdx}`}
@@ -602,7 +593,7 @@ export default function MainIntro({
 										);
 								}}
 								key={`seg${currentSegment}-line${lineIdx}-chunk${chunkIdx}`}
-								className="text-neutral-300 text-2xl md:text-3xl font-bm-hanna-11 text-korean whitespace-pre-wrap opacity-0 align-baseline"
+								className="text-neutral-300 text-2xl md:text-3xl font-bm-hanna-11 text-korean whitespace-pre-wrap break-keep opacity-0 align-baseline"
 								style={{ opacity: 0 }}
 							>
 								{chunk.content}
