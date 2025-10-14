@@ -63,7 +63,7 @@ export interface Background {
 export interface Segment {
 	id: string;
 	lines: Line[];
-	background: Background | null;
+	background?: Background | null;
 	segmentEffects: SegmentEffects;
 }
 
