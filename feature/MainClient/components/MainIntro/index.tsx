@@ -38,6 +38,7 @@ const revealEffects = [
 	"TYPEWRITER",
 	"RISE_FROM_BOTTOM",
 	"TEXT_SCRAMBLE_GLITCH",
+	"INK_REVEAL",
 ];
 
 export default function MainIntro({
@@ -438,6 +439,35 @@ export default function MainIntro({
 								}
 
 								lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
+							} else if (currentRevealEffect == "INK_REVEAL") {
+								// 기존 SplitText가 있으면 revert
+								if (splitInstancesMap.current.has(ref)) {
+									const existingInstance = splitInstancesMap.current.get(ref);
+									existingInstance?.revert();
+									splitInstancesMap.current.delete(ref);
+								}
+
+								const { soundEffects, visualEffects, textEffects } = chunk;
+
+								lineTextEffect.getTimeline().call(
+									() => {
+										if (soundEffects && soundEffects.length > 0) {
+											if (lineTextEffect.getTimeline().reversed()) return;
+											playSounds(soundEffects);
+										}
+										if (visualEffects && visualEffects.length > 0) {
+											playVisuals(visualEffects);
+										}
+									},
+									undefined,
+									"<0.2",
+								);
+
+								if (textEffects && textEffects.length > 0) {
+									playTexts(textEffects, lineTextEffect, ref);
+								}
+
+								lineTextEffect.addEffect("INK_REVEAL", ref);
 							}
 						}
 					});
