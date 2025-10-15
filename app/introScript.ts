@@ -6249,13 +6249,13 @@ export const introScript: Segment[] = [
 			sustain_until: "seg-163",
 		},
 		segmentEffects: {
-			soundEffects: [
+			soundEffects: [],
+			visualEffects: [
 				{
 					tag: "SCREEN_FLICKER",
 					status: "start",
 				},
 			],
-			visualEffects: [],
 		},
 	},
 	{
