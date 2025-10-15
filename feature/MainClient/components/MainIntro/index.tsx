@@ -151,6 +151,7 @@ export default function MainIntro({
 	]);
 
 	const playSounds = (soundEffects: SoundEffect[]) => {
+		console.log(soundEffects);
 		soundEffects.forEach((effect) => {
 			if (effect.status == "start") {
 				audioManager.play(effect.tag, { loop: true });
@@ -302,8 +303,8 @@ export default function MainIntro({
 					const getRevealEffect = (effects: string[]): string | undefined => {
 						return effects.find((effect) => revealEffects.includes(effect));
 					};
-
 					line.chunks.forEach((chunk, chunkIdx) => {
+						console.log(chunk);
 						const ref = chunksRef.current.get(
 							`line${lineIdx}-chunk${chunkIdx}`,
 						);
@@ -353,13 +354,13 @@ export default function MainIntro({
 											stagger: 0.1,
 										});
 
-										lineTextEffect.getTimeline().add(split, "-=0.3");
-
 										const { soundEffects, visualEffects, textEffects } = chunk;
+
 										lineTextEffect.getTimeline().call(
 											() => {
 												if (soundEffects && soundEffects.length > 0) {
 													// reverse 중일 때는 사운드 재생 안 함
+													console.log(soundEffects, "split text에서");
 													if (lineTextEffect.getTimeline().reversed()) return;
 													playSounds(soundEffects);
 												}
@@ -374,6 +375,8 @@ export default function MainIntro({
 										if (textEffects && textEffects.length > 0) {
 											playTexts(textEffects, lineTextEffect, ref);
 										}
+
+										lineTextEffect.getTimeline().add(split, "-=0.3");
 									},
 								});
 								splitInstancesMap.current.set(ref, splitInstance);
@@ -385,9 +388,8 @@ export default function MainIntro({
 									splitInstancesMap.current.delete(ref);
 								}
 
-								lineTextEffect.addEffect("TYPEWRITER", ref);
-
 								const { soundEffects, visualEffects, textEffects } = chunk;
+
 								lineTextEffect.getTimeline().call(
 									() => {
 										if (soundEffects && soundEffects.length > 0) {
@@ -408,6 +410,8 @@ export default function MainIntro({
 								if (textEffects && textEffects.length > 0) {
 									playTexts(textEffects, lineTextEffect, ref);
 								}
+
+								lineTextEffect.addEffect("TYPEWRITER", ref);
 							} else if (currentRevealEffect == "TEXT_SCRAMBLE_GLITCH") {
 								// 기존 SplitText가 있으면 revert
 								if (splitInstancesMap.current.has(ref)) {
@@ -416,9 +420,8 @@ export default function MainIntro({
 									splitInstancesMap.current.delete(ref);
 								}
 
-								lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
-
 								const { soundEffects, visualEffects, textEffects } = chunk;
+
 								lineTextEffect.getTimeline().call(
 									() => {
 										if (soundEffects && soundEffects.length > 0) {
@@ -436,6 +439,8 @@ export default function MainIntro({
 								if (textEffects && textEffects.length > 0) {
 									playTexts(textEffects, lineTextEffect, ref);
 								}
+
+								lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
 							}
 						}
 					});
