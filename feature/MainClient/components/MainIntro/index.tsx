@@ -159,8 +159,7 @@ export default function MainIntro({
 			} else if (effect.loop) {
 				audioManager.play(effect.tag, { loop: true });
 				pendingStopsRef.current.add({ id: effect.tag, type: "audio" }); // 저장만
-			}
-			{
+			} else {
 				audioManager.play(effect.tag, { repeat: effect.repeat, loop: false });
 			}
 		});
@@ -571,12 +570,10 @@ export default function MainIntro({
 				className="absolute inset-0 pointer-events-none w-full h-full"
 				style={{ zIndex: 60 }}
 			/>
-
 			<div
 				ref={visualEffectsRef}
 				className="absolute inset-0 pointer-events-none w-full h-full"
 			/>
-
 			<div className="max-w-screen w-screen lg:w-full p-5 lg:max-w-4xl flex flex-col items-center justify-center space-y-5 text-center">
 				{introScript[currentSegment].lines.map((line, lineIdx) => (
 					<div
