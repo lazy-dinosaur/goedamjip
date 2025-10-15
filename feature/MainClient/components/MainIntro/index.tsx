@@ -151,7 +151,6 @@ export default function MainIntro({
 	]);
 
 	const playSounds = (soundEffects: SoundEffect[]) => {
-		console.log(soundEffects);
 		soundEffects.forEach((effect) => {
 			if (effect.status == "start") {
 				audioManager.play(effect.tag, { loop: true });
@@ -304,7 +303,6 @@ export default function MainIntro({
 						return effects.find((effect) => revealEffects.includes(effect));
 					};
 					line.chunks.forEach((chunk, chunkIdx) => {
-						console.log(chunk);
 						const ref = chunksRef.current.get(
 							`line${lineIdx}-chunk${chunkIdx}`,
 						);
@@ -360,7 +358,6 @@ export default function MainIntro({
 											() => {
 												if (soundEffects && soundEffects.length > 0) {
 													// reverse 중일 때는 사운드 재생 안 함
-													console.log(soundEffects, "split text에서");
 													if (lineTextEffect.getTimeline().reversed()) return;
 													playSounds(soundEffects);
 												}
@@ -372,6 +369,7 @@ export default function MainIntro({
 											undefined,
 											"<0.2",
 										); // ">" = 이전 애니메이션 끝
+
 										if (textEffects && textEffects.length > 0) {
 											playTexts(textEffects, lineTextEffect, ref);
 										}
@@ -410,7 +408,6 @@ export default function MainIntro({
 								if (textEffects && textEffects.length > 0) {
 									playTexts(textEffects, lineTextEffect, ref);
 								}
-
 								lineTextEffect.addEffect("TYPEWRITER", ref);
 							} else if (currentRevealEffect == "TEXT_SCRAMBLE_GLITCH") {
 								// 기존 SplitText가 있으면 revert
