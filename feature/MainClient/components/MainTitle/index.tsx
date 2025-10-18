@@ -41,8 +41,8 @@ export default function MainTitle({
 
 	const onClick = () => {
 		setIsClicked(true);
-		audioManager.play("MUSIC_DREAD_REALIZATION", { loop: true });
-		audioManager.play("DRONE_UNSTABLE_AIR", { loop: true });
+		// audioManager.play("MUSIC_DREAD_REALIZATION", { loop: true });
+		// audioManager.play("DRONE_UNSTABLE_AIR", { loop: true });
 		setTimeout(() => {
 			textEffectRef.current
 				?.getTimeline()
