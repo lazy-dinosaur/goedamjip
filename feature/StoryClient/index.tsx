@@ -34,10 +34,11 @@ export default function StoryClient({
 			setCurrentSegment(0);
 		}
 	}, []);
-	const { loadingProgress, isAssetLoaded } = useLoadingProgress({
-		assets,
-		script,
-	});
+	const { loadingProgress, isAssetLoaded, loadingMessage } =
+		useLoadingProgress({
+			assets,
+			script,
+		});
 
 	const [needsReactivation, setNeedsReactivation] = useState(false);
 	const [needsRecover, setNeedsRecover] = useState(false);
@@ -53,6 +54,7 @@ export default function StoryClient({
 				<StoryTitle
 					loadingProgress={loadingProgress}
 					isAssetLoaded={isAssetLoaded}
+					loadingMessage={loadingMessage}
 					changeStage={() => {
 						changeStage("story");
 					}}

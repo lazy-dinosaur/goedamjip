@@ -4,12 +4,14 @@ interface LoadingProgressProps {
 	loadingProgress: number;
 	location?: "bottom" | "top";
 	visible: boolean;
+	loadingMessage?: string;
 }
 
 export const LoadingProgress = ({
 	visible,
 	location = "bottom",
 	loadingProgress,
+	loadingMessage = "음향을 준비하는 중...",
 }: LoadingProgressProps) => {
 	return (
 		visible &&
@@ -21,7 +23,7 @@ export const LoadingProgress = ({
 				)}
 			>
 				<p className="text-white md:text-xl font-bm-hanna-11 mb-4">
-					음향을 준비하는 중...
+					{loadingMessage}
 				</p>
 				{/* 프로그레스 바 */}
 				<div className="w-full max-w-xs mx-auto">

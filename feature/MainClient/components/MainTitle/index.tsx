@@ -13,12 +13,14 @@ interface MainTitleProps {
 	loadingProgress: number;
 	isAssetLoaded: boolean;
 	changeStage: () => void;
+	loadingMessage: string;
 }
 
 export default function MainTitle({
 	loadingProgress,
 	isAssetLoaded,
 	changeStage,
+	loadingMessage,
 }: MainTitleProps) {
 	const textRef = useRef<HTMLDivElement>(null);
 	const soundAdviceRef = useRef<HTMLDivElement>(null);
@@ -59,7 +61,11 @@ export default function MainTitle({
 		>
 			<MainTitleText textRef={textRef} />
 			<SoundAdvice soundAdviceRef={soundAdviceRef} />
-			<LoadingProgress loadingProgress={loadingProgress} visible={!isClicked} />
+			<LoadingProgress
+				loadingProgress={loadingProgress}
+				visible={!isClicked}
+				loadingMessage={loadingMessage}
+			/>
 		</ComponentWrapper>
 	);
 }

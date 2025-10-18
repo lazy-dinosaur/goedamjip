@@ -56,10 +56,11 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	// 인트로를 봤는지 여부는 세션스토리지에 저장하는게 좋을듯 함
 	const [didWatchIntro, setDidWatchIntro] = useState(false);
 
-	const { loadingProgress, isAssetLoaded } = useLoadingProgress({
-		assets,
-		script: introScript,
-	});
+	const { loadingProgress, isAssetLoaded, loadingMessage } =
+		useLoadingProgress({
+			assets,
+			script: introScript,
+		});
 
 	const [needsReactivation, setNeedsReactivation] = useState(false);
 	const [needsRecover, setNeedsRecover] = useState(false);
@@ -75,6 +76,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 				<MainTitle
 					loadingProgress={loadingProgress}
 					isAssetLoaded={isAssetLoaded}
+					loadingMessage={loadingMessage}
 					changeStage={
 						!skipIntroSetting
 							? () => {

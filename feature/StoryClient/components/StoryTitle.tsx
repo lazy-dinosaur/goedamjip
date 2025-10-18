@@ -12,6 +12,7 @@ interface StoryTitleProps {
 	metadata: StoryMetadata;
 	isAssetLoaded: boolean;
 	changeStage: () => void;
+	loadingMessage: string;
 }
 export default function StoryTitle({
 	loadingProgress,
@@ -19,6 +20,7 @@ export default function StoryTitle({
 	isAssetLoaded,
 	metadata,
 	changeStage,
+	loadingMessage,
 }: StoryTitleProps) {
 	const titleRef = useRef<HTMLDivElement>(null);
 	const textEffectRef = useRef<TextEffect>(null);
@@ -100,6 +102,7 @@ export default function StoryTitle({
 				loadingProgress={loadingProgress}
 				visible={!isClicked}
 				location="top"
+				loadingMessage={loadingMessage}
 			/>
 		</ComponentWrapper>
 	);
