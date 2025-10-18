@@ -21,6 +21,7 @@ import {
 	SoundEffect,
 	VisualEffect,
 } from "@/types/script.types";
+import { getIsMobile } from "@/util/getIsMobile";
 interface MainIntroProps {
 	introScript: ProcessedSegment[];
 	changeStage: () => void;
@@ -339,10 +340,7 @@ export default function MainIntro({
 												display: "inline-block",
 												whiteSpace: "nowrap",
 											});
-											// 마지막 단어가 아니면 공백 추가
 											word.innerHTML = word.innerHTML + "&nbsp;";
-											// if (index < self.words.length - 1) {
-											// }
 										});
 
 										const split = gsap.from(self.words, {
@@ -571,9 +569,7 @@ export default function MainIntro({
 	}, [currentSegment, introScript, needsRecover]);
 
 	// 모바일 기기 감지
-	const isMobile =
-		typeof window !== "undefined" &&
-		/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+	const isMobile = getIsMobile();
 
 	useEffect(() => {
 		if (!isMobile) return;
