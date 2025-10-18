@@ -2,7 +2,7 @@
 import { GetAssetsMap } from "@/lib/supabase/asset";
 import MainTitle from "./components/MainTitle";
 import MainIntro from "./components/MainIntro";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import MainMenu from "./components/MainMenu";
 import ReactivationModal from "@/component/ReactivationModal";
 import { ProcessedSegment } from "@/types/script.types";
@@ -16,12 +16,14 @@ interface MainClientProps {
 
 export default function MainClient({ assets, introScript }: MainClientProps) {
 	// 인트로 스킵 설정 확인
+	// 아이디오 유저 정보를 서버에 저장한 이후에는 유저의 설정 값에서 가져오는 로직을 추가해야함
 	const [skipIntroSetting, setSkipIntroSetting] = useState(() => {
 		if (typeof window !== "undefined") {
 			return localStorage.getItem("skipIntro") === "true";
 		}
 		return false;
 	});
+
 	//화면이 클릭 되면 intro가 시작되어야 한다 다만 title의 종료 에니메이션 이후에 시작되어야 한다.
 	//즉 title에서 로딩이 끝난 이후 클릭을 하면 종료 에니메이션이 동작 해야하고 그 이후에 introstage로 변경 되어야 한다.
 
@@ -51,7 +53,10 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 		}
 	}, []);
 
-	const { loadingProgress, isAudioLoaded } = useLoadingProgress({
+	// 인트로를 봤는지 여부는 세션스토리지에 저장하는게 좋을듯 함
+	const [didWatchIntro, setDidWatchIntro] = useState(false);
+
+	const { loadingProgress, isAssetLoaded } = useLoadingProgress({
 		assets,
 		script: introScript,
 	});
@@ -60,17 +65,19 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	const [needsRecover, setNeedsRecover] = useState(false);
 	audioManager.setGlobalVolume(0.6);
 
+	useEffect(() => {
+		setNeedsRecover(true);
+	}, [introScript]);
+
 	return (
 		<>
 			{currentStage === "title" && (
 				<MainTitle
 					loadingProgress={loadingProgress}
-					isAudioLoaded={isAudioLoaded}
+					isAssetLoaded={isAssetLoaded}
 					changeStage={
-						!skipIntroSetting
+						!!skipIntroSetting
 							? () => {
-									audioManager.stop("MUSIC_DREAD_REALIZATION");
-									audioManager.stop("DRONE_UNSTABLE_AIR");
 									changeStage("intro");
 								}
 							: () => changeStage("menu")
