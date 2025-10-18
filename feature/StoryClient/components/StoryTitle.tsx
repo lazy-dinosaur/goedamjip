@@ -101,7 +101,7 @@ export default function StoryTitle({
 			<LoadingProgress
 				loadingProgress={loadingProgress}
 				visible={!isClicked}
-				location="top"
+				location="middle"
 				loadingMessage={loadingMessage}
 			/>
 		</ComponentWrapper>

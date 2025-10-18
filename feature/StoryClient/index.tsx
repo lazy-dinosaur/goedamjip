@@ -7,6 +7,7 @@ import ReactivationModal from "@/component/ReactivationModal";
 import audioManager from "@/lib/audio/audioManager";
 import { StoryMetadata } from "@/types/story.types";
 import StoryTitle from "./components/StoryTitle";
+import ScriptPlayer from "./components/ScriptPlayer";
 
 interface StoryClientProps {
 	assets: GetAssetsMap;
@@ -27,6 +28,10 @@ export default function StoryClient({
 
 	const [currentSegment, setCurrentSegment] = useState(0); // currentSegment를 상위로 이동
 
+	const handleSegmentChange = useCallback((newSegment: number) => {
+		setCurrentSegment(newSegment);
+	}, []);
+
 	const changeStage = useCallback((stage: "title" | "story") => {
 		setCurrentStage(stage);
 		// title로 돌아갈 때 currentSegment를 리셋할 수 있음
@@ -34,14 +39,20 @@ export default function StoryClient({
 			setCurrentSegment(0);
 		}
 	}, []);
-	const { loadingProgress, isAssetLoaded, loadingMessage } =
-		useLoadingProgress({
+	const { loadingProgress, isAssetLoaded, loadingMessage } = useLoadingProgress(
+		{
 			assets,
 			script,
-		});
+		},
+	);
 
 	const [needsReactivation, setNeedsReactivation] = useState(false);
 	const [needsRecover, setNeedsRecover] = useState(false);
+
+	const onRecover = useCallback(() => {
+		setNeedsRecover(false);
+	}, [setNeedsRecover]);
+
 	audioManager.setGlobalVolume(0.6);
 
 	useEffect(() => {
@@ -62,7 +73,18 @@ export default function StoryClient({
 					title={title}
 				/>
 			)}
-			{currentStage == "story" && <>story</>}
+			{currentStage == "story" && (
+				<ScriptPlayer
+					script={script}
+					needsRecover={needsRecover}
+					onRecover={onRecover}
+					currentSegment={currentSegment}
+					onSegmentChange={handleSegmentChange}
+					changeStage={() => {
+						changeStage("title");
+					}}
+				/>
+			)}
 
 			<ReactivationModal
 				needsReactivationState={[needsReactivation, setNeedsReactivation]}

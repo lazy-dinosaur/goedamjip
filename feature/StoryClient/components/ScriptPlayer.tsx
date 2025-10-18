@@ -35,7 +35,7 @@ const revealEffects = [
 	"INK_REVEAL",
 ];
 
-export default function MainIntro({
+export default function ScriptPlayer({
 	script,
 	needsRecover,
 	onRecover,

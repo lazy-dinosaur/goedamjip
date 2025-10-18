@@ -56,19 +56,21 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	// 인트로를 봤는지 여부는 세션스토리지에 저장하는게 좋을듯 함
 	const [didWatchIntro, setDidWatchIntro] = useState(false);
 
-	const { loadingProgress, isAssetLoaded, loadingMessage } =
-		useLoadingProgress({
+	const { loadingProgress, isAssetLoaded, loadingMessage } = useLoadingProgress(
+		{
 			assets,
 			script: introScript,
-		});
+		},
+	);
 
 	const [needsReactivation, setNeedsReactivation] = useState(false);
 	const [needsRecover, setNeedsRecover] = useState(false);
-	audioManager.setGlobalVolume(0.6);
 
-	useEffect(() => {
-		setNeedsRecover(true);
-	}, [introScript]);
+	const onRecover = useCallback(() => {
+		setNeedsRecover(false);
+	}, [setNeedsRecover]);
+
+	audioManager.setGlobalVolume(0.6);
 
 	return (
 		<>
@@ -86,10 +88,11 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					}
 				/>
 			)}
-			{currentStage === "intro" && (
+			{currentStage === "intro" && !needsReactivation && (
 				<MainIntro
-					introScript={introScript}
-					needsRecoverState={[needsRecover, setNeedsRecover]}
+					script={introScript}
+					needsRecover={needsRecover}
+					onRecover={onRecover}
 					currentSegment={currentSegment}
 					onSegmentChange={handleSegmentChange}
 					changeStage={() => {
@@ -103,7 +106,6 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 				needsReactivationState={[needsReactivation, setNeedsReactivation]}
 				onReactivationStateChange={(isReactivated) => {
 					if (!isReactivated) {
-						// 재활성화되었을 때 복구 필요
 						setNeedsRecover(true);
 					}
 				}}

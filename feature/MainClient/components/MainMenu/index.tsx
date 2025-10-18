@@ -265,6 +265,17 @@ export default function MainMenu() {
 		}
 	}, [router, pageRef]);
 
+	const handleTouch = useCallback(
+		(index: number) => {
+			if (index != targetMenu) {
+				setTargetMenu(index);
+			} else {
+				handleRandomStoryClick();
+			}
+		},
+		[targetMenu, setTargetMenu, handleRandomStoryClick],
+	);
+
 	return (
 		<ComponentWrapper>
 			<div
@@ -302,7 +313,11 @@ export default function MainMenu() {
 								}
 								onClick={
 									isMobile
-										? () => setTargetMenu(index)
+										? () => {
+												if (index == 0) {
+													handleTouch(0);
+												}
+											}
 										: () => {
 												if (index == 0) {
 													handleRandomStoryClick();
