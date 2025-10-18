@@ -1,16 +1,25 @@
+import { cn } from "@/util/styles";
+
 interface LoadingProgressProps {
 	loadingProgress: number;
+	location?: "bottom" | "top";
 	visible: boolean;
 }
 
 export const LoadingProgress = ({
 	visible,
+	location = "bottom",
 	loadingProgress,
 }: LoadingProgressProps) => {
 	return (
 		visible &&
 		(loadingProgress < 100 ? (
-			<div className="absolute bottom-15 left-0 right-0 text-center px-8">
+			<div
+				className={cn(
+					"absolute left-0 right-0 text-center px-8",
+					location == "bottom" ? "bottom-15" : "bottom-1/3",
+				)}
+			>
 				<p className="text-white md:text-xl font-bm-hanna-11 mb-4">
 					음향을 준비하는 중...
 				</p>
@@ -25,8 +34,13 @@ export const LoadingProgress = ({
 				</div>
 			</div>
 		) : (
-			<div className="absolute bottom-15 left-0 right-0 text-center animate-pulse">
-				<p className="text-white md:text-xl font-bm-hanna-11">
+			<div
+				className={cn(
+					"absolute left-0 right-0 text-center animate-pulse",
+					location == "bottom" ? "bottom-15" : "bottom-1/3",
+				)}
+			>
+				<p className="text-neutral-300 md:text-xl font-bm-hanna-11">
 					화면을 클릭하여 시작하세요
 				</p>
 			</div>

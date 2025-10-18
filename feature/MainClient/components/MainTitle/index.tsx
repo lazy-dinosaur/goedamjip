@@ -11,13 +11,13 @@ import TextEffect from "@/lib/text/textEffect";
 
 interface MainTitleProps {
 	loadingProgress: number;
-	isAudioLoaded: boolean;
+	isAssetLoaded: boolean;
 	changeStage: () => void;
 }
 
 export default function MainTitle({
 	loadingProgress,
-	isAudioLoaded,
+	isAssetLoaded,
 	changeStage,
 }: MainTitleProps) {
 	const textRef = useRef<HTMLDivElement>(null);
@@ -54,8 +54,8 @@ export default function MainTitle({
 	return (
 		<ComponentWrapper
 			className="justify-around"
-			onClick={isAudioLoaded && !isClicked ? onClick : undefined}
-			style={{ cursor: isAudioLoaded && !isClicked ? "pointer" : "default" }}
+			onClick={isAssetLoaded && !isClicked ? onClick : undefined}
+			style={{ cursor: isAssetLoaded && !isClicked ? "pointer" : "default" }}
 		>
 			<MainTitleText textRef={textRef} />
 			<SoundAdvice soundAdviceRef={soundAdviceRef} />
