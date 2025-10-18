@@ -76,7 +76,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					loadingProgress={loadingProgress}
 					isAssetLoaded={isAssetLoaded}
 					changeStage={
-						!!skipIntroSetting
+						!skipIntroSetting
 							? () => {
 									changeStage("intro");
 								}
