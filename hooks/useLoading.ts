@@ -11,7 +11,7 @@ interface UseLoadingProps {
 
 export const useLoadingProgress = ({ assets, script }: UseLoadingProps) => {
 	const [loadingProgress, setLoadingProgress] = useState(0);
-	const [isAudioLoaded, setIsAudioLoaded] = useState(false);
+	const [isAssetLoaded, setIsAssetLoaded] = useState(false);
 
 	useEffect(() => {
 		const loadAssets = async () => {
@@ -100,12 +100,12 @@ export const useLoadingProgress = ({ assets, script }: UseLoadingProps) => {
 				...visualPromises,
 				...imagePromises,
 			]);
-			setIsAudioLoaded(true);
+			setIsAssetLoaded(true);
 		};
 		loadAssets();
 	}, [assets, script]);
 	return {
 		loadingProgress,
-		isAudioLoaded,
+		isAssetLoaded,
 	};
 };

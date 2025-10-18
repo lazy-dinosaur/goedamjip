@@ -7,6 +7,7 @@ import {
 	useState,
 } from "react";
 import { Howler } from "howler";
+import { getIsMobile } from "@/util/getIsMobile";
 
 interface ReactivationModalProps {
 	needsReactivationState: [boolean, Dispatch<SetStateAction<boolean>>];
@@ -22,9 +23,7 @@ export default function ReactivationModal({
 	const safeDelayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	// 모바일 기기 감지
-	const isMobile =
-		typeof window !== "undefined" &&
-		/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+	const isMobile = getIsMobile();
 
 	useEffect(() => {
 		if (!isMobile) return;
