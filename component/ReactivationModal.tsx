@@ -86,7 +86,7 @@ export default function ReactivationModal({
 
 	return (
 		<div
-			className={`fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center transition-opacity ${
+			className={`fixed inset-0 z-[70] max-w-screen max-h-screen overflow-hidden bg-black/90 backdrop-blur-sm flex items-center justify-center transition-opacity ${
 				canClick ? "cursor-pointer" : "cursor-not-allowed"
 			}`}
 			onClick={handleReactivation}
@@ -108,7 +108,7 @@ export default function ReactivationModal({
 				>
 					화면을 터치하여 계속하세요
 				</p>
-				<p className="text-white/60 text-lg font-bm-hanna-11 text-center mt-2">
+				<p className="text-white/60 text-lg font-bm-hanna-11 text-center mt-2 whitespace-nowrap">
 					음향과 애니메이션이 일시정지되었습니다
 				</p>
 			</div>
