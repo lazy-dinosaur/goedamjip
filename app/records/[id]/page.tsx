@@ -1,4 +1,4 @@
-import PageWrapper from "@/component/PaperWrapper";
+import PageWrapper from "@/component/PageWrapper";
 import StoryClient from "@/feature/StoryClient";
 import { getAssetsMap } from "@/lib/supabase/asset";
 import { getStoryById } from "@/lib/supabase/story";
