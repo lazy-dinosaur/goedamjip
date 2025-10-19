@@ -35,7 +35,7 @@ export const ContinueMark = ({ userIntereacted }: ContinueMarkProps) => {
 		}
 	}, [userIntereacted, continueRef]);
 	return (
-		<div className="mt-5 text-center h-10">
+		<div className="mt-0 text-center h-10">
 			<div
 				ref={continueRef}
 				className={`text-white/50 inline-flex items-center opacity-0 `}
