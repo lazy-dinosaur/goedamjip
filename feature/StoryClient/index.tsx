@@ -55,10 +55,6 @@ export default function StoryClient({
 
 	audioManager.setGlobalVolume(0.6);
 
-	useEffect(() => {
-		setNeedsRecover(true);
-	}, [script]);
-
 	return (
 		<>
 			{currentStage == "title" && (
