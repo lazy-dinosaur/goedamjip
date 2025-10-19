@@ -15,8 +15,6 @@ interface MainClientProps {
 }
 
 export default function MainClient({ assets, introScript }: MainClientProps) {
-	// 인트로 스킵 설정 확인
-	// 아이디오 유저 정보를 서버에 저장한 이후에는 유저의 설정 값에서 가져오는 로직을 추가해야함
 	const [skipIntroSetting, setSkipIntroSetting] = useState(() => {
 		if (typeof window !== "undefined") {
 			return localStorage.getItem("skipIntro") === "true";
@@ -24,8 +22,20 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 		return false;
 	});
 
-	//화면이 클릭 되면 intro가 시작되어야 한다 다만 title의 종료 에니메이션 이후에 시작되어야 한다.
-	//즉 title에서 로딩이 끝난 이후 클릭을 하면 종료 에니메이션이 동작 해야하고 그 이후에 introstage로 변경 되어야 한다.
+	// 인트로를 봤는지 여부는 세션스토리지에 저장하는게 좋을듯 함
+	const [didWatchIntro, setDidWatchIntro] = useState(() => {
+		if (typeof window !== "undefined") {
+			return sessionStorage.getItem("introWatched") === "true";
+		}
+		return false;
+	});
+
+	const handleIntroWatchChange = useCallback((newValue: boolean) => {
+		setDidWatchIntro(newValue);
+		if (typeof window === "undefined") {
+			sessionStorage.setItem("introWatched", String(newValue));
+		}
+	}, []);
 
 	const [currentStage, setCurrentStage] = useState<"title" | "intro" | "menu">(
 		"title",
@@ -53,9 +63,6 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 		}
 	}, []);
 
-	// 인트로를 봤는지 여부는 세션스토리지에 저장하는게 좋을듯 함
-	const [didWatchIntro, setDidWatchIntro] = useState(false);
-
 	const { loadingProgress, isAssetLoaded, loadingMessage } = useLoadingProgress(
 		{
 			assets,
@@ -80,7 +87,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					isAssetLoaded={isAssetLoaded}
 					loadingMessage={loadingMessage}
 					changeStage={
-						!skipIntroSetting
+						!skipIntroSetting && !didWatchIntro
 							? () => {
 									changeStage("intro");
 								}
@@ -95,7 +102,12 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					onRecover={onRecover}
 					currentSegment={currentSegment}
 					onSegmentChange={handleSegmentChange}
+					onIntroSkip={() => {
+						handleIntroWatchChange(true);
+						handleSkipIntroChange(true);
+					}}
 					changeStage={() => {
+						handleIntroWatchChange(true);
 						changeStage("menu");
 					}}
 				/>

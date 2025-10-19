@@ -14,12 +14,14 @@ import {
 	VisualEffect,
 } from "@/types/script.types";
 import { cn } from "@/util/styles";
+import IntroSkipButton from "./IntroSkipButton";
 interface MainIntroProps {
 	script: ProcessedSegment[];
 	changeStage: () => void;
 	needsRecover: boolean;
 	onRecover: () => void;
 	currentSegment: number;
+	onIntroSkip: () => void;
 	onSegmentChange: (newSegment: number) => void;
 }
 type PendingStop = {
@@ -42,6 +44,7 @@ export default function MainIntro({
 	changeStage,
 	currentSegment,
 	onSegmentChange,
+	onIntroSkip,
 }: MainIntroProps) {
 	const segmentCounts = script.length;
 	const [userIntereacted, setUserInterected] = useState(true);
@@ -567,6 +570,16 @@ export default function MainIntro({
 		};
 	}, [currentSegment, script, needsRecover, onRecover, segmentCleanup]);
 
+	const handleSkip = useCallback(() => {
+		setUserInterected(true);
+		onIntroSkip();
+		segmentCleanup(true);
+		audioManager.stopAllSound();
+		setTimeout(() => {
+			changeStage();
+		}, 500);
+	}, [segmentCleanup, changeStage, onIntroSkip]);
+
 	return (
 		<ComponentWrapper
 			className={!userIntereacted ? "cursor-pointer" : "default"}
@@ -587,13 +600,13 @@ export default function MainIntro({
 			/>
 			<div
 				className={cn(
-					"max-w-screen w-max lg:w-full p-5 lg:max-w-4xl flex flex-col items-center justify-center space-y-5",
+					"max-w-screen w-full lg:w-full p-2 lg:max-w-4xl flex flex-col items-center justify-center space-y-5",
 				)}
 			>
 				{script[currentSegment].lines.map((line, lineIdx) => (
 					<div
 						key={`seg${currentSegment}-line-${lineIdx}`}
-						className="relative w-full md:text-center text-korean"
+						className="relative w-full md:text-center text-center text-korean"
 					>
 						{line.chunks.map((chunk, chunkIdx) => (
 							<span
@@ -615,6 +628,7 @@ export default function MainIntro({
 				))}
 				<ContinueMark userIntereacted={userIntereacted} />
 			</div>
+			<IntroSkipButton handleSkip={handleSkip} />
 		</ComponentWrapper>
 	);
 }
