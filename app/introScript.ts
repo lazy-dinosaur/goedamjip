@@ -33,7 +33,7 @@ export const introScript: Segment[] = [
 				chunks: [
 					{
 						content: "당신은 낡고 음침한 도서관에 ",
-						textEffects: ["PULSE_FAST"],
+						textEffects: ["TYPEWRITER"],
 					},
 					{
 						content: "들어섭니다.",
