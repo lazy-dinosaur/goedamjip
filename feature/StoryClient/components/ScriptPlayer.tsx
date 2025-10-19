@@ -587,13 +587,13 @@ export default function ScriptPlayer({
 			/>
 			<div
 				className={cn(
-					"max-w-screen w-max lg:w-full p-5 lg:max-w-4xl flex flex-col items-center justify-center space-y-5",
+					"max-w-screen w-full lg:w-full p-2 lg:max-w-4xl flex flex-col items-center justify-center space-y-5",
 				)}
 			>
 				{script[currentSegment].lines.map((line, lineIdx) => (
 					<div
 						key={`seg${currentSegment}-line-${lineIdx}`}
-						className="relative w-full md:text-center text-korean"
+						className="relative w-full md:text-center text-center text-korean"
 					>
 						{line.chunks.map((chunk, chunkIdx) => (
 							<span

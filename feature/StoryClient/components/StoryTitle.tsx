@@ -74,12 +74,12 @@ export default function StoryTitle({
 	return (
 		<ComponentWrapper
 			onClick={isAssetLoaded && !isClicked ? onClick : undefined}
-			className="space-y-10 justify-center h-full"
+			className=" justify-center h-full relative"
 			style={{ cursor: isAssetLoaded && !isClicked ? "pointer" : "default" }}
 		>
 			<div
 				ref={titleRef}
-				className="text-5xl md:text-6xl lg:text-7xl text-red-700 text-center px-10 font-bm-euljiro-10"
+				className="text-5xl md:text-6xl lg:text-7xl text-red-700 text-center px-10 font-bm-euljiro-10 whitespace-nowrap mb-10 -mt-10"
 			>
 				{title}
 			</div>
