@@ -2,9 +2,8 @@
 import { useLoadingProgress } from "@/hooks/useLoading";
 import { GetAssetsMap } from "@/lib/supabase/asset";
 import { ProcessedSegment } from "@/types/script.types";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import ReactivationModal from "@/component/ReactivationModal";
-import audioManager from "@/lib/audio/audioManager";
 import { StoryMetadata } from "@/types/story.types";
 import StoryTitle from "./components/StoryTitle";
 import ScriptPlayer from "./components/ScriptPlayer";
@@ -52,8 +51,6 @@ export default function StoryClient({
 	const onRecover = useCallback(() => {
 		setNeedsRecover(false);
 	}, [setNeedsRecover]);
-
-	audioManager.setGlobalVolume(0.6);
 
 	return (
 		<>

@@ -314,13 +314,11 @@ export default function MainMenu() {
 								onClick={
 									isMobile
 										? () => {
-												audioManager.stopAllSound();
 												if (index == 0) {
 													handleTouch(0);
 												}
 											}
 										: () => {
-												audioManager.stopAllSound();
 												if (index == 0) {
 													handleRandomStoryClick();
 												}
