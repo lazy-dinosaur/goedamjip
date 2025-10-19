@@ -8,6 +8,7 @@ import {
 } from "react";
 import { Howler } from "howler";
 import { getIsMobile } from "@/util/getIsMobile";
+import gsap from "gsap";
 
 interface ReactivationModalProps {
 	needsReactivationState: [boolean, Dispatch<SetStateAction<boolean>>];
@@ -21,6 +22,7 @@ export default function ReactivationModal({
 	const [needsReactivation, setNeedsReactivation] = needsReactivationState;
 	const [canClick, setCanClick] = useState(false);
 	const safeDelayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const ref = useRef<HTMLDivElement>(null);
 
 	// 모바일 기기 감지
 	const isMobile = getIsMobile();
@@ -65,6 +67,23 @@ export default function ReactivationModal({
 
 	const handleReactivation = useCallback(async () => {
 		if (!canClick) return; // 500ms 이전에는 클릭 무시
+		setCanClick(false);
+		const tl = gsap.timeline();
+
+		if (ref.current) {
+			tl.to(ref.current, {
+				duration: 0.3,
+				opacity: 0,
+				ease: "power2.inOut",
+			}).call(
+				() => {
+					setNeedsReactivation(false);
+					onReactivationStateChange?.(false);
+				},
+				undefined,
+				"+=0",
+			);
+		}
 
 		try {
 			// Howler 음소거 해제
@@ -74,13 +93,10 @@ export default function ReactivationModal({
 			if (Howler.ctx && Howler.ctx.state === "suspended") {
 				await Howler.ctx.resume();
 			}
-
-			setNeedsReactivation(false);
-			onReactivationStateChange?.(false);
 		} catch (error) {
 			console.error("Failed to reactivate audio:", error);
 		}
-	}, [canClick, onReactivationStateChange, setNeedsReactivation]);
+	}, [canClick, onReactivationStateChange, setNeedsReactivation, ref]);
 
 	if (!needsReactivation) return null;
 
@@ -93,6 +109,7 @@ export default function ReactivationModal({
 		>
 			{/* 배경을 어둡게 하고 중앙에 메시지 표시 */}
 			<div
+				ref={ref}
 				className={
 					canClick
 						? "px-12 py-6 rounded-lg animate-pulse"
