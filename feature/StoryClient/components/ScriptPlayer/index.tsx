@@ -363,11 +363,10 @@ export default function ScriptPlayer({
 											"<0.2",
 										); // ">" = 이전 애니메이션 끝
 
+										lineTextEffect.getTimeline().add(split, "-=0.3");
 										if (textEffects && textEffects.length > 0) {
 											playTexts(textEffects, lineTextEffect, ref);
 										}
-
-										lineTextEffect.getTimeline().add(split, "-=0.3");
 									},
 								});
 								splitInstancesMap.current.set(ref, splitInstance);
@@ -398,10 +397,10 @@ export default function ScriptPlayer({
 									"<0.2",
 								); // ">" = 이전 애니메이션 끝
 
+								lineTextEffect.addEffect("TYPEWRITER", ref);
 								if (textEffects && textEffects.length > 0) {
 									playTexts(textEffects, lineTextEffect, ref);
 								}
-								lineTextEffect.addEffect("TYPEWRITER", ref);
 							} else if (currentRevealEffect == "TEXT_SCRAMBLE_GLITCH") {
 								// 기존 SplitText가 있으면 revert
 								if (splitInstancesMap.current.has(ref)) {
@@ -426,11 +425,10 @@ export default function ScriptPlayer({
 									"<0.2",
 								);
 
+								lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
 								if (textEffects && textEffects.length > 0) {
 									playTexts(textEffects, lineTextEffect, ref);
 								}
-
-								lineTextEffect.addEffect("TEXT_SCRAMBLE_GLITCH", ref);
 							} else if (currentRevealEffect == "INK_REVEAL") {
 								// 기존 SplitText가 있으면 revert
 								if (splitInstancesMap.current.has(ref)) {
@@ -455,11 +453,10 @@ export default function ScriptPlayer({
 									"<0.2",
 								);
 
+								lineTextEffect.addEffect("INK_REVEAL", ref);
 								if (textEffects && textEffects.length > 0) {
 									playTexts(textEffects, lineTextEffect, ref);
 								}
-
-								lineTextEffect.addEffect("INK_REVEAL", ref);
 							}
 						}
 					});
