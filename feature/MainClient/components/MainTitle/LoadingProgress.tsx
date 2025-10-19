@@ -19,7 +19,7 @@ export const LoadingProgress = ({
 			<div
 				className={cn(
 					"absolute left-0 right-0 text-center px-8",
-					location == "bottom" ? "bottom-15" : "bottom-1/4",
+					location == "bottom" ? "bottom-15" : "bottom-1/5",
 				)}
 			>
 				<p className="text-white md:text-xl font-bm-hanna-11 mb-4">
@@ -39,7 +39,7 @@ export const LoadingProgress = ({
 			<div
 				className={cn(
 					"absolute left-0 right-0 text-center animate-pulse",
-					location == "bottom" ? "bottom-15" : "bottom-1/4",
+					location == "bottom" ? "bottom-15" : "bottom-1/5",
 				)}
 			>
 				<p className="text-neutral-300 md:text-xl font-bm-hanna-11">
