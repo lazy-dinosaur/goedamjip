@@ -600,7 +600,7 @@ export default function MainIntro({
 			/>
 			<div
 				className={cn(
-					"max-w-screen w-full p-2 lg:max-w-4xl flex flex-col items-center justify-center space-y-5",
+					"max-w-screen w-fit lg:max-w-4xl flex flex-col items-center justify-center space-y-5",
 				)}
 			>
 				{script[currentSegment].lines.map((line, lineIdx) => (
