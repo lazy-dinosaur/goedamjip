@@ -120,13 +120,49 @@ export default function MainMenu() {
 		}, delay);
 	};
 
+	// 애니메이션 로직 분리
+	const animateMenuChange = useCallback(
+		(index: number, newTarget: number | null) => {
+			const li = menuItemsRef.current.get(index);
+			if (!li) return;
+
+			const span = li.querySelector("span");
+			const tl = gsap.timeline();
+			tl.to(
+				span,
+				{
+					opacity: 0,
+					x: -15,
+					duration: 0.3,
+					ease: "power2.inOut",
+				},
+				"-=0.2",
+			)
+				.call(() => setTargetMenu(newTarget), undefined, "-=0.1")
+				.to(
+					span,
+					{
+						opacity: 1,
+						x: 0,
+						duration: 0.6,
+						ease: "power2.inOut",
+					},
+					"-=0.3",
+				);
+		},
+		[],
+	);
+
 	useLayoutEffect(() => {
-		const handleClick = (event: BaseSyntheticEvent | MouseEvent) => {
+		const handleClick = (event: globalThis.MouseEvent) => {
 			if (
 				ulRef.current &&
-				!ulRef.current.contains(event.target) &&
+				!ulRef.current.contains(event.target as Node) &&
 				!titleChange
 			) {
+				if (isMobile && targetMenu !== null) {
+					animateMenuChange(targetMenu, null);
+				}
 				changeTitle(getRandomSkipTitle());
 			}
 		};
@@ -135,7 +171,14 @@ export default function MainMenu() {
 		return () => {
 			document.removeEventListener("click", handleClick);
 		};
-	}, [isMobile, ulRef, getRandomSkipTitle, titleChange]);
+	}, [
+		isMobile,
+		ulRef,
+		getRandomSkipTitle,
+		titleChange,
+		targetMenu,
+		animateMenuChange,
+	]);
 
 	useLayoutEffect(() => {
 		if (menuItemsRef.current && menuItemsRef.current.size > 0) {
@@ -163,66 +206,14 @@ export default function MainMenu() {
 		}
 	}, [menuItemsRef]);
 
-	const handlePointerEnter = (
-		ev: PointerEvent<HTMLLIElement>,
-		index: number,
-	) => {
+	const handlePointerEnter = (index: number) => {
 		if (targetMenu === index) return;
-		const li = ev.currentTarget;
-		const span = li.querySelector("span");
-		const tl = gsap.timeline();
-		tl.to(
-			span,
-			{
-				opacity: 0,
-				x: -15,
-				duration: 0.3,
-				ease: "power2.inOut",
-			},
-			"-=0.2",
-		)
-			.call(() => setTargetMenu(index), undefined, "-=0.1  ") // call()로 변경
-			.to(
-				span,
-				{
-					opacity: 1,
-					x: 0,
-					duration: 0.6,
-					ease: "power2.inOut",
-				},
-				"-=0.3",
-			);
+		animateMenuChange(index, index);
 	};
 
-	const handlePointerLeave = (
-		ev: PointerEvent<HTMLLIElement>,
-		index: number,
-	) => {
+	const handlePointerLeave = (index: number) => {
 		if (targetMenu === null) return;
-		const li = ev.currentTarget;
-		const span = li.querySelector("span");
-		const tl = gsap.timeline();
-		tl.to(
-			span,
-			{
-				opacity: 0,
-				x: -15,
-				duration: 0.3,
-				ease: "power2.inOut",
-			},
-			"-=0.2",
-		)
-			.call(() => setTargetMenu(null), undefined, "-=0.1") // call()로 변경
-			.to(
-				span,
-				{
-					opacity: 1,
-					x: 0,
-					duration: 0.6,
-					ease: "power2.inOut",
-				},
-				"-=0.3",
-			);
+		animateMenuChange(index, null);
 	};
 
 	const animateSpanEnter = useCallback(
@@ -268,12 +259,12 @@ export default function MainMenu() {
 	const handleTouch = useCallback(
 		(index: number) => {
 			if (index != targetMenu) {
-				setTargetMenu(index);
+				animateMenuChange(index, index);
 			} else {
 				handleRandomStoryClick();
 			}
 		},
-		[targetMenu, setTargetMenu, handleRandomStoryClick],
+		[targetMenu, animateMenuChange, handleRandomStoryClick],
 	);
 
 	return (
@@ -306,8 +297,8 @@ export default function MainMenu() {
 								onPointerEnter={
 									isMobile
 										? undefined
-										: (e) => {
-												handlePointerEnter(e, index);
+										: () => {
+												handlePointerEnter(index);
 												changeTitle(item.title);
 											}
 								}
@@ -316,6 +307,7 @@ export default function MainMenu() {
 										? () => {
 												if (index == 0) {
 													handleTouch(0);
+													changeTitle(item.title);
 												}
 											}
 										: () => {
@@ -327,8 +319,8 @@ export default function MainMenu() {
 								onPointerLeave={
 									isMobile
 										? undefined
-										: (e) => {
-												handlePointerLeave(e, index);
+										: () => {
+												handlePointerLeave(index);
 												changeTitle(getRandomSkipTitle());
 											}
 								}
