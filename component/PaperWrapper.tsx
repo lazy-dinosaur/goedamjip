@@ -9,7 +9,7 @@ interface PageWrapperProps
 	className?: ClassValue;
 }
 
-const pageWrapperStyle = cva("mx-auto max-w-screen-xl h-dvh bg-black");
+const pageWrapperStyle = cva("mx-auto max-w-screen-2xl h-dvh bg-black");
 
 export default function PageWrapper({
 	children,
