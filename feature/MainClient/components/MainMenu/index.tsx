@@ -293,7 +293,10 @@ export default function MainMenu() {
 								ref={(e) => {
 									if (e) menuItemsRef.current.set(index, e);
 								}}
-								className={`text-neutral-300 transition-colors duration-300 cursor-pointer relative py-1 md:-1.5py lg:py-2 hover:text-neutral-50`}
+								className={cn(
+									`transition-colors duration-300 cursor-pointer relative py-1 md:-1.5py lg:py-2 `,
+									targetMenu == index ? "text-neutral-50" : "text-neutral-400",
+								)}
 								onPointerEnter={
 									isMobile
 										? undefined
