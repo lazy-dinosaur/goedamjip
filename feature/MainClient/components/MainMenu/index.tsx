@@ -1,5 +1,5 @@
 import ComponentWrapper from "@/component/ComponentWrapper";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { getIsMobile } from "@/util/getIsMobile";
@@ -233,41 +233,44 @@ export default function MainMenu() {
 		}
 	}, [pageRef, pageCleanup]);
 
-	const menuItems = [
-		{
-			text: "괴담을 추천 받는다.",
-			hoverText: "랜덤 괴담 보기",
-			title: "네가 좋아할 만한 걸로 골라봤어.",
-			onClick: async () => {
-				const storyId = await getRandomStoryId();
-				if (storyId) {
-					pageCleanup(`/records/${storyId}`);
-				}
+	const menuItems = useMemo(
+		() => [
+			{
+				text: "괴담을 추천 받는다.",
+				hoverText: "랜덤 괴담 보기",
+				title: "네가 좋아할 만한 걸로 골라봤어.",
+				onClick: async () => {
+					const storyId = await getRandomStoryId();
+					if (storyId) {
+						pageCleanup(`/records/${storyId}`);
+					}
+				},
 			},
-		},
-		{
-			text: "서고로 걸어간다.",
-			hoverText: "괴담 목록",
-			title: "괴담들이 네 손길을 기다리고 있어.",
-			onClick: () => pageCleanup(`/records`),
-		},
-		{
-			text: "주변을 좀 둘러본다.",
-			hoverText: "환경 설정",
-			title: "이곳이 더 편안해지도록.",
-			onClick: () => pageCleanup(`/settings`),
-		},
-		// {
-		// 	text: "회원증을 보여준다.",
-		// 	hoverText: "로그인",
-		// 	title: "네가 남긴 흔적을 찾아줄게.",
-		// },
-		// {
-		// 	text: "비밀서고에 가입한다.",
-		// 	hoverText: "회원가입",
-		// 	title: "이제 너도 이곳의 일부가 되는 거야.",
-		// },
-	];
+			{
+				text: "서고로 걸어간다.",
+				hoverText: "괴담 목록",
+				title: "괴담들이 네 손길을 기다리고 있어.",
+				onClick: () => pageCleanup(`/records`),
+			},
+			{
+				text: "주변을 좀 둘러본다.",
+				hoverText: "환경 설정",
+				title: "이곳이 더 편안해지도록.",
+				onClick: () => pageCleanup(`/settings`),
+			},
+			// {
+			// 	text: "회원증을 보여준다.",
+			// 	hoverText: "로그인",
+			// 	title: "네가 남긴 흔적을 찾아줄게.",
+			// },
+			// {
+			// 	text: "비밀서고에 가입한다.",
+			// 	hoverText: "회원가입",
+			// 	title: "이제 너도 이곳의 일부가 되는 거야.",
+			// },
+		],
+		[pageCleanup],
+	);
 
 	const handleTouch = useCallback(
 		(index: number, title: string) => {
