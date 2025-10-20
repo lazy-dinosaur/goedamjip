@@ -1,34 +1,13 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { useRef } from "react";
+import { RefObject } from "react";
 
 interface IntroSkipButtonProps {
-	handleSkip: () => void;
+	ref: RefObject<HTMLSpanElement | null>;
+	onClick: () => void;
 }
-export default function IntroSkipButton({ handleSkip }: IntroSkipButtonProps) {
-	const ref = useRef<HTMLSpanElement>(null);
-	const tl = useRef<gsap.core.Timeline>(gsap.timeline());
-
-	useGSAP(() => {
-		if (ref && tl) {
-			tl.current.add(
-				gsap.from(ref.current, {
-					y: 15,
-					opacity: 0,
-					ease: "power2.inOut",
-				}),
-			);
-		}
-	}, []);
-	const onClick = () => {
-		if (tl) {
-			tl.current.reverse();
-			setTimeout(() => {
-				handleSkip();
-			}, 300);
-		}
-	};
-
+export default function IntroSkipButton({
+	ref,
+	onClick,
+}: IntroSkipButtonProps) {
 	return (
 		<span
 			ref={ref}

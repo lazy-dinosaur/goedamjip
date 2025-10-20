@@ -15,6 +15,7 @@ import {
 } from "@/types/script.types";
 import { cn } from "@/util/styles";
 import IntroSkipButton from "./IntroSkipButton";
+import { useGSAP } from "@gsap/react";
 interface MainIntroProps {
 	script: ProcessedSegment[];
 	changeStage: () => void;
@@ -60,6 +61,9 @@ export default function MainIntro({
 	const userInteractionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const recoveryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+	const introSkipRef = useRef<HTMLSpanElement>(null);
+	const introSkipTl = useRef<gsap.core.Timeline>(gsap.timeline());
+
 	const onClick = useCallback(async () => {
 		setUserInterected(true);
 		let completedCount = 0;
@@ -94,6 +98,7 @@ export default function MainIntro({
 				// 모든 라인의 reverse가 완료되면
 				if (completedCount === totalLines) {
 					if (currentSegment == segmentCounts - 1) {
+						introSkipTl.current.reverse();
 						// 마지막 세그먼트: 모든 효과를 부드럽게 정리 후 changeStage
 						const cleanupPromises = Array.from(pendingStopsRef.current).map(
 							(effect) => {
@@ -578,6 +583,27 @@ export default function MainIntro({
 		}, 500);
 	}, [segmentCleanup, changeStage, onIntroSkip]);
 
+	useGSAP(() => {
+		if (introSkipRef && introSkipTl) {
+			introSkipTl.current.add(
+				gsap.from(introSkipRef.current, {
+					y: 15,
+					opacity: 0,
+					ease: "power2.inOut",
+				}),
+			);
+		}
+	}, []);
+
+	const onSkipIntroClick = () => {
+		if (introSkipTl) {
+			introSkipTl.current.reverse();
+			setTimeout(() => {
+				handleSkip();
+			}, 300);
+		}
+	};
+
 	return (
 		<ComponentWrapper
 			className={!userIntereacted ? "cursor-pointer" : "default"}
@@ -626,7 +652,7 @@ export default function MainIntro({
 				))}
 				<ContinueMark userIntereacted={userIntereacted} />
 			</div>
-			<IntroSkipButton handleSkip={handleSkip} />
+			<IntroSkipButton ref={introSkipRef} onClick={onSkipIntroClick} />
 		</ComponentWrapper>
 	);
 }
