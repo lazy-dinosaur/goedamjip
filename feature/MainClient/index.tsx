@@ -32,7 +32,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 
 	const handleIntroWatchChange = useCallback((newValue: boolean) => {
 		setDidWatchIntro(newValue);
-		if (typeof window === "undefined") {
+		if (typeof window !== "undefined") {
 			sessionStorage.setItem("introWatched", String(newValue));
 		}
 	}, []);
@@ -40,6 +40,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	const [currentStage, setCurrentStage] = useState<"title" | "intro" | "menu">(
 		"title",
 	);
+
 	const [currentSegment, setCurrentSegment] = useState(0); // currentSegment를 상위로 이동
 
 	const changeStage = useCallback((stage: "title" | "intro" | "menu") => {
@@ -76,6 +77,22 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	const onRecover = useCallback(() => {
 		setNeedsRecover(false);
 	}, [setNeedsRecover]);
+
+	useEffect(() => {
+		if (
+			currentStage == "title" &&
+			(skipIntroSetting || didWatchIntro) &&
+			isAssetLoaded
+		) {
+			changeStage("menu");
+		}
+	}, [
+		isAssetLoaded,
+		changeStage,
+		currentStage,
+		didWatchIntro,
+		skipIntroSetting,
+	]);
 
 	return (
 		<>

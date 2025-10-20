@@ -1,12 +1,5 @@
 import ComponentWrapper from "@/component/ComponentWrapper";
-import { PointerEvent } from "react";
-import {
-	BaseSyntheticEvent,
-	useCallback,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { getIsMobile } from "@/util/getIsMobile";
@@ -39,33 +32,6 @@ export default function MainMenu() {
 	const router = useRouter();
 	const pageRef = useRef<HTMLDivElement>(null);
 
-	const menuItems = [
-		{
-			text: "괴담을 추천 받는다.",
-			hoverText: "랜덤 괴담 보기",
-			title: "네가 좋아할 만한 걸로 골라봤어.",
-		},
-		// {
-		// 	text: "서고로 걸어간다.",
-		// 	hoverText: "괴담 목록",
-		// 	title: "괴담들이 네 손길을 기다리고 있어.",
-		// },
-		// {
-		// 	text: "주변을 좀 둘러본다.",
-		// 	hoverText: "환경 설정",
-		// 	title: "이곳이 더 편안해지도록.",
-		// },
-		// {
-		// 	text: "회원증을 보여준다.",
-		// 	hoverText: "로그인",
-		// 	title: "네가 남긴 흔적을 찾아줄게.",
-		// },
-		// {
-		// 	text: "비밀서고에 가입한다.",
-		// 	hoverText: "회원가입",
-		// 	title: "이제 너도 이곳의 일부가 되는 거야.",
-		// },
-	];
 	// 랜덤 타이틀 선택 함수
 	// 인트로를 보지 않고 스킵 설정 이 있는 상황에서 메뉴에 접근할 때(재방문시)
 	const getRandomSkipTitle = useCallback(() => {
@@ -206,14 +172,16 @@ export default function MainMenu() {
 		}
 	}, [menuItemsRef]);
 
-	const handlePointerEnter = (index: number) => {
+	const handlePointerEnter = (index: number, title: string) => {
 		if (targetMenu === index) return;
 		animateMenuChange(index, index);
+		changeTitle(title);
 	};
 
 	const handlePointerLeave = (index: number) => {
 		if (targetMenu === null) return;
 		animateMenuChange(index, null);
+		changeTitle(getRandomSkipTitle());
 	};
 
 	const animateSpanEnter = useCallback(
@@ -241,30 +209,83 @@ export default function MainMenu() {
 		[mounted],
 	);
 
+	const pageCleanup = useCallback(
+		(to: string) => {
+			if (pageRef) {
+				gsap.to(pageRef.current, {
+					opacity: 0,
+					y: 15,
+					duration: 0.3,
+					onComplete: () => {
+						audioManager.stopAllSound();
+						router.push(to);
+					},
+				});
+			}
+		},
+		[router, pageRef],
+	);
+
 	const handleRandomStoryClick = useCallback(async () => {
 		const storyId = await getRandomStoryId();
 		if (pageRef.current && storyId) {
-			gsap.to(pageRef.current, {
-				opacity: 0,
-				y: 15,
-				duration: 0.3,
-				onComplete: () => {
-					audioManager.stopAllSound();
-					router.push(`/records/${storyId}`);
-				},
-			});
+			pageCleanup(`/records/${storyId}`);
 		}
-	}, [router, pageRef]);
+	}, [pageRef, pageCleanup]);
+
+	const menuItems = [
+		{
+			text: "괴담을 추천 받는다.",
+			hoverText: "랜덤 괴담 보기",
+			title: "네가 좋아할 만한 걸로 골라봤어.",
+			onClick: async () => {
+				const storyId = await getRandomStoryId();
+				if (storyId) {
+					pageCleanup(`/records/${storyId}`);
+				}
+			},
+		},
+		{
+			text: "서고로 걸어간다.",
+			hoverText: "괴담 목록",
+			title: "괴담들이 네 손길을 기다리고 있어.",
+			onClick: () => pageCleanup(`/records`),
+		},
+		{
+			text: "주변을 좀 둘러본다.",
+			hoverText: "환경 설정",
+			title: "이곳이 더 편안해지도록.",
+			onClick: () => pageCleanup(`/settings`),
+		},
+		// {
+		// 	text: "회원증을 보여준다.",
+		// 	hoverText: "로그인",
+		// 	title: "네가 남긴 흔적을 찾아줄게.",
+		// },
+		// {
+		// 	text: "비밀서고에 가입한다.",
+		// 	hoverText: "회원가입",
+		// 	title: "이제 너도 이곳의 일부가 되는 거야.",
+		// },
+	];
 
 	const handleTouch = useCallback(
-		(index: number) => {
+		(index: number, title: string) => {
 			if (index != targetMenu) {
 				animateMenuChange(index, index);
 			} else {
-				handleRandomStoryClick();
+				menuItems[index].onClick();
 			}
+			changeTitle(title);
 		},
-		[targetMenu, animateMenuChange, handleRandomStoryClick],
+		[targetMenu, animateMenuChange, menuItems],
+	);
+
+	const handleClick = useCallback(
+		(index: number) => {
+			menuItems[index].onClick();
+		},
+		[menuItems],
 	);
 
 	return (
@@ -301,22 +322,16 @@ export default function MainMenu() {
 									isMobile
 										? undefined
 										: () => {
-												handlePointerEnter(index);
-												changeTitle(item.title);
+												handlePointerEnter(index, item.title);
 											}
 								}
 								onClick={
 									isMobile
 										? () => {
-												if (index == 0) {
-													handleTouch(0);
-													changeTitle(item.title);
-												}
+												handleTouch(index, item.title);
 											}
 										: () => {
-												if (index == 0) {
-													handleRandomStoryClick();
-												}
+												handleClick(index);
 											}
 								}
 								onPointerLeave={
@@ -324,7 +339,6 @@ export default function MainMenu() {
 										? undefined
 										: () => {
 												handlePointerLeave(index);
-												changeTitle(getRandomSkipTitle());
 											}
 								}
 							>
