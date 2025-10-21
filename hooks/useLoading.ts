@@ -38,15 +38,14 @@ export const useLoadingProgress = ({ assets, script }: UseLoadingProps) => {
 	};
 
 	// 랜덤 메시지 선택 함수
-	const getRandomMessage = useCallback(
-		(type: keyof typeof messages) => {
-			const list = messages[type];
-			return list[Math.floor(Math.random() * list.length)];
-		},
-		[],
-	);
+	const getRandomMessage = useCallback((type: keyof typeof messages) => {
+		const list = messages[type];
+		return list[Math.floor(Math.random() * list.length)];
+	}, []);
 
-	const [loadingMessage, setLoadingMessage] = useState("이야기를 준비하는 중...");
+	const [loadingMessage, setLoadingMessage] = useState(
+		"이야기를 준비하는 중...",
+	);
 
 	useEffect(() => {
 		const loadAssets = async () => {
@@ -121,7 +120,14 @@ export const useLoadingProgress = ({ assets, script }: UseLoadingProps) => {
 			// 오디오 배치 로드
 			setLoadingMessage(getRandomMessage("audio"));
 			await loadInBatches(audioAssets, async (asset) => {
-				await audioManager.loadAudio(asset.tag_name, asset.files[0].url);
+				await audioManager.loadAudio(asset.tag_name, asset.files[0].url, {
+					tags: asset.tags as string[],
+					properties: asset.properties as {
+						sustain?: boolean;
+						repeat?: number;
+						loop?: boolean;
+					},
+				});
 			});
 
 			// 비주얼 배치 로드
