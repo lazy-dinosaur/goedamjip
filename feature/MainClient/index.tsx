@@ -7,7 +7,6 @@ import MainMenu from "./components/MainMenu";
 import ReactivationModal from "@/component/ReactivationModal";
 import { ProcessedSegment } from "@/types/script.types";
 import { useLoadingProgress } from "@/hooks/useLoading";
-import audioManager from "@/lib/audio/audioManager";
 
 interface MainClientProps {
 	assets: GetAssetsMap;
@@ -107,7 +106,6 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 									changeStage("intro");
 								}
 							: () => {
-									audioManager.stopAllSound();
 									changeStage("menu");
 								}
 					}

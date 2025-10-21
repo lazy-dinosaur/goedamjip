@@ -31,6 +31,7 @@ export default function MainMenu() {
 	const [mounted, setMounted] = useState<boolean>(false);
 	const router = useRouter();
 	const pageRef = useRef<HTMLDivElement>(null);
+	const [isItemClicked, setIsItemClicked] = useState(false);
 
 	// 랜덤 타이틀 선택 함수
 	// 인트로를 보지 않고 스킵 설정 이 있는 상황에서 메뉴에 접근할 때(재방문시)
@@ -41,6 +42,7 @@ export default function MainMenu() {
 	}, [greeting]); // dependency에 greeting 추가!
 
 	useLayoutEffect(() => {
+		if (!mounted) audioManager.stopAllSound();
 		if (titleAnimationRef.current) {
 			titleAnimationRef.current.kill(); // ✅ 또는 clear()
 			titleAnimationRef.current = null;
@@ -173,13 +175,13 @@ export default function MainMenu() {
 	}, [menuItemsRef]);
 
 	const handlePointerEnter = (index: number, title: string) => {
-		if (targetMenu === index) return;
+		if (targetMenu === index || isItemClicked) return;
 		animateMenuChange(index, index);
 		changeTitle(title);
 	};
 
 	const handlePointerLeave = (index: number) => {
-		if (targetMenu === null) return;
+		if (targetMenu === null || isItemClicked) return;
 		animateMenuChange(index, null);
 		changeTitle(getRandomSkipTitle());
 	};
@@ -214,7 +216,8 @@ export default function MainMenu() {
 			if (pageRef) {
 				gsap.to(pageRef.current, {
 					opacity: 0,
-					y: 15,
+					y: -15,
+					scale: 1.1,
 					duration: 0.3,
 					onComplete: () => {
 						audioManager.stopAllSound();
@@ -225,13 +228,6 @@ export default function MainMenu() {
 		},
 		[router, pageRef],
 	);
-
-	const handleRandomStoryClick = useCallback(async () => {
-		const storyId = await getRandomStoryId();
-		if (pageRef.current && storyId) {
-			pageCleanup(`/records/${storyId}`);
-		}
-	}, [pageRef, pageCleanup]);
 
 	const menuItems = useMemo(
 		() => [
@@ -274,21 +270,25 @@ export default function MainMenu() {
 
 	const handleTouch = useCallback(
 		(index: number, title: string) => {
+			if (isItemClicked) return;
 			if (index != targetMenu) {
 				animateMenuChange(index, index);
 			} else {
 				menuItems[index].onClick();
+				setIsItemClicked(true);
 			}
 			changeTitle(title);
 		},
-		[targetMenu, animateMenuChange, menuItems],
+		[targetMenu, animateMenuChange, menuItems, isItemClicked],
 	);
 
 	const handleClick = useCallback(
 		(index: number) => {
+			if (isItemClicked) return;
 			menuItems[index].onClick();
+			setIsItemClicked(true);
 		},
-		[menuItems],
+		[menuItems, isItemClicked],
 	);
 
 	return (
