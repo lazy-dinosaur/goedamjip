@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, East_Sea_Dokdo } from "next/font/google";
 import localFont from "next/font/local";
+import { SettingsProvider } from "@/contexts/SettingsContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -101,7 +102,7 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} ${eastSeaDokdo.variable} ${bmDohyeon.variable} ${bmEuljiro.variable} ${bmEuljiro10.variable} ${bmEuljiroOrae.variable} ${bmHannaAir.variable} ${bmHannaPro.variable} ${bmHanna11.variable} ${bmJua.variable} ${bmKirang.variable} ${bmKkubulim.variable} ${bmYeonsung.variable} antialiased`}
 			>
-				{children}
+				<SettingsProvider>{children}</SettingsProvider>
 			</body>
 		</html>
 	);
