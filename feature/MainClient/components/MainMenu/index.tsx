@@ -30,7 +30,6 @@ export default function MainMenu() {
 	const [titleChange, setTitleChange] = useState<boolean>(false);
 	const [mounted, setMounted] = useState<boolean>(false);
 	const router = useRouter();
-	const pageRef = useRef<HTMLDivElement>(null);
 	const [isItemClicked, setIsItemClicked] = useState(false);
 
 	// 랜덤 타이틀 선택 함수
@@ -330,10 +329,7 @@ export default function MainMenu() {
 
 	return (
 		<PageWrapper>
-			<div
-				ref={pageRef}
-				className="w-full h-full flex items-center justify-evenly flex-col overflow-hidden text-neutral-300 select-none"
-			>
+			<div className="w-full h-full flex items-center justify-evenly flex-col overflow-hidden text-neutral-300 select-none">
 				<div
 					id="title"
 					key={greeting}
