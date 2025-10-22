@@ -114,7 +114,10 @@ export default function Settings() {
 
 	return (
 		<ScreenWrapper className="flex flex-col overflow-hidden">
-			<div ref={navRef} className="p-5 md:p-8 flex w-full text-4xl space-x-6">
+			<div
+				ref={navRef}
+				className="p-5 md:p-8 flex w-full text-4xl space-x-6 text-neutral-100"
+			>
 				<FaChevronLeft
 					onClick={handleBack}
 					className="text-xl md:text-4xl font-medium cursor-pointer"
@@ -124,7 +127,7 @@ export default function Settings() {
 				</span>
 			</div>
 			<PageWrapper className="justify-start flex-1">
-				<ul className="w-full p-1 py-5 md:p-20 flex flex-col space-y-5 md:space-y-24 max-h-full h-full overflow-y-auto">
+				<ul className="w-full p-1 py-10 md:p-20 flex flex-col space-y-10 md:space-y-24 max-h-full h-full overflow-y-auto text-neutral-100">
 					<li
 						ref={(el) => {
 							if (el) itemsRef.current[0] = el;
