@@ -7,6 +7,7 @@ import MainMenu from "./components/MainMenu";
 import ReactivationModal from "@/component/ReactivationModal";
 import { ProcessedSegment } from "@/types/script.types";
 import { useLoadingProgress } from "@/hooks/useLoading";
+import { useSettingsContext } from "@/contexts/SettingsContext";
 
 interface MainClientProps {
 	assets: GetAssetsMap;
@@ -14,12 +15,7 @@ interface MainClientProps {
 }
 
 export default function MainClient({ assets, introScript }: MainClientProps) {
-	const [skipIntroSetting, setSkipIntroSetting] = useState(() => {
-		if (typeof window !== "undefined") {
-			return localStorage.getItem("skipIntro") === "true";
-		}
-		return false;
-	});
+	const { skipIntro, setSkipIntro } = useSettingsContext();
 
 	// 인트로를 봤는지 여부는 세션스토리지에 저장하는게 좋을듯 함
 	const [didWatchIntro, setDidWatchIntro] = useState(() => {
@@ -54,15 +50,6 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 		setCurrentSegment(newSegment);
 	}, []);
 
-	// MainMenu에 전달할 함수
-	const handleSkipIntroChange = useCallback((newValue: boolean) => {
-		setSkipIntroSetting(newValue);
-		// localStorage에 저장
-		if (typeof window !== "undefined") {
-			localStorage.setItem("skipIntro", String(newValue));
-		}
-	}, []);
-
 	const { loadingProgress, isAssetLoaded, loadingMessage } = useLoadingProgress(
 		{
 			assets,
@@ -80,18 +67,12 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 	useEffect(() => {
 		if (
 			currentStage == "title" &&
-			(skipIntroSetting || didWatchIntro) &&
+			(skipIntro || didWatchIntro) &&
 			isAssetLoaded
 		) {
 			changeStage("menu");
 		}
-	}, [
-		isAssetLoaded,
-		changeStage,
-		currentStage,
-		didWatchIntro,
-		skipIntroSetting,
-	]);
+	}, [isAssetLoaded, changeStage, currentStage, didWatchIntro, skipIntro]);
 
 	return (
 		<>
@@ -101,7 +82,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					isAssetLoaded={isAssetLoaded}
 					loadingMessage={loadingMessage}
 					changeStage={
-						!skipIntroSetting && !didWatchIntro
+						!skipIntro && !didWatchIntro
 							? () => {
 									changeStage("intro");
 								}
@@ -120,7 +101,7 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					onSegmentChange={handleSegmentChange}
 					onIntroSkip={() => {
 						handleIntroWatchChange(true);
-						handleSkipIntroChange(true);
+						setSkipIntro(true);
 					}}
 					changeStage={() => {
 						handleIntroWatchChange(true);

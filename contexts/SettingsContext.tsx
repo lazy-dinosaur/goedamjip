@@ -8,9 +8,11 @@ interface SettingsContextType {
 	masterVolume: number;
 	ambienceVolume: number;
 	sfxVolume: number;
+	skipIntro: boolean;
 	setMasterVolume: (volume: number) => void;
 	setAmbienceVolume: (volume: number) => void;
 	setSfxVolume: (volume: number) => void;
+	setSkipIntro: (skip: boolean) => void;
 	resetToDefault: () => void;
 }
 
@@ -30,6 +32,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	const [masterVolume, setMasterVolume] = useState<number>(1.0);
 	const [ambienceVolume, setAmbienceVolume] = useState<number>(1.0);
 	const [sfxVolume, setSfxVolume] = useState<number>(1.0);
+	const [skipIntro, setSkipIntro] = useState<boolean>(false);
 
 	// 컴포넌트 마운트 시 localStorage 초기화
 	useEffect(() => {
@@ -41,10 +44,13 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		);
 		const savedSfx = parseFloat(localStorage.getItem("sfxVolume") || "1.0");
 
+		const savedSkipIntro = localStorage.getItem("skipIntro") === "true";
+
 		// localStorage에서 값 불러와서 state에 설정
 		setMasterVolume(savedMaster);
 		setAmbienceVolume(savedAmbience);
 		setSfxVolume(savedSfx);
+		setSkipIntro(savedSkipIntro);
 
 		audioManager.setGlobalVolume(savedMaster);
 		audioManager.setAmbienceVolume(savedAmbience);
@@ -71,12 +77,17 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		localStorage.setItem("sfxVolume", volume.toString());
 		audioManager.setSfxVolume(volume);
 	};
+	const handleSkipIntroChange = (skip: boolean) => {
+		setSkipIntro(skip);
+		localStorage.setItem("skipIntro", skip.toString());
+	};
 
 	// 기본값으로 리셋
 	const resetToDefault = () => {
 		handleMasterVolumeChange(1.0);
 		handleAmbienceVolumeChange(1.0);
 		handleSfxVolumeChange(1.0);
+		handleSkipIntroChange(false);
 	};
 
 	// 로딩 중에는 children 렌더링 안 함
@@ -90,9 +101,11 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 				masterVolume,
 				ambienceVolume,
 				sfxVolume,
+				skipIntro,
 				setMasterVolume: handleMasterVolumeChange,
 				setAmbienceVolume: handleAmbienceVolumeChange,
 				setSfxVolume: handleSfxVolumeChange,
+				setSkipIntro: handleSkipIntroChange,
 				resetToDefault,
 			}}
 		>
