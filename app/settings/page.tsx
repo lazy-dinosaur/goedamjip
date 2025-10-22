@@ -24,6 +24,8 @@ export default function Settings() {
 	const tlRef = useRef<gsap.core.Timeline | null>(null);
 	const navRef = useRef<HTMLDivElement>(null);
 	const itemsRef = useRef<HTMLLIElement[]>([]);
+	const checkboxRef = useRef<HTMLDivElement>(null);
+	const checkboxTextRef = useRef<HTMLSpanElement>(null);
 	const [isAnimating, setIsAnimating] = useState(false);
 
 	// 진입 애니메이션
@@ -112,11 +114,51 @@ export default function Settings() {
 		}
 	}, [router, isAnimating]);
 
+	// 체크박스 변경 애니메이션
+	const handleCheckboxChange = useCallback(
+		(checked: boolean) => {
+			// 체크박스 애니메이션
+			if (checkboxRef.current) {
+				gsap.to(checkboxRef.current, {
+					scale: 1.2,
+					duration: 0.15,
+					ease: "power2.out",
+					yoyo: true,
+					repeat: 1,
+				});
+			}
+
+			// 텍스트 애니메이션 (fade out -> 상태 변경 -> fade in)
+			if (checkboxTextRef.current) {
+				const tl = gsap.timeline();
+				tl.to(checkboxTextRef.current, {
+					opacity: 0,
+					y: 15,
+					duration: 0.2,
+					ease: "power2.in",
+					onComplete: () => {
+						// fade out이 끝난 후 상태 변경
+						setSkipIntro(checked);
+					},
+				}).to(checkboxTextRef.current, {
+					opacity: 1,
+					y: 0,
+					duration: 0.2,
+					ease: "power2.out",
+				});
+			} else {
+				// ref가 없을 경우 바로 상태 변경
+				setSkipIntro(checked);
+			}
+		},
+		[setSkipIntro],
+	);
+
 	return (
 		<ScreenWrapper className="flex flex-col overflow-hidden">
 			<div
 				ref={navRef}
-				className="p-5 md:p-8 flex w-full text-4xl space-x-6 text-neutral-100"
+				className="p-5 md:p-8 flex w-full text-4xl space-x-6 text-neutral-100 items-center align-middle"
 			>
 				<FaChevronLeft
 					onClick={handleBack}
@@ -196,21 +238,27 @@ export default function Settings() {
 						ref={(el) => {
 							if (el) itemsRef.current[3] = el;
 						}}
-						className="w-full flex items-center space-x-3"
+						className="w-full flex items-center space-x-3 align-middle"
 					>
 						<span className="md:text-2xl font-medium font-bm-hanna-11 w-[25%]">
 							인트로 스킵
 						</span>
-						<div className="flex flex-1 justify-center items-center">
+						<div
+							ref={checkboxRef}
+							className="flex flex-1 justify-center items-center"
+						>
 							<Checkbox
 								defaultChecked={skipIntro}
 								onCheckedChange={(e) => {
-									setSkipIntro(Boolean(e));
+									handleCheckboxChange(Boolean(e));
 								}}
 								className="size-4 md:size-6"
 							/>
 						</div>
-						<span className="md:text-xl font-bold w-[15%] flex justify-end">
+						<span
+							ref={checkboxTextRef}
+							className="md:text-xl font-bold w-[15%] flex justify-end"
+						>
 							{skipIntro ? "안보기" : "보기"}
 						</span>
 					</li>
