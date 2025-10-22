@@ -15,22 +15,8 @@ interface MainClientProps {
 }
 
 export default function MainClient({ assets, introScript }: MainClientProps) {
-	const { skipIntro, setSkipIntro } = useSettingsContext();
-
-	// 인트로를 봤는지 여부는 세션스토리지에 저장하는게 좋을듯 함
-	const [didWatchIntro, setDidWatchIntro] = useState(() => {
-		if (typeof window !== "undefined") {
-			return sessionStorage.getItem("introWatched") === "true";
-		}
-		return false;
-	});
-
-	const handleIntroWatchChange = useCallback((newValue: boolean) => {
-		setDidWatchIntro(newValue);
-		if (typeof window !== "undefined") {
-			sessionStorage.setItem("introWatched", String(newValue));
-		}
-	}, []);
+	const { skipIntro, didWatchIntro, setSkipIntro, setDidWatchIntro } =
+		useSettingsContext();
 
 	const [currentStage, setCurrentStage] = useState<"title" | "intro" | "menu">(
 		"title",
@@ -100,11 +86,11 @@ export default function MainClient({ assets, introScript }: MainClientProps) {
 					currentSegment={currentSegment}
 					onSegmentChange={handleSegmentChange}
 					onIntroSkip={() => {
-						handleIntroWatchChange(true);
+						setDidWatchIntro(true);
 						setSkipIntro(true);
 					}}
 					changeStage={() => {
-						handleIntroWatchChange(true);
+						setDidWatchIntro(true);
 						changeStage("menu");
 					}}
 				/>

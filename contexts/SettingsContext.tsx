@@ -9,10 +9,12 @@ interface SettingsContextType {
 	ambienceVolume: number;
 	sfxVolume: number;
 	skipIntro: boolean;
+	didWatchIntro: boolean;
 	setMasterVolume: (volume: number) => void;
 	setAmbienceVolume: (volume: number) => void;
 	setSfxVolume: (volume: number) => void;
 	setSkipIntro: (skip: boolean) => void;
+	setDidWatchIntro: (watched: boolean) => void;
 	resetToDefault: () => void;
 }
 
@@ -33,6 +35,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	const [ambienceVolume, setAmbienceVolume] = useState<number>(0.6);
 	const [sfxVolume, setSfxVolume] = useState<number>(0.8);
 	const [skipIntro, setSkipIntro] = useState<boolean>(false);
+	const [didWatchIntro, setDidWatchIntro] = useState<boolean>(false);
 
 	// 컴포넌트 마운트 시 localStorage 초기화
 	useEffect(() => {
@@ -45,12 +48,15 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		const savedSfx = parseFloat(localStorage.getItem("sfxVolume") || "0.8");
 
 		const savedSkipIntro = localStorage.getItem("skipIntro") === "true";
+		const savedDidWatchIntro =
+			sessionStorage.getItem("introWatched") === "true";
 
 		// localStorage에서 값 불러와서 state에 설정
 		setMasterVolume(savedMaster);
 		setAmbienceVolume(savedAmbience);
 		setSfxVolume(savedSfx);
 		setSkipIntro(savedSkipIntro);
+		setDidWatchIntro(savedDidWatchIntro);
 
 		audioManager.setGlobalVolume(savedMaster);
 		audioManager.setAmbienceVolume(savedAmbience);
@@ -77,13 +83,19 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		localStorage.setItem("sfxVolume", volume.toString());
 		audioManager.setSfxVolume(volume);
 	};
+
+	const handleIntroWatchChange = (watched: boolean) => {
+		setDidWatchIntro(watched);
+		sessionStorage.setItem("introWatched", watched.toString());
+	};
+
 	const handleSkipIntroChange = (skip: boolean) => {
 		setSkipIntro(skip);
 		localStorage.setItem("skipIntro", skip.toString());
 		if (skip) {
-			sessionStorage.setItem("introWatched", "true");
+			handleIntroWatchChange(true);
 		} else {
-			sessionStorage.setItem("introWatched", "false");
+			handleIntroWatchChange(false);
 		}
 	};
 
@@ -93,6 +105,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 		handleAmbienceVolumeChange(0.6);
 		handleSfxVolumeChange(0.8);
 		handleSkipIntroChange(false);
+		handleIntroWatchChange(false);
 	};
 
 	// 로딩 중에는 children 렌더링 안 함
@@ -107,10 +120,12 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 				ambienceVolume,
 				sfxVolume,
 				skipIntro,
+				didWatchIntro,
 				setMasterVolume: handleMasterVolumeChange,
 				setAmbienceVolume: handleAmbienceVolumeChange,
 				setSfxVolume: handleSfxVolumeChange,
 				setSkipIntro: handleSkipIntroChange,
+				setDidWatchIntro: handleIntroWatchChange,
 				resetToDefault,
 			}}
 		>
