@@ -1,13 +1,13 @@
 "use client";
 import ScreenWrapper from "@/component/ScreenWrapper";
 import PageWrapper from "@/component/PageWrapper";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "@/components/ui/slider";
 import { useSettingsContext } from "@/contexts/SettingsContext";
 import { useRouter } from "next/navigation";
 import { FaChevronLeft } from "react-icons/fa6";
 import gsap from "gsap";
 import { useLayoutEffect, useRef, useState, useCallback } from "react";
+import { Checkbox } from "@/component/ui/checkbox";
+import { Slider } from "@/component/ui/slider";
 
 export default function Settings() {
 	const router = useRouter();
