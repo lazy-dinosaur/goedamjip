@@ -1,4 +1,4 @@
-import PageWrapper from "@/component/PageWrapper";
+import ScreenWrapper from "@/component/ScreenWrapper";
 import StoryClient from "@/feature/StoryClient";
 import { getAssetsMap } from "@/lib/supabase/asset";
 import { getStoryById } from "@/lib/supabase/story";
@@ -29,7 +29,7 @@ export default async function Goedam({ params }: GoedamPageProps) {
 	const preprocessedScript = preprocessScript(segments);
 
 	return (
-		<PageWrapper className={"select-none"}>
+		<ScreenWrapper className={"select-none"}>
 			<StoryClient
 				script={preprocessedScript}
 				assets={assets}
@@ -37,6 +37,6 @@ export default async function Goedam({ params }: GoedamPageProps) {
 				storyId={storyId}
 				metadata={metadata}
 			/>
-		</PageWrapper>
+		</ScreenWrapper>
 	);
 }

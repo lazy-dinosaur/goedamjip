@@ -1,4 +1,4 @@
-import { HTMLAttributes, PropsWithChildren } from "react";
+import { PropsWithChildren, HTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 import { ClassValue } from "clsx";
 import { cn } from "@/util/styles";
@@ -9,7 +9,9 @@ interface PageWrapperProps
 	className?: ClassValue;
 }
 
-const pageWrapperStyle = cva("mx-auto max-w-screen-xl h-dvh bg-black");
+const pageWrapperStyle = cva(
+	`h-full w-full flex items-center justify-center flex-col overflow-hidden px-8 relative`,
+);
 
 export default function PageWrapper({
 	children,

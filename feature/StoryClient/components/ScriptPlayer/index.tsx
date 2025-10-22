@@ -1,5 +1,5 @@
 "use client";
-import ComponentWrapper from "@/component/ComponentWrapper";
+import PageWrapper from "@/component/PageWrapper";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import TextEffect from "@/lib/text/textEffect";
 import gsap from "gsap";
@@ -565,7 +565,7 @@ export default function ScriptPlayer({
 	}, [currentSegment, script, needsRecover, onRecover, segmentCleanup]);
 
 	return (
-		<ComponentWrapper
+		<PageWrapper
 			className={!userIntereacted ? "cursor-pointer" : "default"}
 			onClick={!userIntereacted ? onClick : undefined}
 		>
@@ -612,6 +612,6 @@ export default function ScriptPlayer({
 				))}
 				<ContinueMark userIntereacted={userIntereacted} />
 			</div>
-		</ComponentWrapper>
+		</PageWrapper>
 	);
 }

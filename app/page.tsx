@@ -3,7 +3,7 @@ import { getStoryAssets } from "@/util/getResources";
 import { getAssetsMap } from "@/lib/supabase/asset";
 import MainClient from "@/feature/MainClient";
 import { preprocessScript } from "@/util/preprocessScript";
-import PageWrapper from "@/component/PageWrapper";
+import ScreenWrapper from "@/component/ScreenWrapper";
 
 export default async function Home() {
 	const assetLists = getStoryAssets(introScript);
@@ -15,8 +15,8 @@ export default async function Home() {
 	const preprocessedIntroScript = preprocessScript(introScript);
 
 	return (
-		<PageWrapper className={"select-none"}>
+		<ScreenWrapper className={"select-none"}>
 			<MainClient assets={assets} introScript={preprocessedIntroScript} />
-		</PageWrapper>
+		</ScreenWrapper>
 	);
 }

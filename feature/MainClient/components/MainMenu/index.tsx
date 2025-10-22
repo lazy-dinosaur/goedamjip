@@ -1,4 +1,4 @@
-import ComponentWrapper from "@/component/ComponentWrapper";
+import PageWrapper from "@/component/PageWrapper";
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
@@ -292,7 +292,7 @@ export default function MainMenu() {
 	);
 
 	return (
-		<ComponentWrapper>
+		<PageWrapper>
 			<div
 				ref={pageRef}
 				className="w-full h-full flex items-center justify-evenly flex-col overflow-hidden text-neutral-300 select-none"
@@ -381,6 +381,6 @@ export default function MainMenu() {
 					})}
 				</ul>
 			</div>
-		</ComponentWrapper>
+		</PageWrapper>
 	);
 }

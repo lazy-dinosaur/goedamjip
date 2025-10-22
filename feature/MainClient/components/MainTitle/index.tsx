@@ -1,5 +1,5 @@
 "use client";
-import ComponentWrapper from "@/component/ComponentWrapper";
+import PageWrapper from "@/component/PageWrapper";
 import { useRef, useState } from "react";
 import { MainTitleText } from "./MainTitleText";
 import { SoundAdvice } from "./SoundAdvice";
@@ -54,7 +54,7 @@ export default function MainTitle({
 	};
 
 	return (
-		<ComponentWrapper
+		<PageWrapper
 			className="justify-around"
 			onClick={isAssetLoaded && !isClicked ? onClick : undefined}
 			style={{ cursor: isAssetLoaded && !isClicked ? "pointer" : "default" }}
@@ -66,6 +66,6 @@ export default function MainTitle({
 				visible={!isClicked}
 				loadingMessage={loadingMessage}
 			/>
-		</ComponentWrapper>
+		</PageWrapper>
 	);
 }

@@ -1,4 +1,4 @@
-import ComponentWrapper from "@/component/ComponentWrapper";
+import PageWrapper from "@/component/PageWrapper";
 import { LoadingProgress } from "@/feature/MainClient/components/MainTitle/LoadingProgress";
 import { StoryMetadata } from "@/types/story.types";
 import { useGSAP } from "@gsap/react";
@@ -72,7 +72,7 @@ export default function StoryTitle({
 	};
 
 	return (
-		<ComponentWrapper
+		<PageWrapper
 			onClick={isAssetLoaded && !isClicked ? onClick : undefined}
 			className=" justify-center h-full relative"
 			style={{ cursor: isAssetLoaded && !isClicked ? "pointer" : "default" }}
@@ -104,6 +104,6 @@ export default function StoryTitle({
 				location="middle"
 				loadingMessage={loadingMessage}
 			/>
-		</ComponentWrapper>
+		</PageWrapper>
 	);
 }

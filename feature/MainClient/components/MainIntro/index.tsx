@@ -1,5 +1,5 @@
 "use client";
-import ComponentWrapper from "@/component/ComponentWrapper";
+import PageWrapper from "@/component/PageWrapper";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import TextEffect from "@/lib/text/textEffect";
 import gsap from "gsap";
@@ -605,7 +605,7 @@ export default function MainIntro({
 	};
 
 	return (
-		<ComponentWrapper
+		<PageWrapper
 			className={!userIntereacted ? "cursor-pointer" : "default"}
 			onClick={!userIntereacted ? onClick : undefined}
 		>
@@ -653,6 +653,6 @@ export default function MainIntro({
 				<ContinueMark userIntereacted={userIntereacted} />
 			</div>
 			<IntroSkipButton ref={introSkipRef} onClick={onSkipIntroClick} />
-		</ComponentWrapper>
+		</PageWrapper>
 	);
 }
