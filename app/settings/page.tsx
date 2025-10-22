@@ -5,7 +5,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { useSettingsContext } from "@/contexts/SettingsContext";
 import { useRouter } from "next/navigation";
-import { skip } from "node:test";
 import { FaChevronLeft } from "react-icons/fa6";
 
 export default function Settings() {
