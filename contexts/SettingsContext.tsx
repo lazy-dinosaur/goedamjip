@@ -31,8 +31,8 @@ interface SettingsProviderProps {
 // 4. Provider 컴포넌트
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	const [isLoaded, setIsLoaded] = useState(false);
-	const [masterVolume, setMasterVolume] = useState<number>(0.6);
-	const [ambienceVolume, setAmbienceVolume] = useState<number>(0.6);
+	const [masterVolume, setMasterVolume] = useState<number>(0.5);
+	const [ambienceVolume, setAmbienceVolume] = useState<number>(0.5);
 	const [sfxVolume, setSfxVolume] = useState<number>(0.8);
 	const [skipIntro, setSkipIntro] = useState<boolean>(false);
 	const [didWatchIntro, setDidWatchIntro] = useState<boolean>(false);
@@ -40,10 +40,10 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	// 컴포넌트 마운트 시 localStorage 초기화
 	useEffect(() => {
 		const savedMaster = parseFloat(
-			localStorage.getItem("masterVolume") || "0.6",
+			localStorage.getItem("masterVolume") || "0.5",
 		);
 		const savedAmbience = parseFloat(
-			localStorage.getItem("ambienceVolume") || "0.6",
+			localStorage.getItem("ambienceVolume") || "0.5",
 		);
 		const savedSfx = parseFloat(localStorage.getItem("sfxVolume") || "0.8");
 
@@ -101,8 +101,8 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 
 	// 기본값으로 리셋
 	const resetToDefault = () => {
-		handleMasterVolumeChange(0.6);
-		handleAmbienceVolumeChange(0.6);
+		handleMasterVolumeChange(0.5);
+		handleAmbienceVolumeChange(0.5);
 		handleSfxVolumeChange(0.8);
 		handleSkipIntroChange(false);
 		handleIntroWatchChange(false);
