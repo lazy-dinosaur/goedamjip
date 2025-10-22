@@ -29,20 +29,20 @@ interface SettingsProviderProps {
 // 4. Provider 컴포넌트
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	const [isLoaded, setIsLoaded] = useState(false);
-	const [masterVolume, setMasterVolume] = useState<number>(1.0);
-	const [ambienceVolume, setAmbienceVolume] = useState<number>(1.0);
-	const [sfxVolume, setSfxVolume] = useState<number>(1.0);
+	const [masterVolume, setMasterVolume] = useState<number>(0.6);
+	const [ambienceVolume, setAmbienceVolume] = useState<number>(0.6);
+	const [sfxVolume, setSfxVolume] = useState<number>(0.8);
 	const [skipIntro, setSkipIntro] = useState<boolean>(false);
 
 	// 컴포넌트 마운트 시 localStorage 초기화
 	useEffect(() => {
 		const savedMaster = parseFloat(
-			localStorage.getItem("masterVolume") || "1.0",
+			localStorage.getItem("masterVolume") || "0.6",
 		);
 		const savedAmbience = parseFloat(
-			localStorage.getItem("ambienceVolume") || "1.0",
+			localStorage.getItem("ambienceVolume") || "0.6",
 		);
-		const savedSfx = parseFloat(localStorage.getItem("sfxVolume") || "1.0");
+		const savedSfx = parseFloat(localStorage.getItem("sfxVolume") || "0.8");
 
 		const savedSkipIntro = localStorage.getItem("skipIntro") === "true";
 
@@ -80,13 +80,18 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
 	const handleSkipIntroChange = (skip: boolean) => {
 		setSkipIntro(skip);
 		localStorage.setItem("skipIntro", skip.toString());
+		if (skip) {
+			sessionStorage.setItem("introWatched", "true");
+		} else {
+			sessionStorage.setItem("introWatched", "false");
+		}
 	};
 
 	// 기본값으로 리셋
 	const resetToDefault = () => {
-		handleMasterVolumeChange(1.0);
-		handleAmbienceVolumeChange(1.0);
-		handleSfxVolumeChange(1.0);
+		handleMasterVolumeChange(0.6);
+		handleAmbienceVolumeChange(0.6);
+		handleSfxVolumeChange(0.8);
 		handleSkipIntroChange(false);
 	};
 
