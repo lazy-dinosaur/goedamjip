@@ -213,20 +213,57 @@ export default function MainMenu() {
 
 	const pageCleanup = useCallback(
 		(to: string) => {
-			if (pageRef) {
-				gsap.to(pageRef.current, {
-					opacity: 0,
-					y: -15,
-					scale: 1.1,
-					duration: 0.3,
+			let hasRun = false;
+
+			const runCleanup = () => {
+				if (hasRun) return;
+				hasRun = true;
+
+				const tl = gsap.timeline({
 					onComplete: () => {
 						audioManager.stopAllSound();
 						router.push(to);
 					},
 				});
+
+				// 진입 애니메이션의 반대 방향으로
+				if (menuItemsRef.current && menuItemsRef.current.size > 0) {
+					const elements = Array.from(menuItemsRef.current.values());
+					tl.to(elements, {
+						x: -15,
+						opacity: 0,
+						duration: 0.4,
+						stagger: 0.05,
+						ease: "power2.out",
+					});
+				}
+
+				if (titleRef.current) {
+					tl.to(
+						titleRef.current,
+						{
+							y: -15,
+							opacity: 0,
+							duration: 0.3,
+							ease: "power2.out",
+						},
+						"-=0.2",
+					);
+				}
+			};
+
+			// 타이틀 애니메이션이 진행 중이면 완료될 때까지 기다림
+			if (titleAnimationRef.current && titleAnimationRef.current.isActive()) {
+				// then()을 사용해서 완료 후 실행
+				titleAnimationRef.current.then(runCleanup);
+
+				// 안전장치: 최대 1초 대기 후 강제 실행
+				setTimeout(runCleanup, 600);
+			} else {
+				runCleanup();
 			}
 		},
-		[router, pageRef],
+		[router, menuItemsRef, titleRef],
 	);
 
 	const menuItems = useMemo(
