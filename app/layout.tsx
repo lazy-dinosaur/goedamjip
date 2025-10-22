@@ -98,7 +98,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="ko">
+		<html lang="ko" className="dark">
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} ${eastSeaDokdo.variable} ${bmDohyeon.variable} ${bmEuljiro.variable} ${bmEuljiro10.variable} ${bmEuljiroOrae.variable} ${bmHannaAir.variable} ${bmHannaPro.variable} ${bmHanna11.variable} ${bmJua.variable} ${bmKirang.variable} ${bmKkubulim.variable} ${bmYeonsung.variable} antialiased`}
 			>
