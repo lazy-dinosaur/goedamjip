@@ -329,7 +329,12 @@ export default function MainMenu() {
 
 	return (
 		<PageWrapper>
-			<div className="w-full h-full flex items-center justify-evenly flex-col overflow-hidden text-neutral-300 select-none">
+			<div
+				className={cn(
+					"w-full h-full flex items-center justify-evenly flex-col overflow-hidden text-neutral-300 select-none",
+					isItemClicked && "cursor-none",
+				)}
+			>
 				<div
 					id="title"
 					key={greeting}
@@ -351,7 +356,7 @@ export default function MainMenu() {
 									if (e) menuItemsRef.current.set(index, e);
 								}}
 								className={cn(
-									`transition-colors duration-300 cursor-pointer relative py-1 md:-1.5py lg:py-2 `,
+									`transition-colors duration-300 relative cursor-pointer py-1 md:-1.5py lg:py-2 `,
 									targetMenu == index ? "text-neutral-50" : "text-neutral-400",
 								)}
 								onPointerEnter={
