@@ -263,11 +263,10 @@ export default function MainMenu() {
 					setTimeout(runCleanup, 250);
 				});
 				titleAnimationRef.current.eventCallback("onReverseComplete", () => {
-					setTimeout(runCleanup, 0);
+					runCleanup();
 				});
-
 				titleAnimationRef.current.eventCallback("onComplete", () => {
-					setTimeout(runCleanup, 0);
+					runCleanup();
 				});
 			} else {
 				runCleanup();
