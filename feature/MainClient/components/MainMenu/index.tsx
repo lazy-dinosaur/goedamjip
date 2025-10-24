@@ -253,18 +253,18 @@ export default function MainMenu() {
 
 			// 타이틀 애니메이션이 진행 중이면 완료될 때까지 기다림
 			if (titleAnimationRef.current && titleAnimationRef.current.isActive()) {
-				// // then()을 사용해서 완료 후 실행
-				// titleAnimationRef.current.then(runCleanup);
-				//
-				// // 안전장치: 최대 1초 대기 후 강제 실행
-				// setTimeout(runCleanup, 300);
+				// then()을 사용해서 완료 후 실행
+				titleAnimationRef.current.then(runCleanup);
 
-				titleAnimationRef.current.eventCallback("onInterrupt", () => {
-					setTimeout(runCleanup, 250);
-				});
-				titleAnimationRef.current.eventCallback("onReverseComplete", () => {
-					setTimeout(runCleanup, 0);
-				});
+				// 안전장치: 최대 1초 대기 후 강제 실행
+				setTimeout(runCleanup, 300);
+
+				// titleAnimationRef.current.eventCallback("onInterrupt", () => {
+				// 	setTimeout(runCleanup, 250);
+				// });
+				// titleAnimationRef.current.eventCallback("onReverseComplete", () => {
+				// 	setTimeout(runCleanup, 0);
+				// });
 			} else {
 				runCleanup();
 			}
