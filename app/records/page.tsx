@@ -1,17 +1,19 @@
-import PageWrapper from "@/component/PageWrapper";
-import ScreenWrapper from "@/component/ScreenWrapper";
-import { FaChevronLeft } from "react-icons/fa6";
+import RecordsClient from "@/feature/RecordsClient";
+import { getStories } from "@/lib/supabase/story";
 
-export default function Records() {
+export default async function Records() {
+	// 목록에 필요한 정보만 클라이언트에 전달
+	const stories = await getStories();
+
 	return (
-		<ScreenWrapper className="flex flex-col">
-			<div className="p-5 md:p-8 flex w-full text-4xl space-x-6">
-				<FaChevronLeft className="text-xl md:text-4xl font-medium cursor-pointer" />
-				<span className="text-xl md:text-4xl font-medium font-bm-hanna-11 w-[15%]">
-					괴담집
-				</span>
-			</div>
-			<PageWrapper className="justify-start flex-1"></PageWrapper>
-		</ScreenWrapper>
+		<RecordsClient
+			stories={(stories ?? []).map(({ id, title, author, published_at }) => ({
+				id,
+				title,
+				author,
+				published_at,
+			}))}
+			hasError={stories === null}
+		/>
 	);
 }
